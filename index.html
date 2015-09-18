@@ -15,11 +15,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/solarized.css" id="theme">
+		<link rel="stylesheet" href="css/theme/league.css" id="theme">
 
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
-
+		<!-- FontAwesome -->
+		<link rel="stylesheet" href="lib/font/font-awesome-4.4.0/css/font-awesome.min.css">
+		<style>
+			.reveal ul {
+				list-style-type: none;
+			}
+		</style>
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement( 'link' );
@@ -41,85 +47,92 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Paraunit</h1>
-					<h3>Test paralleli, Doctrine e le fixture</h3>
-					<p>
-						<small>By <a href="https://github.com/Jean85">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a></small>
-					</p>
-				</section>
-
-				<section>
-					<h2>Hello There</h2>
-					<p>
-						reveal.js enables you to create beautiful interactive slide decks using HTML. This presentation will show you examples of what it can do.
-					</p>
-				</section>
-
-				<!-- Example of nested vertical slides -->
-				<section>
 					<section>
-						<h2>Vertical Slides</h2>
-						<p>Slides can be nested inside of each other.</p>
-						<p>Use the <em>Space</em> key to navigate through all slides.</p>
-						<br>
-						<a href="#" class="navigate-down">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
+						<h1>Paraunit</h1>
+						<h3>Test paralleli, Doctrine e le fixture</h3>
+						<p>
+							<small>By <a href="https://github.com/Jean85">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a></small>
+						</p>
 					</section>
 					<section>
-						<h2>Basement Level 1</h2>
-						<p>Nested slides are useful for adding additional detail underneath a high level horizontal slide.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>That's it, time to go back up.</p>
-						<br>
-						<a href="#/2">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="transform: rotate(180deg); -webkit-transform: rotate(180deg);">
-						</a>
+						<h1>
+							<i class="fa fa-exclamation-triangle"></i>
+							Spoiler alert
+							<i class="fa fa-exclamation-triangle"></i>
+						</h1>
+						<p>
+							Talk in anteprima dal SymfonyDay <br>
+							e (forse) dal CodeMotion Milano
+						</p>
 					</section>
 				</section>
 
 				<section>
-					<h2>Slides</h2>
-					<p>
-						Not a coder? Not a problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slides.com" target="_blank">http://slides.com</a>.
-					</p>
-				</section>
+					<section>
+						<h2>Mi presento</h2>
+						<ul class="fa-ul">
+							<li><i class="fa-li fa fa-user"></i>Alessandro Lai</li>
+							<li><i class="fa-li fa fa-pencil-square"></i>PHP developer @ Facile.it <span class="fragment">...</span></li>
+							<li class="fragment" style="padding-top: 1.5em">... da meno di un anno e mezzo</li>
+						</ul>
+					</section>
 
-				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
-					</p>
-					<p>
-						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
-				</section>
+					<section>
+						<h2>Perché ho cambiato?</h2>
 
-				<section>
-					<h2>Touch Optimized</h2>
-					<p>
-						Presentations look great on touch devices, like mobile phones and tablets. Simply swipe through your slides.
-					</p>
-				</section>
+						<p>Non facevo e volevo provare:</p>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
+						<ul class="fa-ul">
+							<li><i class="fa-li fa fa-check-square-o"></i>Automatizzazione deploy</li>
+							<li><i class="fa-li fa fa-check-square-o"></i>Test automatici & TDD</li>
+							<li><i class="fa-li fa fa-check-square-o"></i>Continuous Integration</li>
+							<li><i class="fa-li fa fa-check-square-o"></i>...</li>
+						</ul>
+					</section>
 
-						Write content using inline or external Markdown.
-						Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
+					<section>
+						<h2>I fondamentali</h2>
+						<img src="img/php-best-practices-cover.jpg" style="height: 10em; float:right;">
 
-						```
-						<section data-markdown>
-						  ## Markdown support
+						<p>
+							Prima di iniziare mi consigliarono un libro:<br><br>
+							<i class="fa fa-book"></i>
+							<a href="http://www.phpbestpractices.it/">PHP Best Practices</a>
+						</p>
+						<blockquote class="fragment" cite="http://www.phpbestpractices.it/" style="margin: 20px;">
+							&ldquo;
+							Una build che impiega un'ora ad essere eseguita non è particolarmente utile [...]
+							&rdquo;
+						</blockquote>
+						<p class="fragment" style="margin-top: 1em">
+							In realtà il limite è molto più stretto: <br>
+							<strong class="fragment current-visible" style="font-size: larger">10 minuti</strong>
+						</p>
+					</section>
 
-						  Write content using inline or external Markdown.
-						  Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-						</section>
-						```
-					</script>
+					<section>
+						<h2>Gli inizi...</h2>
+						<p>
+							La nostra build era spaventosamente lenta <br>
+							(fino a 25 minuti!!) per tre motivi combinati:
+						</p>
+						<p><span style="text-decoration: line-through">Vagrant</span> + NFS + Symfony2 (cache)</p>
+						<div class="fragment">
+							<p>
+								<i class="fa fa-long-arrow-down"></i>
+							</p>
+							<p>Docker!
+								<span style="font-size: smaller">Ma
+									<span style="font-size: smaller">servirebbe
+										<span style="font-size: smaller">un altro
+											<span style="font-size: smaller">talk...
+											</span>
+										</span>
+									</span>
+								</span>
+							</p>
+						</div>
+					</section>
 				</section>
 
 				<section>
