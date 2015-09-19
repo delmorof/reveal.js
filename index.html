@@ -121,7 +121,8 @@
                             <p>
                                 <i class="fa fa-long-arrow-down"></i>
                             </p>
-                            <p>Docker!
+                            <p>
+                                Docker! (&gt;15 minuti)<br>
                                 <span style="font-size: smaller">Ma
                                     <span style="font-size: smaller">servirebbe
                                         <span style="font-size: smaller">un altro
@@ -203,6 +204,7 @@
                         <ul class="fa-ul">
                             <li><i class="fa-li fa fa-check-square-o"></i>Overhead bootstrap poco importante</li>
                             <li><i class="fa-li fa fa-check-square-o"></i>Utilizzo risorse 100%</li>
+                            <li><i class="fa-li fa fa-check-square-o"></i>Niente problemi di memoria</li>
                             <li class="fragment" style="margin-top: 1.5em; font-size: larger"><i class="fa-li fa fa-times" style="color: red"></i>Problemi di concorrenza sul DB</li>
                         </ul>
                     </section>
@@ -232,7 +234,7 @@
 
                     <section id="setup-function">
                         <h2>setUp()</h2>
-                        <pre style="width: 100%"><code>
+                        <pre style="width: 100%"><code class="php">
     public function setUp()
     {
         parent::setUp();
@@ -249,7 +251,7 @@
 
                     <section id="teardown-function">
                         <h2>tearDown()</h2>
-                        <pre><code>
+                        <pre><code class="php">
     public function tearDown()
     {
         parent::tearDown();
@@ -274,6 +276,108 @@
                         </ul>
                     </section>
                 </section>
+
+                <section>
+                    <section>
+                        <h2>Ancora fallimenti??</h2>
+                        <p>
+                            Si verificavano ancora fallimenti casuali...<br><br>
+
+                            Le cause erano due:
+                        </p>
+                        <ul class="fa-ul">
+                            <li class="fragment"><i class="fa-li fa fa-times" style="color: red"></i>I deadlock possono sempre succedere</li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-times" style="color: red"></i>
+                                I controller non mantengono la transazione<br>
+                                <span style="font-size: smaller">(fra chiamate conseguenti)</span>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Risolvere definitivamente i deadlock</h2>
+                        <p>Il parser di Paraunit sa individuare i fallimenti per deadlock</p>
+                        <pre><code class="nohighlight">
+SQLSTATE[HY000]:
+    General error: 1205 Lock wait timeout exceeded;
+    try restarting transaction
+                        </code></pre>
+                        <p>Quando li individua, marca il test come da riprovare,<br> e stampa una "A"</p>
+
+                    </section>
+
+                    <section>
+                        <h2>Client HTTP di test</h2>
+                        <p>Per risolvere il problema dei controller, abbiamo fatto 2 modifiche al TestCase:</p>
+                        <ul class="fa-ul">
+                            <li class="fragment"><i class="fa-li fa fa-check-square-o"></i>Avviamo il kernel una volta sola nel costruttore</li>
+                            <li class="fragment"><i class="fa-li fa fa-check-square-o"></i>Passiamo la connessione all'EntityManager manualmente:</li>
+                        </ul>
+                        <pre class="fragment"><code class="php">
+protected function doRequest($request)
+{
+    $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+    $newEm = $em->create(
+                $em->getConnection(),
+                $em->getConfiguration(),
+                $em->getEventManager()
+            );
+    $this->getContainer()->set('doctrine.orm.entity_manager', $newEm);
+
+    return $this->kernel->handle($request);
+}
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section id="comparazione-prestazioni">
+                    <h2>Comparazione</h2>
+                    <p>Suite funzionale SharkDev: 261 classi, 1568 metodi</p>
+                    <script src="lib/js/amchart/amcharts.js"></script>
+                    <script src="lib/js/amchart/serial.js"></script>
+                    <div id="chart-performance" class="stretch"></div>
+                    <script type="application/javascript" src="js/chart-performance.js"></script>
+                </section>
+
+                <section id="live-demo">
+                    <h2>Live demo!</h2>
+                </section>
+
+                <section>
+                    <h2>Nuova funzionalità: coverage</h2>
+                    <ul class="fa-ul">
+                        <li><i class="fa-li fa fa-check-square-o"></i>Feature ancora in sviluppo (milestone 0.5)</li>
+                        <li><i class="fa-li fa fa-check-square-o"></i>Sfrutta l'opzione <code>--coverage-php</code> di PHPUnit</li>
+                        <li><i class="fa-li fa fa-check-square-o"></i>Esecuzione parallelizzata</li>
+                        <li><i class="fa-li fa fa-check-square-o"></i>Merge successivo dei risultati</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Prossimi sviluppi</h2>
+                    <ul class="fa-ul">
+                        <li><i class="fa-li fa fa-caret-right"></i>Incrementare coverage</li>
+                        <li><i class="fa-li fa fa-caret-right"></i>Evitare overhead bootstrap</li>
+                        <li><i class="fa-li fa fa-caret-right"></i>Migliorare feature coverage</li>
+                        <ul>
+                            <li>Migliorare strategia di merging</li>
+                            <li>Profiling per trovare colli di bottiglia</li>
+                        </ul>
+                        <li><i class="fa-li fa fa-caret-right"></i>Supportare altri framework/ORM</li>
+                        <li><i class="fa-li fa fa-caret-right"></i>NoSQL?</li>
+                        <li><i class="fa-li fa fa-caret-right"></i>Milestone v1.0: PHP >= 5.6, PHPUnit >= 5.0</li>
+                    </ul>
+                </section>
+
+
+
+
+
+
+
+
+
 
                 <section>
                     <section id="fragments">
