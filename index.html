@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="css/theme/beige.css" id="theme">
 
         <!-- Code syntax highlighting -->
-        <link rel="stylesheet" href="css/code-fix.css">
+        <link rel="stylesheet" href="css/fixes.css">
         <link rel="stylesheet" href="lib/css/highlight-js/idea.css">
         <!-- FontAwesome -->
         <link rel="stylesheet" href="lib/font/font-awesome-4.4.0/css/font-awesome.min.css">
@@ -43,29 +43,27 @@
 
     <body>
         <div class="reveal">
-            <img src="img/logo_engineering.png" style="height: 100px; position: absolute; bottom: 10px; left: 10px;">
+            <img id="logo-engineering" src="img/logo_engineering.png" style="height: 12%; position: absolute; bottom: 10px; left: 10px;">
 
             <!-- Any section element inside of this container is displayed as a slide -->
             <div class="slides">
                 <section id="title">
-                    <section>
-                        <h1>Paraunit</h1>
-                        <h3>Test paralleli, Doctrine e le fixture</h3>
-                        <p>
-                            <small>By <a href="https://github.com/Jean85">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a></small>
-                        </p>
-                    </section>
-                    <section>
-                        <h1>
-                            <i class="fa fa-exclamation-triangle"></i>
-                            Spoiler alert
-                            <i class="fa fa-exclamation-triangle"></i>
-                        </h1>
-                        <p>
-                            Talk in anteprima dal SymfonyDay <br>
-                            e (forse) dal CodeMotion Milano
-                        </p>
-                    </section>
+                    <h1>Paraunit</h1>
+                    <h3>Test paralleli, Doctrine e le fixture</h3>
+                    <p>
+                        <small>By <a href="https://github.com/Jean85">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a></small>
+                    </p>
+                </section>
+                <section id="spoiler">
+                    <h1>
+                        <i class="fa fa-exclamation-triangle"></i>
+                        Spoiler alert
+                        <i class="fa fa-exclamation-triangle"></i>
+                    </h1>
+                    <p>
+                        Talk in anteprima dal SymfonyDay <br>
+                        e (forse) dal CodeMotion Milano
+                    </p>
                 </section>
 
                 <section id="presentazione">
@@ -85,10 +83,10 @@
                         <p>Non facevo e volevo provare:</p>
 
                         <ul class="fa-ul">
-                            <li><i class="fa-li fa fa-check-square-o"></i>Automatizzazione deploy</li>
                             <li><i class="fa-li fa fa-check-square-o"></i>Test automatici & TDD</li>
                             <li><i class="fa-li fa fa-check-square-o"></i>Continuous Integration</li>
-                            <li><i class="fa-li fa fa-check-square-o"></i>...</li>
+                            <li><i class="fa-li fa fa-check-square-o"></i>Automatizzazione deploy</li>
+                            <li><i class="fa-li fa fa-check-square-o"></i>Etc. ...</li>
                         </ul>
                     </section>
 
@@ -119,7 +117,7 @@
                             La nostra build era molto lenta <br>
                             (fino a 25 minuti!!) per tre motivi combinati:
                         </p>
-                        <p><span style="text-decoration: line-through">Vagrant</span> + NFS + Symfony2 (cache)</p>
+                        <p class="fragment"><span style="text-decoration: line-through">Vagrant</span> + NFS + Symfony2 (cache)</p>
                         <div class="fragment">
                             <p>
                                 <i class="fa fa-long-arrow-down"></i>
@@ -144,12 +142,13 @@
                 </section>
 
                 <section id="la-concorrenza">
+                    <aside class="notes">[6:00]</aside>
                     <h2>Primi tentativi</h2>
                     <ul class="fa-ul">
-                        <li>
+                        <li class="fragment">
                             <i class="fa-li fa fa-question-circle"></i>
                             <strong><a href="https://github.com/brianium/paratest">brianium/paratest</a></strong>
-                            <ul>
+                            <ul class="fragment">
                                 <li>Va riconfigurato di fino (batch size)</li>
                                 <li>
                                     Non risolve problemi di concorrenza <br>
@@ -157,22 +156,22 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
+                        <li class="fragment">
                             <i class="fa-li fa fa-question-circle"></i>
                             <strong><a href="https://github.com/liuggio/fastest">liuggio/fastest</a></strong>
-                            <ul>
+                            <ul class="fragment">
                                 <li>Semplice lancio di comandi paralleli</li>
-                                <li>Un processo/database per core</li>
                                 <li>Diventato tool generico</li>
+                                <li>Un processo/database per core</li>
                             </ul>
                         </li>
                         <li class="fragment" style="font-size: smaller">
                             <i class="fa-li fa fa-question-circle"></i>
                             <strong><a href="https://github.com/jlipps/paraunit">jlipps/paraunit</a> <span style="font-size: smaller">(ouch!)</span></strong>
-                            <ul>
+                            <ul class="fragment">
                                 <li>Abbandonato da 3 anni (v0.1.5)</li>
-                                <li>Nessun supporto testsuite</li>
                                 <li>Anche qui, solo il <code>TEST_TOKEN</code></li>
+                                <li>Nessun supporto testsuite</li>
                             </ul>
                         </li>
                     </ul>
@@ -180,6 +179,7 @@
 
                 <section>
                     <section id="features">
+                        <aside class="notes">[10:00]</aside>
                         <h2>facile-it/paraunit</h2>
                         <h3>Features:</h3>
                         <ul class="fa-ul">
@@ -209,6 +209,7 @@
                     </section>
 
                     <section id="functional">
+                        <aside class="notes">[16:00]</aside>
                         <h2>Testsuite funzionali</h2>
                         <ul class="fa-ul">
                             <li><i class="fa-li fa fa-check-square-o"></i>Overhead bootstrap poco importante</li>
@@ -232,6 +233,7 @@
 
                 <section>
                     <section id="features-testcase">
+                        <aside class="notes">[20:00]</aside>
                         <h2>facile-it/paraunit-testcase</h2>
                         <p>Per test funzionali di Symfony2 + Doctrine</p>
                         <p style="font-size: smaller">Il trucco?</p>
@@ -279,6 +281,7 @@
                     </section>
 
                     <section id="vantaggi">
+                        <aside class="notes">[23:00]</aside>
                         <h2>Vantaggi</h2>
                         <ul class="fa-ul">
                             <li class="fragment"><i class="fa-li fa fa-check-square-o"></i>Massimo isolamento del database</li>
@@ -291,6 +294,7 @@
 
                 <section>
                     <section>
+                        <aside class="notes">[24:30]</aside>
                         <h2>Ancora fallimenti??</h2>
                         <p>
                             Si verificavano ancora fallimenti casuali...<br><br>
@@ -326,6 +330,7 @@
                     </section>
 
                     <section>
+                        <aside class="notes">[26:00]</aside>
                         <h2>Client HTTP di test</h2>
                         <p>
                             Per risolvere il problema dei controller,<br>
@@ -353,6 +358,7 @@ protected function doRequest($request)
                 </section>
 
                 <section id="comparazione-prestazioni">
+                    <aside class="notes">[28:00]</aside>
                     <h2>Comparazione</h2>
                     <p>Suite funzionale SharkDev: 261 classi, 1568 metodi</p>
                     <div id="chart-performance" class="stretch" style="height: 100%"></div>
@@ -364,6 +370,7 @@ protected function doRequest($request)
                 </section>
 
                 <section>
+                    <aside class="notes">[32:00]</aside>
                     <h2>Nuova funzionalità: coverage</h2>
                     <ul class="fa-ul">
                         <li><i class="fa-li fa fa-check-square-o"></i>Feature ancora in sviluppo (milestone 0.5)</li>
@@ -374,16 +381,17 @@ protected function doRequest($request)
                 </section>
 
                 <section>
+                    <aside class="notes">[33:00]</aside>
                     <h2>Prossimi sviluppi</h2>
                     <ul class="fa-ul">
-                        <li><i class="fa-li fa fa-caret-right"></i>Altre opzioni di selezione test</li>
-                        <li><i class="fa-li fa fa-caret-right"></i>Incrementare testing nel progetto</li>
-                        <li><i class="fa-li fa fa-caret-right"></i>Evitare overhead bootstrap</li>
                         <li><i class="fa-li fa fa-caret-right"></i>Migliorare feature coverage</li>
                         <ul>
                             <li>Migliorare strategia di merging</li>
                             <li>Profiling per trovare colli di bottiglia</li>
                         </ul>
+                        <li><i class="fa-li fa fa-caret-right"></i>Incrementare testing nel progetto</li>
+                        <li><i class="fa-li fa fa-caret-right"></i>Altre opzioni di selezione test</li>
+                        <li><i class="fa-li fa fa-caret-right"></i>Evitare overhead bootstrap</li>
                         <li><i class="fa-li fa fa-caret-right"></i>Supportare altri framework/ORM</li>
                         <li><i class="fa-li fa fa-caret-right"></i>NoSQL?</li>
                         <li><i class="fa-li fa fa-caret-right"></i>Milestone v1.0: PHP >= 5.6, PHPUnit >= 5.0</li>
@@ -412,6 +420,7 @@ protected function doRequest($request)
                     </ul>
                 </section>
                 <section>
+                    <aside class="notes">[36:00]</aside>
                     <h2>In Facile.it...</h2>
                     <ul class="fa-ul">
                         <li class="fragment">
