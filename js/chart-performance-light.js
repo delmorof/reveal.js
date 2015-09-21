@@ -3,6 +3,7 @@ function loadChartPerformance() {
         "type": "serial",
         "startDuration": 1,
         "fontSize": 20,
+        "fontFamily": 'Lato, sans-serif',
         "color": "#000000",
         "thousandsSeparator": ".",
         "creditsPosition": "top-right",

@@ -19,7 +19,7 @@
 
         <!-- Code syntax highlighting -->
         <link rel="stylesheet" href="css/code-fix.css">
-        <link rel="stylesheet" href="lib/css/highlight-tomorrow.css">
+        <link rel="stylesheet" href="lib/css/highlight-js/idea.css">
         <!-- FontAwesome -->
         <link rel="stylesheet" href="lib/font/font-awesome-4.4.0/css/font-awesome.min.css">
         <style>
@@ -94,7 +94,7 @@
 
                     <section>
                         <h2>I fondamentali</h2>
-                        <img src="img/php-best-practices-cover.jpg" style="height: 10em; float:right;">
+                        <img src="img/php-best-practices-cover.jpg" style="border: none; height: 10em; float:right;">
 
                         <p>
                             Prima di iniziare mi consigliarono un libro:<br><br>
@@ -116,7 +116,7 @@
                     <section>
                         <h2>Gli inizi...</h2>
                         <p>
-                            La nostra build era spaventosamente lenta <br>
+                            La nostra build era molto lenta <br>
                             (fino a 25 minuti!!) per tre motivi combinati:
                         </p>
                         <p><span style="text-decoration: line-through">Vagrant</span> + NFS + Symfony2 (cache)</p>
@@ -136,6 +136,10 @@
                                 </span>
                             </p>
                         </div>
+                        <p class="fragment">
+                            Inoltre, la dimensione (e la durata) di una suite di test<br>
+                            può solo aumentare...
+                        </p>
                     </section>
                 </section>
 
@@ -452,7 +456,7 @@ protected function doRequest($request)
             // Full list of configuration options available at:
             // https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
-                controls: true,
+                controls: false,
                 progress: true,
                 history: true,
                 center: true,
