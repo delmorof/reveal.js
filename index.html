@@ -55,6 +55,7 @@
                     </p>
                 </section>
                 <section id="spoiler">
+                    <aside class="notes">[0:20]</aside>
                     <h1>
                         <i class="fa fa-exclamation-triangle"></i>
                         Spoiler alert
@@ -67,6 +68,7 @@
                 </section>
 
                 <section id="presentazione">
+                    <aside class="notes">[1:10]</aside>
                     <section>
                         <h2>Mi presento</h2>
                         <img class="stretch" src="img/github_avatar.jpg" style="border-radius: 0.5em; border: none; margin-right: 1em; text-shadow: 0 0 6px rgba(0, 0, 0, 0.2); vertical-align: middle">
@@ -78,6 +80,7 @@
                     </section>
 
                     <section>
+                        <aside class="notes">[1:45]</aside>
                         <h2>Perché ho cambiato?</h2>
 
                         <p>Non facevo e volevo provare:</p>
@@ -91,6 +94,7 @@
                     </section>
 
                     <section>
+                        <aside class="notes">[2:30]</aside>
                         <h2>I fondamentali</h2>
                         <img src="img/php-best-practices-cover.jpg" style="border: none; height: 10em; float:right;">
 
@@ -112,6 +116,7 @@
                     </section>
 
                     <section>
+                        <aside class="notes">[5:40]</aside>
                         <h2>Gli inizi...</h2>
                         <p>
                             La nostra build era molto lenta <br>
@@ -142,7 +147,7 @@
                 </section>
 
                 <section id="la-concorrenza">
-                    <aside class="notes">[6:00]</aside>
+                    <aside class="notes">[8:00]</aside>
                     <h2>Primi tentativi</h2>
                     <ul class="fa-ul">
                         <li class="fragment">
@@ -179,7 +184,7 @@
 
                 <section>
                     <section id="features">
-                        <aside class="notes">[10:00]</aside>
+                        <aside class="notes">[11:50]</aside>
                         <h2>facile-it/paraunit</h2>
                         <h3>Features:</h3>
                         <ul class="fa-ul">
@@ -194,6 +199,7 @@
                     </section>
 
                     <section id="unit">
+                        <aside class="notes">[4:40]</aside>
                         <h2>Testsuite unitarie</h2>
                         <ul class="fa-ul">
                             <li><i class="fa-li fa fa-check-square-o"></i>Nessun problema di concorrenza</li>
@@ -209,7 +215,7 @@
                     </section>
 
                     <section id="functional">
-                        <aside class="notes">[16:00]</aside>
+                        <aside class="notes">[17:25]</aside>
                         <h2>Testsuite funzionali</h2>
                         <ul class="fa-ul">
                             <li><i class="fa-li fa fa-check-square-o"></i>Overhead bootstrap poco importante</li>
@@ -220,6 +226,7 @@
                     </section>
 
                     <section id="db-problems">
+                        <aside class="notes">[19:00]</aside>
                         <h2>Problemi di accesso al database</h2>
                         <p>Principali cause dei problemi</p>
                         <ul class="fa-ul">
@@ -233,7 +240,7 @@
 
                 <section>
                     <section id="features-testcase">
-                        <aside class="notes">[20:00]</aside>
+                        <aside class="notes">[22:00]</aside>
                         <h2>facile-it/paraunit-testcase</h2>
                         <p>Per test funzionali di Symfony2 + Doctrine</p>
                         <p style="font-size: smaller">Il trucco?</p>
@@ -247,6 +254,7 @@
                     </section>
 
                     <section id="setup-function">
+                        <aside class="notes">[23:00]</aside>
                         <h2>setUp()</h2>
                         <pre style="width: 100%"><code class="php">
     public function setUp()
@@ -281,7 +289,7 @@
                     </section>
 
                     <section id="vantaggi">
-                        <aside class="notes">[23:00]</aside>
+                        <aside class="notes">[24:30]</aside>
                         <h2>Vantaggi</h2>
                         <ul class="fa-ul">
                             <li class="fragment"><i class="fa-li fa fa-check-square-o"></i>Massimo isolamento del database</li>
@@ -294,7 +302,7 @@
 
                 <section>
                     <section>
-                        <aside class="notes">[24:30]</aside>
+                        <aside class="notes">[26:30]</aside>
                         <h2>Ancora fallimenti??</h2>
                         <p>
                             Si verificavano ancora fallimenti casuali...<br><br>
@@ -312,6 +320,7 @@
                     </section>
 
                     <section>
+                        <aside class="notes">[28:00]</aside>
                         <h2>Risolvere definitivamente i deadlock</h2>
                         <p>Il parser di Paraunit sa individuare i fallimenti per deadlock</p>
                         <pre><code class="nohighlight" style="background-color: #dd0000; color: white; font-weight: bolder">
@@ -330,7 +339,7 @@
                     </section>
 
                     <section>
-                        <aside class="notes">[26:00]</aside>
+                        <aside class="notes">[28:50]</aside>
                         <h2>Client HTTP di test</h2>
                         <p>
                             Per risolvere il problema dei controller,<br>
@@ -358,7 +367,7 @@ protected function doRequest($request)
                 </section>
 
                 <section id="comparazione-prestazioni">
-                    <aside class="notes">[28:00]</aside>
+                    <aside class="notes">[30:40]</aside>
                     <h2>Comparazione</h2>
                     <p>Suite funzionale SharkDev: 261 classi, 1568 metodi</p>
                     <div id="chart-performance" class="stretch" style="height: 100%"></div>
@@ -366,11 +375,12 @@ protected function doRequest($request)
                 </section>
 
                 <section id="live-demo">
+                    <aside class="notes">[33:20 => 35:00]</aside>
                     <h2>Live demo!</h2>
                 </section>
 
                 <section>
-                    <aside class="notes">[32:00]</aside>
+                    <aside class="notes">[35:00]</aside>
                     <h2>Nuova funzionalità: coverage</h2>
                     <ul class="fa-ul">
                         <li><i class="fa-li fa fa-check-square-o"></i>Feature ancora in sviluppo (milestone 0.5)</li>
@@ -381,7 +391,7 @@ protected function doRequest($request)
                 </section>
 
                 <section>
-                    <aside class="notes">[33:00]</aside>
+                    <aside class="notes">[36:30]</aside>
                     <h2>Prossimi sviluppi</h2>
                     <ul class="fa-ul">
                         <li><i class="fa-li fa fa-caret-right"></i>Migliorare feature coverage</li>
@@ -399,6 +409,7 @@ protected function doRequest($request)
                 </section>
 
                 <section>
+                    <aside class="notes">[39:10]</aside>
                     <h2>Contatti</h2>
                     <ul class="fa-ul">
                         <li>
@@ -420,7 +431,7 @@ protected function doRequest($request)
                     </ul>
                 </section>
                 <section>
-                    <aside class="notes">[36:00]</aside>
+                    <aside class="notes">[40:00]</aside>
                     <h2>In Facile.it...</h2>
                     <ul class="fa-ul">
                         <li class="fragment" style="margin-bottom: 0.8em">
