@@ -123,7 +123,7 @@
                                 <i class="fa fa-long-arrow-down"></i>
                             </p>
                             <p>
-                                Docker! (&gt;15 minuti)<br>
+                                Docker! (&lt;15 minuti)<br>
                                 <span style="font-size: smaller">Ma
                                     <span style="font-size: smaller">servirebbe
                                         <span style="font-size: smaller">un altro
@@ -149,10 +149,10 @@
                             <i class="fa-li fa fa-question-circle"></i>
                             <strong><a href="https://github.com/brianium/paratest">brianium/paratest</a></strong>
                             <ul class="fragment">
-                                <li>Va riconfigurato di fino (batch size)</li>
+                                <li>Va configurato con precisione (batch size)</li>
                                 <li>
                                     Non risolve problemi di concorrenza <br>
-                                    (solo il <code>TEST_TOKEN</code>)
+                                    (solo la globale <code>TEST_TOKEN</code>)
                                 </li>
                             </ul>
                         </li>
@@ -170,7 +170,7 @@
                             <strong><a href="https://github.com/jlipps/paraunit">jlipps/paraunit</a> <span style="font-size: smaller">(ouch!)</span></strong>
                             <ul class="fragment">
                                 <li>Abbandonato da 3 anni (v0.1.5)</li>
-                                <li>Anche qui, solo il <code>TEST_TOKEN</code></li>
+                                <li>Anche qui, solo <code>TEST_TOKEN</code></li>
                                 <li>Nessun supporto testsuite</li>
                             </ul>
                         </li>
@@ -185,7 +185,7 @@
                         <ul class="fa-ul">
                             <li class="fragment"><i class="fa-li fa fa-check-square-o"></i>PHP >= 5.3, PHPUnit >= 4.6</li>
                             <li class="fragment"><i class="fa-li fa fa-check-square-o"></i>Creato con componenti Symfony</li>
-                            <li class="fragment"><i class="fa-li fa fa-check-square-o"></i>Supporto testsuites da configurazione XML</li>
+                            <li class="fragment"><i class="fa-li fa fa-check-square-o"></i>Supporto testsuite da configurazione XML</li>
                             <li class="fragment"><i class="fa-li fa fa-check-square-o"></i>Parsing e aggregazione dei risultati</li>
                             <li class="fragment"><i class="fa-li fa fa-check-square-o"></i>Gestione dei fatal error</li>
                             <li class="fragment"><i class="fa-li fa fa-check-square-o"></i>Affidabile: controllo degli exit code</li>
@@ -306,7 +306,7 @@
                             <li class="fragment">
                                 <i class="fa-li fa fa-times" style="color: red"></i>
                                 I controller non mantengono la transazione<br>
-                                <span style="font-size: smaller">(fra chiamate conseguenti)</span>
+                                tra una chiamata e l'altra
                             </li>
                         </ul>
                     </section>
@@ -314,7 +314,7 @@
                     <section>
                         <h2>Risolvere definitivamente i deadlock</h2>
                         <p>Il parser di Paraunit sa individuare i fallimenti per deadlock</p>
-                        <pre><code class="nohighlight">
+                        <pre><code class="nohighlight" style="background-color: #dd0000; color: white; font-weight: bolder">
     SQLSTATE[HY000]:
         General error: 1205 Lock wait timeout exceeded;
         try restarting transaction
@@ -389,7 +389,7 @@ protected function doRequest($request)
                             <li>Migliorare strategia di merging</li>
                             <li>Profiling per trovare colli di bottiglia</li>
                         </ul>
-                        <li><i class="fa-li fa fa-caret-right"></i>Incrementare testing nel progetto</li>
+                        <li><i class="fa-li fa fa-caret-right"></i>Prioritizzazione test lenti</li>
                         <li><i class="fa-li fa fa-caret-right"></i>Altre opzioni di selezione test</li>
                         <li><i class="fa-li fa fa-caret-right"></i>Evitare overhead bootstrap</li>
                         <li><i class="fa-li fa fa-caret-right"></i>Supportare altri framework/ORM</li>
@@ -423,20 +423,16 @@ protected function doRequest($request)
                     <aside class="notes">[36:00]</aside>
                     <h2>In Facile.it...</h2>
                     <ul class="fa-ul">
-                        <li class="fragment">
+                        <li class="fragment" style="margin-bottom: 0.8em">
                             <i class="fa-li fa fa-rss"></i>
-                            Blog sviluppatori<br>
-                            <a href="http://engineering.facile.it/">Facile.it Engineering</a>
+                            <strong>Blog sviluppatori</strong><br>
+                            <a href="http://engineering.facile.it/">engineering.facile.it</a>
                         </li>
                         <li class="fragment">
                             <i class="fa-li fa fa-calendar"></i>
-                            Hackaton: <a href="http://hackathon.facile.it/">#FacileHack</a><br>
-                            14-15 novembre 2015 (Milano)
-                        </li>
-                        <li class="fragment">
-                            <i class="fa-li fa fa-briefcase"></i>
-                            We're hiring!<br>
-                            <a href="http://jobs.facile.it/chi-cerchiamo/programmatori.html">jobs.facile.it</a>
+                            <strong>#FacileHack</strong><br>
+                            <span style="font-size: smaller">14-15 novembre 2015 (Milano)</span><br>
+                            <a href="http://hackathon.facile.it/">hackathon.facile.it</a>
                         </li>
                     </ul>
                 </section>
