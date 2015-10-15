@@ -15,3 +15,12 @@
 a[title='JavaScript charts'] {
     display: none !important;
 }
+
+.note-adapted {
+    color: green;
+    font-weight: bolder;
+}
+
+.crossed {
+    text-decoration: line-through;
+}
