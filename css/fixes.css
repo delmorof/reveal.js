@@ -19,3 +19,12 @@ a[title='JavaScript charts'] {
 .no-shadow {
     box-shadow: none !important;
 }
+
+.note-adapted {
+    color: green;
+    font-weight: bolder;
+}
+
+.crossed {
+    text-decoration: line-through;
+}
