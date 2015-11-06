@@ -114,6 +114,11 @@
                         <img src="img/logo_phpunit.png" class="stretch no-shadow" style="border: none"><br>
                         ?
                     </section>
+                    <section>
+                        <h3>Chi conosce...</h3>
+                        <h1 style="font-size: 7em">S.O.L.I.D.</h1><br>
+                        ?
+                    </section>
                 </section>
 
                 <section>
@@ -181,7 +186,7 @@
                             </li>
                             <li class="fragment">
                                 <i class="fa-li fa fa-list"></i>
-                                Formalizzati in regole
+                                Formalizzati in "regole"
                             </li>
                         </ul>
                     </section>
@@ -253,13 +258,13 @@
                             </li>
                         </ul>
                     </section>
-                </section>
 
-                <section>
-                    <h1>
-                        <i class="fa fa-warning"></i><br>
-                        Esercizi, non regole
-                    </h1>
+                    <section>
+                        <h1>
+                            <i class="fa fa-warning"></i><br>
+                            Esercizi, non regole
+                        </h1>
+                    </section>
                 </section>
 
                 <section>
@@ -268,7 +273,7 @@
                         <h1>Usare un solo livello di indentazione</h1>
                     </section>
 
-                    <section>
+                    <section style="font-size: larger">
                         <pre class="stretch"><code>
 function validateProducts($products)
 {
@@ -314,6 +319,7 @@ function isValidProduct($product)
 function validateProductList($products)
 {
     $validProducts = array_filter($products, 'isValidProduct');
+
     return (count($products) == count($validProducts));
 }
                         </code></pre>
@@ -404,13 +410,12 @@ public function createPost($request)
 }</code></pre>
                     </section>
 
-                    <section>
+                    <section style="font-size: larger">
                         <aside class="notes">
                              - Esempio wall-text su Facebook<br>
                              - Alternativa: \Exception
                         </aside>
-                        <pre class="stretch"><code>
-public function createPost($request)
+                        <pre class="stretch"><code>public function createPost($request)
 {
     $entity = new Post();
     $repository = $this->getRepository('MyBundle:Post');
@@ -429,8 +434,7 @@ public function createPost($request)
     $repository->save($entity);
 
     return $this->redirect('create_ok');
-}
-                        </code></pre>
+}</code></pre>
                     </section>
 
                     <section>
@@ -455,12 +459,255 @@ public function createPost($request)
 
                 <section>
                     <section>
+                        <h1>OC #3</h1>
+                        <h1>Incapsulare<br>primitive e stringhe</h1>
+                        <span class="note-adapted">(non sempre)</span>
+                    </section>
+
+                    <section style="font-size: larger">
+                        <pre><code>
+$component->repaint(false);
+                        </code></pre>
+                        <pre class="fragment"><code>
+class UIComponent
+{
+//...
+    public function repaint($animate = true)
+    {
+        //...
+    }
+}
+                        </code></pre>
+                    </section>
+
+                    <section style="font-size: larger">
+                        <pre class="stretch"><code>class UIComponent
+{
+//...
+    public function repaint( Animate $animate )
+    {
+        //...
+    }
+}
+
+class Animate
+{
+    public $animate;
+
+    public function __construct( $animate = true )
+    {
+        $this->animate = $animate;
+    }
+}
+
+$component->repaint( new Animate(false) );</code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Vantaggi</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Aiuta nell'individuare cosa deve diventare un oggetto
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Aiuta l'autocompletamento nell'IDE
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Incapsula le operazioni (ancora la S del SOLID)
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>OC #4</h1>
+                        <h1>Una sola <span class="note-adapted">-&gt;</span> per linea</h1>
+                    </section>
+
+                    <section style="font-size: larger">
+                        <aside class="notes">Legge di Demetra ("non parlate con gli sconosciuti")</aside>
+                        <pre style="width: 200%"><code>
+$this->base_url = $this->CI->config->site_url().'/'.$this->CI->uri->segment(1).$this->CI->uri->slash_segment(2, 'both');
+
+$this->base_uri = $this->CI->uri->segment(1).$this->CI->uri->slash_segment(2, 'leading');
+                        </code></pre>
+
+                        <pre class="fragment"><code>
+$this->getCI()->getUriBuilder()->getBaseUri(‘leading’);
+                        </code></pre>
+
+                        <h3 class="fragment">Eccezione: fluent interface</h3>
+                        <pre class="fragment"><code>
+    $box->setHeight(2.5)
+        ->setWidth(6.0)
+        ->setDepth(2.0)
+        ->setColor(new Color(255, 0, 0));
+                        </code></pre>
+                    </section>
+
+                    <section style="font-size: larger">
+                        <pre><code>
+$this->get('security.context')->getToken()->getUser();
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Vantaggi</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Leggibilità
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Più facile scrivere test
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Più facile fare debug
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Legge di Demetra
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>OC #5</h1>
+                        <h1>NON abbreviare</h1>
+                    </section>
+
+                    <section>
+                        <pre class="stretch"><code>
+if($sx >= $sy) {
+
+    if ($sx > $strSysMatImgW) {
+            $ny = $strSysMatImgW * $sy / $sx;
+            $nx = $strSysMatImgW;
+    }
+
+    if ($ny > $strSysMatImgH) {
+        $nx = $strSysMatImgH * $sx / $sy;
+        $ny = $strSysMatImgH;
+    }
+
+} else {
+
+    if ($sy > $strSysMatImgH) {
+        $nx = $strSysMatImgH * $sx / $sy;
+        $ny = $strSysMatImgH;
+    }
+
+    if($nx > $strSysMatImgW) {
+        $ny = $strSysMatImgW * $sy / $sx;
+        $nx = $strSysMatImgW;
+    }
+}
+                        </code></pre>
+                    </section>
+
+                    <section style="font-size: larger">
+                        <pre style="width: 100%"><code>
+function processResponseHeadersAndDefineOutput($response) { ... }
+                        </code></pre>
+                        <pre class="fragment"><code>
+function getPage($data) { ... }
+                        </code></pre>
+                        <pre class="fragment"><code>
+function execute() { ... }
+                        </code></pre>
+                        <pre class="fragment"><code>
+$tr->process(“site.login”);
+                        </code></pre>
+                        <code class="fragment">$translatorService</code>
+                    </section>
+
+                    <section>
+                        <h2>Vantaggi</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Comunicazione più completa tra programmatori
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Maggiore manutenibilità
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Indica spesso problemi sottostanti
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>OC #6</h1>
+                        <h1>Mantenere le classi brevi</h1>
+                    </section>
+
+                    <section>
+                        <h2><span class="note-adapted">200</span> righe per classe</h2>
+                        <h2><span class="note-adapted">10</span> metodi per classe</h2>
+                        <h2><span class="note-adapted">15</span> classi per package\cartella</h2>
+                    </section>
+
+                    <section>
+                        <h2>Vantaggi</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Singola responsabilità (si, ancora la S!)
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Metodi chiari e concisi
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Package\namespace di dimensioni ridotte
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Evita cartelle-calderone
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>OC #99</h1>
+                        <h1>Pattern</h1>
+                    </section>
+
+                    <section>
+                        <h2>Vantaggi</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Aumenta la frammentazione dei metodi
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
                         <h2>Le "regole"</h2>
                         <ol>
                             <li>Usare un solo livello di indentazione</li>
                             <li>Non usare l'else</li>
-                            <li>Evitare l'uso di primitive e stringhe <span class="note-adapted">(non sempre)</span></li>
-                            <li>Usare una sola <span class="crossed">punto</span> <span class="note-adapted">-&gt;</span> per linea</li>
+                            <li>Incapsulare primitive e stringhe <span class="note-adapted">(non sempre)</span></li>
+                            <li>Una sola <span class="crossed">punto</span> <span class="note-adapted">-&gt;</span> per riga</li>
                             <li>NON abbreviare</li>
                             <li>Mantenere le classi brevi</li>
                             <li>
