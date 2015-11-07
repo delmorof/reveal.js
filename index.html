@@ -685,8 +685,28 @@ $tr->process(“site.login”);
 
                 <section>
                     <section>
-                        <h1>OC #99</h1>
-                        <h1>Pattern</h1>
+                        <h1>OC #7</h1>
+                        <h1>
+                            Usare solo<br>da due <span class="note-adapted">a cinque</span><br>
+                            variabili d'istanza
+                        </h1>
+                    </section>
+
+                    <section style="font-size: larger">
+                        <pre><code>
+    class MyRegistrationService
+    {
+
+        protected $userService;
+        protected $passwordService;
+        protected $logger;
+        protected $translator;
+        protected $entityManager;
+        protected $imageCropper;
+
+        // ...
+    }
+                        </code></pre>
                     </section>
 
                     <section>
@@ -694,7 +714,192 @@ $tr->process(“site.login”);
                         <ul class="fa-ul">
                             <li class="fragment">
                                 <i class="fa-li fa fa-check-square"></i>
-                                Aumenta la frammentazione dei metodi
+                                Classi con meno dipendenze
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Test più facili (meno mock necessari)
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>OC #8</h1>
+                        <h1>Usare collezioni "pure"</h1>
+                    </section>
+
+                    <section>
+                        <p>
+                            Una collezione di oggetti deve solo essere una collezione:
+                        </p>
+                        <ul class="fa-ul fragment">
+                            <li>
+                                <i class="fa-li fa fa-check-square"></i>
+                                Accesso sequenziale e/o a chiave
+                            </li>
+                            <li>
+                                <i class="fa-li fa fa-check-square"></i>
+                                Iteratore
+                            </li>
+                            <li>
+                                <i class="fa-li fa fa-check-square"></i>
+                                Funzioni aggiuntive (sort, map, filter...)
+                            </li>
+                        </ul>
+                        <p class="fragment">
+                            Alcuni linguaggi o librerie permettono di avere collezioni
+                            di oggetti della stessa classe
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2>Vantaggi</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Forniscono le operazioni sulle collezioni
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                In PHP abbiamo le classi SPL
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Diventa più facile unire collezioni tra loro
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>OC #9</h1>
+                        <h1>
+                            Non usare accessors (getters/setters)<br>
+                            <span class="note-adapted">[non in PHP]</span>
+                        </h1>
+                    </section>
+
+                    <section>
+                        <pre class="stretch"><code>
+    class ScoreModel
+    {
+        private $score;
+
+        public getScore()
+        {
+            if ( ! is_null($this->score)) {
+                return $this->score;
+            } else {
+                return "Score not available";
+            }
+        }
+
+        public setScore($score)
+        {
+            if ($score < 0) {
+                throw new InvalidScoreException()
+            }
+
+            $this->score = $score;
+        }
+    }
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Vantaggi</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Operazioni iniettate
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Incapsulamento delle trasformazioni
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>OC #10 <span class="note-adapted">(bonus!)</span></h1>
+                        <h1>Documentare <br>il proprio codice</h1>
+                    </section>
+
+                    <section style="font-size: larger">
+                        <pre class="stretch"><code>
+
+// controllo se $overall_pref è stata impostata a void
+if ($overall_pref == 'void')
+
+
+
+// implode l'array di selezioni del gruppo tre in una stringa,
+// così che poi possa essere successivamente trasferita in un
+// database alla fine della pagina
+$groupthree = implode($groupthree_array, "\n\r");
+
+                        </code></pre>
+                    </section>
+
+                    <section style="font-size: larger">
+                        <pre class="stretch"><code>
+$priority = isset($event['priority']) ? $event['priority'] : 0;
+
+if (!isset($event['event'])) {
+    throw new \InvalidArgumentException(...));
+}
+
+if (!isset($event['method'])) {
+    $event['method'] = 'on'.preg_replace(array(
+        '/(?<=\b)[a-z]/ie',
+        '/[^a-z0-9]/i'
+    ), array('strtoupper("\\0")', ''), $event['event']);
+}
+
+$definition->addMethodCall(
+    'addListenerService',
+    array() // ...
+);
+                        </code></pre>
+                    </section>
+
+                    <section style="font-size: larger">
+                        <pre class="stretch"><code>
+
+
+/**
+ * Checks whether an element is contained in the collection.
+ * This is an O(n) operation, where n is the size of collection.
+ *
+ * @todo implement caching for better performance
+ * @param mixed $element The element to search for.
+ * @return boolean TRUE if the collection contains the element,
+ *                 or FALSE.
+ */
+
+function contains($element);
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Vantaggi</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Documentazione automatica delle API
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Trasmissione dei vostri ragionamenti
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Si evitano fraintendimenti
                             </li>
                         </ul>
                     </section>
@@ -714,7 +919,7 @@ $tr->process(“site.login”);
                                 Usare solo da due <span class="note-adapted">a cinque</span><br>
                                 variabili d'istanza
                             </li>
-                            <li>Usare collezioni pure</li>
+                            <li>Usare collezioni "pure"</li>
                             <li class="note-adapted crossed">Non usare accessors (getters/setters)</li>
                             <li class="note-adapted">Documentare il proprio codice</li>
                         </ol>
