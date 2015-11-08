@@ -589,8 +589,8 @@ $this->get('security.context')->getToken()->getUser();
 if($sx >= $sy) {
 
     if ($sx > $strSysMatImgW) {
-            $ny = $strSysMatImgW * $sy / $sx;
-            $nx = $strSysMatImgW;
+        $ny = $strSysMatImgW * $sy / $sx;
+        $nx = $strSysMatImgW;
     }
 
     if ($ny > $strSysMatImgH) {
@@ -687,7 +687,8 @@ $tr->process(“site.login”);
                     <section>
                         <h1>OC #7</h1>
                         <h1>
-                            Usare solo<br>da due <span class="note-adapted">a cinque</span><br>
+                            Usare solo<br>
+                            <span class="note-adapted">da</span> due <span class="note-adapted">a cinque</span><br>
                             variabili d'istanza
                         </h1>
                     </section>
@@ -923,6 +924,65 @@ function contains($element);
                             <li class="note-adapted crossed">Non usare accessors (getters/setters)</li>
                             <li class="note-adapted">Documentare il proprio codice</li>
                         </ol>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Kata: <br>punteggi del tennis</h1>
+                        <p><a href="https://github.com/emilybache/Tennis-Refactoring-Kata">emilybache/Tennis-Refactoring-Kata</a></p>
+                    </section>
+
+                    <section>
+                        <h2>Regole del tennis</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Un <b>game</b> viene vinto dal primo che fa almeno <b>4 punti e due in più</b> dell'avversario
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                I nomi dei punti da 0 a 3 sono: <br>
+                                <b>"Love", "Fifteen", "Thirty" e "Forty"</b>
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Se c'è un pareggio sotto i 3 punti, si aggiunge "-all"
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Se c'è un pareggio e sono stati fatti almeno 3 punti, si dice "Deuce"
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Dopo il "deuce", il primo che segna ottiene un "Advantage"
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Cosa abbiamo a disposizione</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa-li fa fa-github"></i>
+                                Il repository di oggi è disponibile in tanti linguaggi
+                                <br>&nbsp;
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-code"></i>
+                                Noi oggi ci eserciteremo sul PHP
+                                <br>&nbsp;
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-check-square"></i>
+                                Il repository contiene tre versioni funzionanti
+                                <br>&nbsp;
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-cogs"></i>
+                                Abbiamo anche una suite di test!
+                            </li>
+                        </ul>
                     </section>
                 </section>
             </div>
