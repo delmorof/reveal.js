@@ -60,17 +60,19 @@
 
                 <section>
                     <section>
-                        <h3>Hexagonal Architectures</h3>
+                        <h2>Hexagonal Architectures</h2>
                         <ul class="fa-ul">
                             <li>
-                                <i class="fa fa-lightbulb-o"></i>
+                                <i class="fa fa-li fa-lightbulb-o"></i>
                                 Concept created by <a href="http://alistair.cockburn.us/Hexagonal+architecture">Alistair Cockburn</a>
                             </li>
                         </ul>
                         <blockquote class="fragment" style="font-size: smaller">
                             <p>
                                 Hexagonal Architecture is an architecture defined by establishing a perimeter around the
-                                domain of your application and establishing adapters for input/output interactions. <br>
+                                domain of your application and establishing adapters for input/output interactions.
+                            </p>
+                            <p>
                                 By establishing this isolation layer, the application becomes unaware of the nature of the
                                 things it's interacting with.
                             </p>
@@ -78,20 +80,26 @@
                     </section>
 
                     <section>
+                        <h3>Scheme</h3>
+                        <img src="img/hex.gif" class="stretch">
+                    </section>
+
+                    <section>
                         <h3>Hexagonal Architectures: TL;DR</h3>
 
                         <ul class="fa-ul">
                             <li class="fragment">
-                                <i class="fa fa-gear"></i>
-                                The hexagon is the core of you app
+                                <i class="fa fa-li fa-gear"></i>
+                                The hexagon is the <strong>core</strong> of you app
                             </li>
                             <li class="fragment">
-                                <i class="fa fa-briefcase"></i>
-                                The hexagon contains all the business domain logic
+                                <i class="fa fa-li fa-briefcase"></i>
+                                The hexagon contains all the <strong>business domain logic</strong>
                             </li>
                             <li class="fragment">
-                                <i class="fa fa-plug"></i>
-                                The hexagon communicates ONLY through ports and adapters
+                                <i class="fa fa-li fa-plug"></i>
+                                The hexagon communicates <br>
+                                ONLY through <strong>ports</strong> and <strong>adapters</strong>
                             </li>
                         </ul>
                     </section>
@@ -99,36 +107,204 @@
 
                 <section>
                     <section>
-                        <h3>Problems</h3>
+                        <h3>So...</h3>
 
                         <ul class="fa-ul">
                             <li class="fragment">
-                                <i class="fa fa-question-circle"></i>
+                                <i class="fa fa-li fa-question-circle"></i>
                                 Why so popular right now?
-                                <ul class="fragment fa-ul">
-                                    <li>
-                                        <i class="fa fa-codepen"></i>
+                                <ul class="fa-ul" style="list-style: none">
+                                    <li class="fragment">
+                                        <i class="fa fa-li fa-cube"></i>
                                         Microservices!
                                     </li>
                                 </ul>
                             </li>
                             <li class="fragment">
-                                <i class="fa fa-question-circle"></i>
+                                <i class="fa fa-li fa-question-circle"></i>
                                 Why don't we see it so much?
-                                <ul class="fragment fa-ul">
-                                    <li>
-                                        <i class="fa fa-exclamation-triangle"></i>
+                                <ul class="fa-ul" style="list-style: none">
+                                    <li class="fragment">
+                                        <i class="fa fa-li fa-exclamation-triangle"></i>
                                         Complicated
                                     </li>
                                     <li class="fragment">
-                                        <i class="fa fa-exclamation-triangle"></i>
-                                        Hard to start with:
-                                        <a href="http://martinfowler.com/bliki/MonolithFirst.html">MonolithFirst</a>
-                                        by Martin Fowler
+                                        <i class="fa fa-li fa-exclamation-triangle"></i>
+                                        Hard to start with<br>
+                                        <span style="font-size: smaller">
+                                            <a href="http://martinfowler.com/bliki/MonolithFirst.html">MonolithFirst</a>
+                                            by Martin Fowler
+                                        </span>
                                     </li>
                                 </ul>
                             </li>
                         </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>A little history...</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa fa-li fa-question-circle"></i>
+                                Listened to a XPUG presentation about it
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-li fa-briefcase"></i>
+                                At the same time, I was nearly ready<br>
+                                to start a new project...
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Blaine</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa fa-li fa-check-square-o"></i>
+                                Shiny new technologies
+                                <ul class="fa-ul" style="list-style: none">
+                                    <li class="fragment">
+                                        <i class="fa fa-li fa-gear"></i>
+                                        PHP 7 (yay!)
+                                    </li>
+                                    <li class="fragment">
+                                        <i class="fa fa-li fa-gear"></i>
+                                        Symfony 3
+                                    </li>
+                                    <li class="fragment">
+                                        <i class="fa fa-li fa-gear"></i>
+                                        Docker & Docker-composer
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="fragment">
+                                <i class="fa fa-li fa-comments"></i>
+                                Looked like a microservice...
+                                <ul class="fa-ul" style="list-style: none">
+                                    <li class="fragment">
+                                        <i class="fa fa-li fa-gear"></i>
+                                        Isolated
+                                    </li>
+                                    <li class="fragment">
+                                        <i class="fa fa-li fa-gear"></i>
+                                        In charge of a single domain (invoices)
+                                    </li>
+                                    <li class="fragment">
+                                        <i class="fa fa-li fa-gear"></i>
+                                        Adapter from BU to accounting software
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Complications</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa fa-li fa-thumbs-o-down"></i>
+                                A microservice is surrounded by other microservices
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-li fa-thumbs-o-down"></i>
+                                MVP was substitution of previous system<br>
+                                <span style="font-size: smaller">(Caronte)</span>
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-li fa-thumbs-o-down"></i>
+                                Couldn't force all the clients to change immediately<br>
+                                <span style="font-size: smaller">(Shark, Cougar)</span>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Change of plans</h2>
+                        <p>
+                            What if we use hexagons as a <strong style="text-transform: uppercase">design pattern</strong> <br>
+                            instead of an architectural one?
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2>Bundles as hexagons</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa fa-li fa-briefcase"></i>
+                                InvoiceBundle<br>
+                                <span style="font-size: smaller">core domain</span>
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-li fa-plug"></i>
+                                ApiBundle<br>
+                                <span style="font-size: smaller">REST endpoints</span>
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-li fa-globe"></i>
+                                WebPanelBundle<br>
+                                <span style="font-size: smaller">a simple web interface</span>
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-li fa-file-pdf-o"></i>
+                                PDFBundle<br>
+                                <span style="font-size: smaller">invoice as files</span>
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-li fa-bomb"></i>
+                                ESABundle<br>
+                                <span style="font-size: smaller">adapter to accounting software</span>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Technologies as adapters</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa fa-li fa-database"></i>
+                                Doctrine
+                                <ul class="fa-ul" style="list-style: none; font-size: smaller">
+                                    <li class="fragment">
+                                        <i class="fa fa-li fa-archive"></i>
+                                        Entities as persistence and domain model
+                                    </li>
+                                    <li class="fragment">
+                                        <i class="fa fa-li fa-object-group"></i>
+                                        Additional models and interfaces<br>
+                                        to avoid exposure of core
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-li fa-legal"></i>
+                                Symfony validator
+                                <ul class="fa-ul" style="list-style: none; font-size: smaller">
+                                    <li class="fragment">
+                                        <i class="fa fa-li fa-lock"></i>
+                                        On entities to enforce <br>
+                                        business logic and reject errors
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-li fa-cogs"></i>
+                                Symfony services
+                                <ul class="fa-ul" style="list-style: none; font-size: smaller">
+                                    <li class="fragment">
+                                        <i class="fa fa-li fa-plug"></i>
+                                        Adapters/ports from/to the hexagon<br>
+                                        or between bundles
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
                     </section>
                 </section>
             </div>
@@ -137,9 +313,6 @@
 
         <script src="lib/js/head.min.js"></script>
         <script src="js/reveal.js"></script>
-        <script src="lib/js/amchart/amcharts.js"></script>
-        <script src="lib/js/amchart/serial.js"></script>
-        <script src="js/chart-performance-light.js"></script>
 
         <script>
 
