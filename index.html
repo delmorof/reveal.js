@@ -4,9 +4,9 @@
     <head>
         <meta charset="utf-8">
 
-        <title>{{ TITOLO }}</title>
+        <title>A (small) Hexagonal architecture inside a Symfony application</title>
 
-        <meta name="description" content="{{ Descrizione }}">
+        <meta name="description" content="Lightning talk">
         <meta name="author" content="Alessandro Lai">
 
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -49,16 +49,88 @@
 
             <div class="slides">
                 <section id="title">
-                    <h1>Paraunit</h1>
-                    <h3>Test paralleli, Doctrine e le fixture</h3>
+                    <h2>A (small) Hexagonal architecture<br>inside a Symfony application</h2>
                     <p>
                         <small>By <a href="https://github.com/Jean85">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a></small>
                     </p>
                     <p>
-                        <small><a href="#">{{ Event }}</a> - {{ date }}, {{ location }}</small>
+                        <small><a href="#">IT Meeting</a> - 18/03, Facile.it</small>
                     </p>
                 </section>
 
+                <section>
+                    <section>
+                        <h3>Hexagonal Architectures</h3>
+                        <ul class="fa-ul">
+                            <li>
+                                <i class="fa fa-lightbulb-o"></i>
+                                Concept created by <a href="http://alistair.cockburn.us/Hexagonal+architecture">Alistair Cockburn</a>
+                            </li>
+                        </ul>
+                        <blockquote class="fragment" style="font-size: smaller">
+                            <p>
+                                Hexagonal Architecture is an architecture defined by establishing a perimeter around the
+                                domain of your application and establishing adapters for input/output interactions. <br>
+                                By establishing this isolation layer, the application becomes unaware of the nature of the
+                                things it's interacting with.
+                            </p>
+                        </blockquote>
+                    </section>
+
+                    <section>
+                        <h3>Hexagonal Architectures: TL;DR</h3>
+
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa fa-gear"></i>
+                                The hexagon is the core of you app
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-briefcase"></i>
+                                The hexagon contains all the business domain logic
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-plug"></i>
+                                The hexagon communicates ONLY through ports and adapters
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h3>Problems</h3>
+
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <i class="fa fa-question-circle"></i>
+                                Why so popular right now?
+                                <ul class="fragment fa-ul">
+                                    <li>
+                                        <i class="fa fa-codepen"></i>
+                                        Microservices!
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-question-circle"></i>
+                                Why don't we see it so much?
+                                <ul class="fragment fa-ul">
+                                    <li>
+                                        <i class="fa fa-exclamation-triangle"></i>
+                                        Complicated
+                                    </li>
+                                    <li class="fragment">
+                                        <i class="fa fa-exclamation-triangle"></i>
+                                        Hard to start with:
+                                        <a href="http://martinfowler.com/bliki/MonolithFirst.html">MonolithFirst</a>
+                                        by Martin Fowler
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
             </div>
 
         </div>
