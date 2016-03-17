@@ -51,10 +51,10 @@
                 <section id="title">
                     <h2>A (small) Hexagonal architecture<br>inside a Symfony application</h2>
                     <p>
-                        <small>By <a href="https://github.com/Jean85">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a></small>
+                        <span style="font-size: smaller">By <a href="https://github.com/Jean85">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a></span>
                     </p>
                     <p>
-                        <small><a href="#">IT Meeting</a> - 18/03, Facile.it</small>
+                        <span style="font-size: smaller"><a href="#">IT Meeting</a> - 18/03, Facile.it</span>
                     </p>
                 </section>
 
@@ -245,14 +245,14 @@
                                 <span style="font-size: smaller">REST endpoints</span>
                             </li>
                             <li class="fragment">
-                                <i class="fa fa-li fa-globe"></i>
-                                WebPanelBundle<br>
-                                <span style="font-size: smaller">a simple web interface</span>
-                            </li>
-                            <li class="fragment">
                                 <i class="fa fa-li fa-file-pdf-o"></i>
                                 PDFBundle<br>
                                 <span style="font-size: smaller">invoice as files</span>
+                            </li>
+                            <li class="fragment">
+                                <i class="fa fa-li fa-globe"></i>
+                                WebPanelBundle<br>
+                                <span style="font-size: smaller">a simple web interface</span>
                             </li>
                             <li class="fragment">
                                 <i class="fa fa-li fa-bomb"></i>
@@ -261,52 +261,172 @@
                             </li>
                         </ul>
                     </section>
-
-                    <section>
-                        <h2>Technologies as adapters</h2>
-                        <ul class="fa-ul">
-                            <li class="fragment">
-                                <i class="fa fa-li fa-database"></i>
-                                Doctrine
-                                <ul class="fa-ul" style="list-style: none; font-size: smaller">
-                                    <li class="fragment">
-                                        <i class="fa fa-li fa-archive"></i>
-                                        Entities as persistence and domain model
-                                    </li>
-                                    <li class="fragment">
-                                        <i class="fa fa-li fa-object-group"></i>
-                                        Additional models and interfaces<br>
-                                        to avoid exposure of core
-                                    </li>
-
-                                </ul>
-                            </li>
-                            <li class="fragment">
-                                <i class="fa fa-li fa-legal"></i>
-                                Symfony validator
-                                <ul class="fa-ul" style="list-style: none; font-size: smaller">
-                                    <li class="fragment">
-                                        <i class="fa fa-li fa-lock"></i>
-                                        On entities to enforce <br>
-                                        business logic and reject errors
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="fragment">
-                                <i class="fa fa-li fa-cogs"></i>
-                                Symfony services
-                                <ul class="fa-ul" style="list-style: none; font-size: smaller">
-                                    <li class="fragment">
-                                        <i class="fa fa-li fa-plug"></i>
-                                        Adapters/ports from/to the hexagon<br>
-                                        or between bundles
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                    </section>
                 </section>
+
+                <section>
+                    <h2><i class="fa fa-briefcase"></i> InvoiceBundle</h2>
+                    <p>I used the technologies as adapters:</p>
+                    <ul class="fa-ul">
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-database"></i>
+                            Doctrine
+                            <ul class="fa-ul" style="list-style: none; font-size: smaller">
+                                <li>
+                                    <i class="fa fa-li fa-archive"></i>
+                                    Entities as persistence and domain model
+                                </li>
+                                <li>
+                                    <i class="fa fa-li fa-object-group"></i>
+                                    Additional models and interfaces to avoid exposure of core
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-legal"></i>
+                            Symfony validator
+                            <ul class="fa-ul" style="list-style: none; font-size: smaller">
+                                <li>
+                                    <i class="fa fa-li fa-lock"></i>
+                                    On entities to enforce business logic and reject errors
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="fragment">
+                            <i class="fa fa-li fa-cogs"></i>
+                            Symfony services
+                            <ul class="fa-ul" style="list-style: none; font-size: smaller">
+                                <li>
+                                    <i class="fa fa-li fa-plug"></i>
+                                    Adapters/ports from/to the hexagon or between bundles
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h2><i class="fa fa-plug"></i> ApiBundle</h2>
+                    <ul class="fa-ul">
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-sign-in"></i>
+                            POST: creation of new invoices
+                            <ul class="fa-ul" style="list-style: none; font-size: smaller">
+                                <li>
+                                    <i class="fa fa-li fa-file-text"></i>
+                                    Should emulate same behaviour of previous API (Caronte)
+                                </li>
+                                <li>
+                                    <i class="fa fa-li fa-clone"></i>
+                                    POSTing is tested to ensure similarity
+                                </li>
+                                <li>
+                                    <i class="fa fa-li fa-frown-o"></i>
+                                    Some changes where required anyway...
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="fragment">
+                            <i class="fa fa-li fa-file-pdf-o"></i>
+                            GET: fetch the invoice in PDF format
+                            <ul class="fa-ul" style="list-style: none; font-size: smaller">
+                                <li class="fragment">
+                                    <i class="fa fa-li fa-cog"></i>
+                                    PDFBuilder <span style="font-size: smaller">(adapter to hexagon)</span><br>
+                                    <i class="fa fa-arrow-down fragment"></i>
+                                </li>
+                                <li class="fragment">
+                                    <i class="fa fa-li fa-cog"></i>
+                                    InvoiceLocator <i class="fa fa-arrow-right"></i> Repositories
+                                    <span style="font-size: smaller">(adapter from Blaine to Caronte DB)</span><br>
+                                    <i class="fa fa-arrow-down fragment"></i>
+                                </li>
+                                <li class="fragment">
+                                    <i class="fa fa-li fa-cog"></i>
+                                    PrintableMappers <span style="font-size: smaller">(adapter to PDFBundle)</span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h2><i class="fa fa-file-pdf-o"></i> PDFBundle</h2>
+                    <ul class="fa-ul">
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-sign-in"></i>
+                            PrintableModels
+                            <ul class="fa-ul" style="list-style: none; font-size: smaller">
+                                <li>
+                                    <i class="fa fa-li fa-cog"></i>
+                                    Level of abstraction
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-map-signs"></i>
+                            PrintableMappers
+                            <ul class="fa-ul" style="list-style: none; font-size: smaller">
+                                <li>
+                                    <i class="fa fa-li fa-cog"></i>
+                                    Adapter from other bundles
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-file-text"></i>
+                            Internal rendering of PDF (Twig + PsPDF)
+                        </li>
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-file-pdf-o"></i>
+                            Result is sent back as file content (string)
+                        </li>
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h2><i class="fa fa-globe"></i> WebPanelBundle</h2>
+                    <ul class="fa-ul">
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-paper-plane-o"></i>
+                            Bootstrap
+                        </li>
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-desktop"></i>
+                            Simple web interface
+                        </li>
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-plug"></i>
+                            Just an interface for the services of the bundles
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2><i class="fa fa-bomb"></i> ESABundle</h2>
+                    <ul class="fa-ul">
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-spinner fa-spin"></i>
+                            Work in progress...
+                        </li>
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-desktop"></i>
+                            Internal models (isolation)
+                        </li>
+                        <li class="fragment" style="padding-bottom: 0.7em">
+                            <i class="fa fa-li fa-random"></i>
+                            Easy to replace
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h1>The End</h1>
+                </section>
+
             </div>
 
         </div>
