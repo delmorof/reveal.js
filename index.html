@@ -4,9 +4,9 @@
     <head>
         <meta charset="utf-8">
 
-        <title>{{ TITOLO }}</title>
+        <title>Bug hunting with Git bisect</title>
 
-        <meta name="description" content="{{ Descrizione }}">
+        <meta name="description" content="Bug hunting with Git bisect">
         <meta name="author" content="Alessandro Lai">
 
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -49,16 +49,63 @@
 
             <div class="slides">
                 <section id="title">
-                    <h1>Paraunit</h1>
-                    <h3>Test paralleli, Doctrine e le fixture</h3>
+                    <h1>Bug hunting<br>with Git bisect</h1>
                     <p>
                         <small>By <a href="https://github.com/Jean85">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a></small>
                     </p>
                     <p>
-                        <small><a href="#">{{ Event }}</a> - {{ date }}, {{ location }}</small>
+                        <small><a href="#">Nomad PHP Lightining talk</a> - 18 august 2016</small>
                     </p>
                 </section>
 
+                <section>
+                    <section>
+                        <h2>Who am I</h2>
+                        <img class="stretch" src="img/github_avatar.jpg" style="border-radius: 0.5em; border: none; margin-right: 1em; text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);">
+                        <ul class="fa-ul">
+                            <li><i class="fa-li fa fa-user"></i>Alessandro Lai</li>
+                            <li class="fragment"><i class="fa-li fa fa-laptop"></i>PHP developer @ Facile.it</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Paraunit</h2>
+                        <h4><code style="text-transform: lowercase">facile-it/paraunit</code></h4>
+                        <ul class="fa-ul">
+                            <li><i class="fa-li fa fa-github"></i><a href="https://github.com/facile-it/paraunit">https://github.com/facile-it/paraunit</a> </li>
+                            <li><i class="fa-li fa fa-cogs"></i>Tool for running multiple PHPUnit test in parallel</li>
+                            <li class="fragment"><i class="fa-li fa fa-fast-forward"></i>Faster test builds!</li>
+                            <li class="fragment"><i class="fa-li fa fa-wrench"></i>Built upon Symfony components</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Here comes the bug</h2>
+                        <ul class="fa-ul">
+                            <li><i class="fa-li fa fa-warning"></i>2.8.3 -> ??? -> 2.8.4</li>
+                            <li><i class="fa-li fa fa-warning"></i>3.0.3 -> ??? -> 3.0.4</li>
+                            <li class="fragment"><i class="fa-li fa fa-question-circle"></i>Symfony 2.8 is the bridge version between 2.7 and 3.0</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Git bisect to the rescue</h2>
+                        <ul class="fa-ul">
+                            <li><i class="fa-li fa fa-cogs"></i><code>git bisect</code></li>
+                            <li><i class="fa-li fa fa-warning"></i>It uses a binary search algorithm on the commit history</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Git bisect to the rescue</h2>
+                        <ul class="fa-ul">
+                            <li><i class="fa-li fa fa-cogs"></i><code>git bisect</code></li>
+                            <li><i class="fa-li fa fa-warning"></i>It uses a binary search algorithm on the commit history</li>
+                        </ul>
+                    </section>
+                </section>
             </div>
 
         </div>
