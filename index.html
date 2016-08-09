@@ -90,28 +90,28 @@
                         <p>It searches for a value inside an ordered list/array</p>
                         <p class="fragment">
                             Easy example:<br> 
-                            we are searching for <strong>number 3</strong><br>
+                            we are searching for <strong>number 4</strong><br>
                             inside the <strong>[1...9]</strong> interval
                         </p>
                     </section>
                         
                     <section>
                         <table width="100%">
-                            <tr class="fragment">
+                            <tr class="fragment" data-fragment-index="1">
                                 <td>
-                                    <i class="fa fa-fast-backward"></i>
+                                    <i class="fa fa-fast-backward fragment" data-fragment-index="2"></i>
                                 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    <i class="fa fa-arrow-right fragment"></i><br>
-                                    <i class="fa fa-hand-o-down"></i>
+                                    <i class="fa fa-arrow-left fragment" data-fragment-index="5"></i><br>
+                                    <i class="fa fa-hand-o-down fragment" data-fragment-index="4"></i>
                                 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><i class="fa fa-fast-forward"></i></td>
+                                <td><i class="fa fa-fast-forward fragment" data-fragment-index="3"></i></td>
                             </tr>
                             <tr>
                                 <td>1</td>
@@ -135,11 +135,14 @@
                                 </td>
                                 <td></td>
                                 <td>
-                                    <i class="fa fa-arrow-right fragment"></i><br>
-                                    <i class="fa fa-hand-o-down"></i>
+                                    <i class="fa fa-arrow-right fragment"  data-fragment-index="4"></i><br>
+                                    <i class="fa fa-hand-o-down fragment"  data-fragment-index="3"></i>
                                 </td>
                                 <td></td>
-                                <td><i class="fa fa-fast-forward"></i></td>
+                                <td>
+                                    <i class="fa fa-fast-forward fragment" data-fragment-index="1"></i><br>
+                                    <i class="fa fa-hand-o-down fragment fade-out" data-fragment-index="2"></i>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -165,11 +168,12 @@
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    <i class="fa fa-fast-backward"></i>
+                                    <i class="fa fa-fast-backward fragment" data-fragment-index="1"></i><br>
+                                    <i class="fa fa-hand-o-down fragment fade-out" data-fragment-index="2"></i>
                                 </td>
                                 <td>
-                                    <i class="fa fa-check-square-o fragment"></i><br>
-                                    <i class="fa fa-hand-o-down"></i>
+                                    <i class="fa fa-check-square-o fragment" data-fragment-index="4"></i><br>
+                                    <i class="fa fa-hand-o-down fragment" data-fragment-index="3"></i>
                                 </td>
                                 <td><i class="fa fa-fast-forward"></i></td>
                                 <td></td>
@@ -234,8 +238,8 @@
                         <ul class="fa-ul">
                             <li><i class="fa-li fa fa-github"></i><a href="https://github.com/facile-it/paraunit">https://github.com/facile-it/paraunit</a> </li>
                             <li><i class="fa-li fa fa-cogs"></i>Tool for running multiple PHPUnit test in parallel</li>
-                            <li class="fragment"><i class="fa-li fa fa-fast-forward"></i>Faster test builds!</li>
-                            <li class="fragment"><i class="fa-li fa fa-wrench"></i>Built upon Symfony components</li>
+                            <li class="fragment"><i class="fa-li fa fa-bolt"></i>Faster test builds!</li>
+                            <li class="fragment"><i class="fa-li fa fa-wrench"></i>Built with Symfony components</li>
                         </ul>
                     </section>
  
@@ -262,10 +266,15 @@
                     
                     <section>
                         <h2>Here comes the bug!</h2>
+                        
+                        <p>
+                            A few months ago,<br>
+                            I was upgrading to the latest available patch...
+                        </p>
 
                         <p>
-                            2.8.3 <i class="fa fa-long-arrow-right" style="font-size: smaller"></i> <i class="fa fa-bug" style="font-size: larger"></i> <i class="fa fa-long-arrow-right" style="font-size: smaller"></i> 2.8.4<br>
-                            3.0.3 <i class="fa fa-long-arrow-right" style="font-size: smaller"></i> <i class="fa fa-bug" style="font-size: larger"></i> <i class="fa fa-long-arrow-right" style="font-size: smaller"></i> 3.0.4
+                            2.8.3 <i class="fa fa-long-arrow-right" style="font-size: smaller"></i> 2.8.4 <i class="fa fa-long-arrow-right" style="font-size: smaller"></i> <i class="fa fa-bug" style="font-size: larger"></i> <br>
+                            3.0.3 <i class="fa fa-long-arrow-right" style="font-size: smaller"></i> 3.0.4 <i class="fa fa-long-arrow-right" style="font-size: smaller"></i> <i class="fa fa-bug" style="font-size: larger"></i>
                         </p>
 
                         <ul class="fa-ul fragment">
@@ -280,7 +289,7 @@
                             <pre><code>
 $ rm -rf vendor/symfony/symfony
                             </code></pre>
-                            <pre><code>
+                            <pre class="fragment"><code>
 $ composer install --prefer-source
 
 Loading composer repositories with package information
@@ -290,7 +299,7 @@ Installing dependencies (including require-dev) from lock file
 
 [...]
                             </code></pre>
-                            <pre><code>
+                            <pre class="fragment"><code>
 $ cd vendor/symfony/symfony
 $ git status
 HEAD detached at v2.8.9
