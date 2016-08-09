@@ -58,18 +58,178 @@
                     </p>
                 </section>
 
-                <section>
+                <section id="whoami">
+                    <h2>Who am I</h2>
+                    <img class="stretch" src="img/github_avatar.jpg" style="vertical-align: middle; border-radius: 0.5em; border: none; margin-right: 1em; text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);">
+                    <ul class="fa-ul">
+                        <li><i class="fa-li fa fa-user"></i>Alessandro Lai</li>
+                        <li><i class="fa-li fa fa-laptop"></i>PHP developer @ Facile.it</li>
+                        <li>
+                            <i class="fa-li fa fa-twitter"></i>
+                            <a href="https://twitter.com/AlessandroLai">@AlessandroLai</a>
+                        </li>
+                        <li>
+                            <i class="fa-li fa fa-github"></i>
+                            <a href="https://github.com/Jean85">@Jean85</a>
+                        </li>
+                    </ul>
+                </section>
+                
+                <section id="binary-search">
                     <section>
-                        <h2>Who am I</h2>
-                        <img class="stretch" src="img/github_avatar.jpg" style="border-radius: 0.5em; border: none; margin-right: 1em; text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);">
-                        <ul class="fa-ul">
-                            <li><i class="fa-li fa fa-user"></i>Alessandro Lai</li>
-                            <li class="fragment"><i class="fa-li fa fa-laptop"></i>PHP developer @ Facile.it</li>
-                        </ul>
+                        <h2>The Git bisect command</h2>
+                        <p>From the <a href="https://git-scm.com/docs/git-bisect">Git documentation</a>:</p>
+                        <blockquote>
+                            This command uses a binary search algorithm to find which commit in your project’s history introduced a bug.
+                        </blockquote>
+                        <p class="fragment">But what is a <strong>binary search algorithm</strong>?</p>
                     </section>
-
+                    
                     <section>
-                        <h2>Paraunit</h2>
+                        <h2>Binary search algorithm</h2>
+                        <p>It searches for a value inside an ordered list/array</p>
+                        <p class="fragment">
+                            Easy example:<br> 
+                            we are searching for <strong>number 3</strong><br>
+                            inside the <strong>[1...9]</strong> interval
+                        </p>
+                    </section>
+                        
+                    <section>
+                        <table width="100%">
+                            <tr class="fragment">
+                                <td>
+                                    <i class="fa fa-fast-backward"></i>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <i class="fa fa-arrow-right fragment"></i><br>
+                                    <i class="fa fa-hand-o-down"></i>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><i class="fa fa-fast-forward"></i></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>6</td>
+                                <td>7</td>
+                                <td>8</td>
+                                <td>9</td>
+                            </tr>
+                        </table>
+                    </section>
+                        
+                    <section>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <i class="fa fa-fast-backward"></i>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <i class="fa fa-arrow-right fragment"></i><br>
+                                    <i class="fa fa-hand-o-down"></i>
+                                </td>
+                                <td></td>
+                                <td><i class="fa fa-fast-forward"></i></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>6</td>
+                                <td>7</td>
+                                <td>8</td>
+                                <td>9</td>
+                            </tr>
+                        </table>
+                    </section>
+                        
+                    <section>
+                        <table width="100%">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <i class="fa fa-fast-backward"></i>
+                                </td>
+                                <td>
+                                    <i class="fa fa-check-square-o fragment"></i><br>
+                                    <i class="fa fa-hand-o-down"></i>
+                                </td>
+                                <td><i class="fa fa-fast-forward"></i></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>6</td>
+                                <td>7</td>
+                                <td>8</td>
+                                <td>9</td>
+                            </tr>
+                        </table>
+                    </section>
+                </section>
+                
+                <section id="git-bisect">
+                    <h3>How binary search is used</h3>
+                    <p>With <code>git bisect</code>:</p>
+                    <ul class="fa-ul">
+                        <li class="fragment">
+                            <i class="fa-li fa fa-code-fork"></i>
+                            The list is the <strong>commit history</strong> of one branch
+                        </li>
+                        <li class="fragment">
+                            <i class="fa-li fa fa-sort-amount-asc"></i>
+                            The order is <strong>time</strong>
+                        </li>
+                        <li class="fragment">
+                            <i class="fa-li fa fa-question-circle"></i>
+                            Who decide if we are before or after?
+                            <span class="fragment"><strong>YOU!</strong></span>
+                        </li>
+                        <li class="fragment">
+                            <i class="fa-li fa fa-question-circle"></i>
+                            HOW???
+                            <ul class="fragment">
+                                <li>
+                                    With a manual inspection
+                                </li>
+                                <li>
+                                    Refreshing a page
+                                </li>
+                                <li>
+                                    Using an automatic test!
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                                
+                <section id="use-case">
+                    <section>
+                        <h2>My use case: Paraunit</h2>
                         <h4><code style="text-transform: lowercase">facile-it/paraunit</code></h4>
                         <ul class="fa-ul">
                             <li><i class="fa-li fa fa-github"></i><a href="https://github.com/facile-it/paraunit">https://github.com/facile-it/paraunit</a> </li>
@@ -78,32 +238,64 @@
                             <li class="fragment"><i class="fa-li fa fa-wrench"></i>Built upon Symfony components</li>
                         </ul>
                     </section>
-                </section>
-
-                <section>
+ 
                     <section>
-                        <h2>Here comes the bug</h2>
-                        <ul class="fa-ul">
-                            <li><i class="fa-li fa fa-warning"></i>2.8.3 -> ??? -> 2.8.4</li>
-                            <li><i class="fa-li fa fa-warning"></i>3.0.3 -> ??? -> 3.0.4</li>
-                            <li class="fragment"><i class="fa-li fa fa-question-circle"></i>Symfony 2.8 is the bridge version between 2.7 and 3.0</li>
+                        <h2>The landscape</h2>
+                        <p>I use Paraunit in 2 different projects:</p>
+                        <ol>
+                            <li>
+                                One (big) project,<br>
+                                based onto <strong>Symfony 2.8</strong>
+                            </li>
+                            <li>
+                                One (smaller, newer) project, <br>
+                                based onto <strong>Symfony 3.0</strong>
+                            </li>
+                        </ol>
+                        
+                        <p class="fragment" style="font-size: smaller">
+                            Note: the 2.8 version in the bridge between 2.7 and 3.0,<br>
+                            so they receive the same patches
+                        </p>
+                        
+                    </section>
+                    
+                    <section>
+                        <h2>Here comes the bug!</h2>
+
+                        <p>
+                            2.8.3 <i class="fa fa-long-arrow-right" style="font-size: smaller"></i> <i class="fa fa-bug" style="font-size: larger"></i> <i class="fa fa-long-arrow-right" style="font-size: smaller"></i> 2.8.4<br>
+                            3.0.3 <i class="fa fa-long-arrow-right" style="font-size: smaller"></i> <i class="fa fa-bug" style="font-size: larger"></i> <i class="fa fa-long-arrow-right" style="font-size: smaller"></i> 3.0.4
+                        </p>
+
+                        <ul class="fa-ul fragment">
+                            <li class="fragment"><i class="fa-li fa fa-warning"></i>Functional tests failing randomly</li>
+                            <li class="fragment"><i class="fa-li fa fa-question-circle"></i>I wasn't able to reproduce the issue outside my projects</li>
+                            <li class="fragment"><i class="fa-li fa fa-lightbulb-o"></i>I had to debug it from my vendor folder</li>
                         </ul>
                     </section>
-
+                    
                     <section>
-                        <h2>Git bisect to the rescue</h2>
-                        <ul class="fa-ul">
-                            <li><i class="fa-li fa fa-cogs"></i><code>git bisect</code></li>
-                            <li><i class="fa-li fa fa-warning"></i>It uses a binary search algorithm on the commit history</li>
-                        </ul>
-                    </section>
+                        <h2>Setup</h2>
+                            <pre><code>
+$ rm -rf vendor/symfony/symfony
+                            </code></pre>
+                            <pre><code>
+$ composer install --prefer-source
 
-                    <section>
-                        <h2>Git bisect to the rescue</h2>
-                        <ul class="fa-ul">
-                            <li><i class="fa-li fa fa-cogs"></i><code>git bisect</code></li>
-                            <li><i class="fa-li fa fa-warning"></i>It uses a binary search algorithm on the commit history</li>
-                        </ul>
+Loading composer repositories with package information
+Installing dependencies (including require-dev) from lock file
+  - Installing symfony/symfony (v2.8.9)
+    Cloning df02dd5d3f7decb3a05c6d0f31054b4263625dcb
+
+[...]
+                            </code></pre>
+                            <pre><code>
+$ cd vendor/symfony/symfony
+$ git status
+HEAD detached at v2.8.9
+nothing to commit, working directory clean
+                            </code></pre>
                     </section>
                 </section>
             </div>
