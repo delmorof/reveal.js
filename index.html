@@ -96,8 +96,9 @@
                     </section>
                         
                     <section>
+                        <h3>Step 1</h3>
                         <table width="100%">
-                            <tr class="fragment" data-fragment-index="1">
+                            <tr>
                                 <td>
                                     <i class="fa fa-fast-backward fragment" data-fragment-index="2"></i>
                                 </td>
@@ -128,6 +129,7 @@
                     </section>
                         
                     <section>
+                        <h3>Step 2</h3>
                         <table width="100%">
                             <tr>
                                 <td>
@@ -163,6 +165,7 @@
                     </section>
                         
                     <section>
+                        <h3>Step 3</h3>
                         <table width="100%">
                             <tr>
                                 <td></td>
@@ -210,7 +213,7 @@
                         </li>
                         <li class="fragment">
                             <i class="fa-li fa fa-question-circle"></i>
-                            Who decide if we are before or after?
+                            Who decide if we are before or after?<br>
                             <span class="fragment"><strong>YOU!</strong></span>
                         </li>
                         <li class="fragment">
@@ -305,6 +308,86 @@ $ git status
 HEAD detached at v2.8.9
 nothing to commit, working directory clean
                             </code></pre>
+                    </section>
+                </section>
+                
+                <section id="bisecting">
+                    <section>
+                        <h2>Let's start!</h2>
+                        <pre><code>
+$ git bisect start
+                        </code></pre>
+                        <pre class="fragment"><code>
+$ git checkout v2.8.3
+Previous HEAD position was df02dd5... Merge pull request #19487 from fabpot/release-2.8.9
+HEAD is now at 7a9a5fc... Merge pull request #17952 from fabpot/release-2.8.3
+                            
+$ git bisect good
+                        </code></pre>                    
+                        <pre class="fragment"><code>
+$ git checkout v2.8.4
+Previous HEAD position was 7a9a5fc... Merge pull request #17952 from fabpot/release-2.8.3
+HEAD is now at 9e14f9f... Merge branch '2.7' into 2.8
+                            
+$ git bisect bad
+Bisecting: 154 revisions left to test after this (roughly 7 steps)
+[ff93c1a0266d766c0643c6fd862b00fe0e4dd54e] bug #18087 [WebProfiler] Sidebar button padding (rvanlaak)
+                        </code></pre>                    
+                    </section>
+                    
+                    <section>
+                        <h2>Moving forward</h2>
+                        <pre><code>
+$ git bisect bad
+Bisecting: 37 revisions left to test after this (roughly 5 steps)
+[4fece2877337b182927331a728a3bed90f9fb394] bug #18175 [Translation] Add support for fuzzy tags in PoFileLoader (nud)
+                        </code></pre>
+                        <h3 class="fragment">Roughly 5 steps later...</h3>
+                        <pre class="fragment"><code>
+$ git bisect bad
+b2293515a491db91e8ee85178558461374161a77 is the first bad commit
+commit b2293515a491db91e8ee85178558461374161a77
+Author: Nicolas Grekas &lt;nicolas.grekas@gmail.com&gt;
+Date:   Wed Mar 16 16:22:42 2016 +0100
+
+    [PhpUnitBridge] Revert 7f62133939b1172e1c9924d211e1d315230b3be8
+
+:040000 040000 4cf2abdee62e5708f91a8025e81a1fad5a91e154 182f7ddb10abb302c077a8a248cf285fd1a43c2e M	src
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Skipping</h2>
+                        <pre><code>
+$ git bisect skip
+Bisecting: 37 revisions left to test after this (roughly 5 steps)
+[2a2aefa4b7c3ee573f0d11b36ce4411787b95180] minor #18119 [Hack Day] Issue for newcomers (2). Replace perfom by perform (JuanLuisGarciaBorrego)
+                        </code></pre>
+
+                        <h2 class="fragment">Manual checkout</h2>
+                        <pre class="fragment"><code>
+$ git checkout baf35cf3c0e09a2de186e135cfcc001956a923f0
+                            
+$ git bisect bad
+Bisecting: 2 revisions left to test after this (roughly 1 step)
+[478c49a8aae66c4701ccd8fcba979cb17c038327] update CONTRIBUTORS for 2.3.38
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>If you skip too much...</h2>
+                        <pre><code>
+$ git bisect skip
+                            
+There are only 'skip'ped commits left to test.
+The first bad commit could be any of:
+478c49a8aae66c4701ccd8fcba979cb17c038327
+84203be72071a16aa8e552b88effc63d64abab62
+78f4e00140b9925eb83df48e19e33642b7a25db9
+c51503db3f4e8f22a075cc9a226cfe7c42a7663e
+baf35cf3c0e09a2de186e135cfcc001956a923f0
+We cannot bisect more!
+                        </code></pre>
                     </section>
                 </section>
             </div>
