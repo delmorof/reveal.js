@@ -43,7 +43,7 @@
 
     <body>
         <div class="reveal">
-            <img id="logo-engineering" src="img/logo_engineering.png" style="height: 12%; position: absolute; bottom: 10px; left: 10px;">
+            <img id="logo-engineering" src="img/logo_engineering_full.png" style="height: 10%; position: absolute; bottom: 16px; left: 10px;">
 
             <!-- Any section element inside of this container is displayed as a slide -->
 
@@ -357,20 +357,43 @@ Date:   Wed Mar 16 16:22:42 2016 +0100
                     </section>
 
                     <section>
-                        <h2>Skipping</h2>
-                        <pre><code>
-$ git bisect skip
-Bisecting: 37 revisions left to test after this (roughly 5 steps)
-[2a2aefa4b7c3ee573f0d11b36ce4411787b95180] minor #18119 [Hack Day] Issue for newcomers (2). Replace perfom by perform (JuanLuisGarciaBorrego)
-                        </code></pre>
+                        <h2>Using alternate terms</h2>
+                        <ul class="fa-ul">
+                            <li>
+                                <i class="fa-li fa fa-book"></i>
+                                If you don't like <code>good</code> and <code>bad</code>,<br>
+                                you can use <code>old</code> and <code>new</code>!
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-exclamation-circle"></i>
+                                You shouldn't mix different pairs of terms;<br>
+                                use <code>git bisect terms</code> to get a reminder 
+                            </li>
+                            <li class="fragment">
+                                <i class="fa-li fa fa-exclamation-circle"></i>
+                                You can also define your own terms!
+                                <pre><code>
+$ git bisect start --term-old fast --term-new slow
+                                </code></pre>
+                            </li>
+                        </ul>
+                    </section>
 
-                        <h2 class="fragment">Manual checkout</h2>
-                        <pre class="fragment"><code>
+                    <section>
+                        <h2>Manual checkout</h2>
+                        <pre><code>
 $ git checkout baf35cf3c0e09a2de186e135cfcc001956a923f0
                             
 $ git bisect bad
 Bisecting: 2 revisions left to test after this (roughly 1 step)
 [478c49a8aae66c4701ccd8fcba979cb17c038327] update CONTRIBUTORS for 2.3.38
+                        </code></pre>
+
+                        <h2 class="fragment">Skipping</h2>
+                        <pre class="fragment"><code>
+$ git bisect skip
+Bisecting: 37 revisions left to test after this (roughly 5 steps)
+[2a2aefa4b7c3ee573f0d11b36ce4411787b95180] minor #18119 [Hack Day] Issue for newcomers (2). Replace perfom by perform (JuanLuisGarciaBorrego)
                         </code></pre>
                     </section>
 
@@ -406,6 +429,13 @@ We cannot bisect more!
                         <li>
                             <i class="fa-li fa fa-rss"></i>
                             <a href="http://engineering.facile.it/">http://engineering.facile.it/</a>
+                        </li>
+                    </ul>
+                    <p>Please rate my talk on Joind.in!</p>
+                    <ul class="fa-ul">
+                        <li>
+                            <i class="fa-li fa fa-thumbs-o-up"></i>
+                            <a href="https://joind.in/talk/292d3">https://joind.in/talk/292d3</a>
                         </li>
                     </ul>
                 </section>
