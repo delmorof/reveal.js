@@ -46,8 +46,40 @@
 					</p>
 				</section>
 
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section id="intro">
+					<section>
+						<h2>Who am I?</h2>
+						<img src="img/github_avatar.jpg" class="stretch" style="border-radius: 0.5em; margin-right: 1em; text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);">
+						<ul class="fa-ul" style="float: right">
+							<li><i class="fa-li fa fa-user"></i>Alessandro Lai</li>
+							<li>
+								<i class="fa-li fa fa-github"></i>
+								<a href="https://github.com/Jean85">@Jean85</a>
+							</li>
+							<li>
+								<i class="fa-li fa fa-twitter"></i>
+								<a href="https://twitter.com/AlessandroLai">@AlessandroLai</a>
+							</li>
+							<li>
+								<span>
+									<i class="fa-li fa fa-pencil-square"></i>
+									PHP developer @
+								</span>
+								<img src="img/logo_engineering_full.png" style="height: 1.6em; box-shadow: none; vertical-align: middle; margin-bottom: 0; margin-top: -0.8em">
+							</li>
+							<li>
+								<i class="fa-li fa fa-pencil-square"></i>
+								PHP UG Milan Coordinator
+							</li>
+							<li>
+								<i class="fa-li fa fa-pencil-square"></i>
+								PHP-FIG Secretary
+							</li>
+						</ul>
+					</section>
+
+                    <section>Slide 2</section>
+                </section>
 			</div>
 		</div>
 
@@ -59,6 +91,7 @@
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+                history: true,
                 keyboard: {
                     38: 'prev', // go to the prev slide/fragment when the UP key is pressed
                     40: 'next', // go to the next slide/fragment when the DOWN key is pressed

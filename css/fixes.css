@@ -15,3 +15,7 @@
 a[title='JavaScript charts'] {
     display: none !important;
 }
+
+.reveal section img {
+    border: 0;
+}
