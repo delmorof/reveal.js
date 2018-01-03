@@ -113,8 +113,12 @@
 
                     <section>
 						<h2>Disclaimer 3/3:</h2>
+						<img src="img/gabriele-lana.jpg" class="stretch" style="float: left; border-radius: 0.5em; margin-right: 1em; box-shadow: none;">
 						<h3>We got help!</h3>
-						<p>TODO -- Lana?</p>
+						<div>
+							We reached out to <a href="https://twitter.com/gabrielelana">@gabrielelana</a>
+							for a speedy bootstrap with MongoDB + Event Sourcing 
+						</div>
 					</section>
                 </section>
 				
@@ -261,15 +265,21 @@
 					<section>
 						<h2>Anatomy of an event</h2>
 						<ul>
+							<li>type</li>
+							<li>family</li>
 							<li>Payload</li>
 							<li>Metadata</li>
 						</ul>
+					</section>
+					<section>
+						<h2>type & family</h2>
 					</section>
 					<section>
 						<h2>The payload</h2>
 					</section>
 					<section>
 						<h2>Metadata</h2>
+						<p>Search purpose, all indexes</p>
 					</section>
 				</section>
 				<section id="event-storing">
@@ -277,10 +287,13 @@
 						<h2>Storing events</h2>
 					</section>
 					<section>
-						<h2>Generating events for the past</h2>
+						<h2>real-time storing</h2>
+						<p>EventDispatcher -> Decoratori -> Job in RabbitMQ -> Mongo</p>
 					</section>
 					<section>
-						<h2>Switching to real-time storing</h2>
+						<h2>Generating events for the past</h2>
+						<p>example: RinnovvoDiary needed +12months from event origin</p>
+						<p>What's the correct created at? You're reading current state</p>
 					</section>
 					<section>
 						<h2>Saving events with a delay/queue</h2>
@@ -307,6 +320,12 @@
 					</section>
 					<section>
 						<h2>Intermediate state and correlation</h2>
+						<p>example: Renewals/product selling not expected</p>
+						<h2>Executors must be idempotent</h2>
+						<p>Se per un bug riprocesso un evento non devo fare errori</p>
+						<h2>projection state has TTL</h2>
+						<p>I dati di correlazione possono scadere (es.: polizza dopo 12 mesi)</p>
+						<p>Ogni executor decide come fare</p>
 					</section>
 					<section>
 						<h2>The fulcrum: pushing state away</h2>
@@ -314,13 +333,20 @@
 				</section>
 				<section id="practical-issues">
 					<section>
-						<h2>What we gained</h2>
+						<h2>Practical issues</h2>
 					</section>
 					<section>
 						<h2>Duration of a projection</h2>
+						<p>stoppable projections</p>
+					</section>
+					<section>
+						<h2>Long running processes</h2>
+						<p>memory leaks (gc_clear failure)</p>
+						<p>memory leaks (mongo driver)</p>
 					</section>
 					<section>
 						<h2>Runner concurrency</h2>
+						<p>NonConcurrentCommandTrait</p>
 					</section>
 					<section>
 						<h2>Updating past events</h2>
@@ -330,6 +356,7 @@
 					</section>
 					<section>
 						<h2>Storing a copy of the projection</h2>
+						<p>Production estractor (snapshot)</p>
 					</section>
 					<section>
 						<h2>Projections and code reuse</h2>
@@ -337,10 +364,17 @@
 				</section>
 				<section id="advantages">
 					<section>
+						<h2>What we gained</h2>
+					</section>
+					<section>
 						<h2>Historical data without schema constraints</h2>
 					</section>
 					<section>
 						<h2>Complex projections with low effort</h2>
+					</section>
+					<section>
+						<h2>Intermediate results used multiple times</h2>
+						<p>Production estractor bis (rete production per collaboratri & account)</p>
 					</section>
 					<section>
 						<h2>Complexity splitted</h2>
