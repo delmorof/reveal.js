@@ -448,18 +448,67 @@
 				<section id="event-storing">
 					<section>
 						<h2>Storing events</h2>
+						<ul class="fa-ul">
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-bullhorn"></i></span>
+								We already used the (Symfony) Event Dispatcher <br>
+								a lot to drive our business logic
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-indent"></i></span>
+								We easily identified the points where we needed to store events
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-tasks"></i></span>
+								Base event + decorators 
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-leaf"></i></span>
+								We didn't have enough confidence with MongoDB...
+							</li>
+						</ul>
+
 					</section>
 					<section>
-						<h2>real-time storing</h2>
-						<p>EventDispatcher -> Decoratori -> Job in RabbitMQ -> Mongo</p>
+						<h2>Real-time (delayed) storing</h2>
+						<ul class="fa-ul">
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-hourglass-half"></i></span>
+								... so we used our (RabbitMQ) queue to delay the event storing
+								and avoid failures in critical processes
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-university"></i></span>
+								In theory, events should be append only, immutable and ordered in time...
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-tasks"></i></span>
+								We made made this as an intentional trade-off
+							</li>
+						</ul>
 					</section>
 					<section>
 						<h2>Generating events for the past</h2>
-						<p>example: RinnovvoDiary needed +12months from event origin</p>
-						<p>What's the correct created at? You're reading current state</p>
-					</section>
-					<section>
-						<h2>Saving events with a delay/queue</h2>
+						<ul class="fa-ul">
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-history"></i></span>
+								It allowed us to easily generate events for the past
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-copy"></i></span>
+								We had to avoid writing duplicates
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-bug"></i></span>
+								Deriving events from the current (lossy) state
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-university"></i></span>
+								In theory, you shouldn't do it...
+							</li>
+						</ul>
+						<!--<p>example: RinnovvoDiary needed +12months from event origin</p>-->
+						<!--<p>What's the correct created at? You're reading current state</p>-->
 					</section>
 				</section>
 				<section id="event-sourcing">
