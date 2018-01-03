@@ -19,3 +19,16 @@ a[title='JavaScript charts'] {
 .reveal section img {
     border: 0;
 }
+
+.reveal section.white h1,
+.reveal section.white h2,
+.reveal section.white h3,
+.reveal section.white h4,
+.reveal section.white p,
+.reveal section.white li,
+.reveal section.white span,
+.reveal section.white div
+{
+    text-shadow: 0 0 5px rgba(0, 0, 0, 1);
+    color: white;
+}

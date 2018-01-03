@@ -100,15 +100,15 @@
 						</ul>
 					</section>
                     
-					<section data-background-image="img/shark-team.jpg">
-						<h2 style="color: white">
+					<section class="white" data-background-image="img/shark-team.jpg">
+						<h2>
 							<br>
 							<br>
 							<br>
 							Disclaimer 2/3:<br>
 						</h2>
-						<h2 style="color: white">It's a group effort!</h2>
-						<h3 style="color: white">The Facile.it Shark team</h3>
+						<h2>It's a group effort!</h2>
+						<h3>The Facile.it Shark team</h3>
 					</section>
 
                     <section>
@@ -117,6 +117,252 @@
 						<p>TODO -- Lana?</p>
 					</section>
                 </section>
+				
+				<section id="theory">
+					<section>
+						<h2>First things first:</h2>
+						<p>What's Event Sourcing?</p>
+					</section>
+					
+					<section class="white" data-background-image="img/money.jpg">
+						<!--https://flic.kr/p/6c6Q6r-->
+					</section>
+					
+					<section>
+						<h2>The prime example:</h2>
+						<h3>money transactions</h3>
+						<ul class="fa-ul">
+							<li class="fragment">
+								<span class="fa-li"><i class="fas fa-book"></i></span>
+								You save only the current state (the balance)
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fas fa-wrench"></i></span>
+								Each operation completely rewrites the information
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fas fa-rocket"></i></span>
+								What about concurrency???
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fas fa-rocket"></i></span>
+								We are addicted to software transactions,<br>
+								but they are inherently fallible
+							</li>
+						</ul>
+					</section>
+					
+					<section>
+						<h2>With events instead</h2>
+						<ul>
+							<li>We store performed actions (withdrawal, deposit)</li>
+							<li>Concurrency is no longer a big issue (going under)</li>
+							<li>Adding events gives me the current state (balance)</li>
+						</ul>
+					</section>
+					
+					<section>
+						<h2>And CQRS?</h2>
+						<p>It's a design pattern, it stands for:</p>
+						<ul>
+							<li>Command</li>
+							<li>Query</li>
+							<li>Responsibility</li>
+							<li>Segregation</li>
+						</ul>
+						<p>
+							It's normally opposed to CRUD,<br>
+							see <a href="https://martinfowler.com/bliki/CQRS.html">Martin Fowler's article</a>
+						</p>
+					</section>
+				</section>
+				
+				<section id="setup">
+					<section>
+						<h2>Story time!</h2>
+					</section>
+					<section data-background-image="img/star-wars-intro.jpg">
+						<!--public domain-->
+					</section>
+					<section data-background-image="img/greenfield.jpg">
+						<!--https://flic.kr/p/rVrVkv-->
+					</section>
+					<section data-background-image="img/legacy-project.jpg">
+						<!--https://flic.kr/p/VAU3d-->
+					</section>
+					<section>
+						<h2>In the real world...</h2>
+						<ul>
+							<li>Projects start small and simple</li>
+							<li>Especially with PHP, a fast CRUD approach is used 99% of the time</li>
+							<li>Inherent business complexity comes only with time, while adding new features</li>
+						</ul>
+					</section>
+				</section>
+				
+				<section id="our-use-case">
+					<section>
+						<h2>Background</h2>
+						<ul>
+							<li>Facile.it main business is comparison, especially car insurances</li>
+							<li>We basically act as an adapter between insurance companies and end user</li>
+							<li>Complexity is intermediate</li>
+							<li>Not so much to do after the product is sold</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Our use case</h2>
+						<ul>
+							<li>The Shark team works on the Facile Partner Network (FPN) project</li>
+							<li>It's a B2B platform for car insurance brokering</li>
+							<li>We offer the platform to insurance agents on the field</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Complexity is increased</h2>
+						<ul>
+							<li>We handle the product after it's sold</li>
+							<li>We handle customer relationships</li>
+							<li>We have to be an adapter for a lot more processes</li>
+							<li>Last but not least, we have a team of 40+ accounts</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Our issues</h2>
+						<ul>
+							<li>Reports are needed more and more every day</li>
+							<li>Business rules evolve really fast!</li>
+							<li>We still have to provide historical data</li>
+							<li>
+								By coincidence, we also had a small piece of functionality
+								that was having growing pains inside our RDBMS (MySQL + Doctrine)
+							</li>
+						</ul>
+					</section>
+				</section>
+				
+				<section id="solution">
+					<section>
+						<h2>Our solutions</h2>
+						<ul>
+							<li>
+								Lana to the rescue!
+							</li>
+							<li>MongoDB</li>
+							<li>Event sourcing</li>
+						</ul>
+					</section>
+					<section>
+						<h2>facile-it/mongodb-bundle</h2>
+						<a href="https://github.com/facile-it/mongodb-bundle">Our bundle!</a>
+					</section>
+				</section>
+				<section id="events-explained">
+					<section>
+						<h2>Anatomy of an event</h2>
+						<ul>
+							<li>Payload</li>
+							<li>Metadata</li>
+						</ul>
+					</section>
+					<section>
+						<h2>The payload</h2>
+					</section>
+					<section>
+						<h2>Metadata</h2>
+					</section>
+				</section>
+				<section id="event-storing">
+					<section>
+						<h2>Storing events</h2>
+					</section>
+					<section>
+						<h2>Generating events for the past</h2>
+					</section>
+					<section>
+						<h2>Switching to real-time storing</h2>
+					</section>
+					<section>
+						<h2>Saving events with a delay/queue</h2>
+					</section>
+				</section>
+				<section id="event-sourcing">
+					<section>
+						<h2>It's time to read!</h2>
+					</section>
+					<section>
+						<h2>Projections</h2>
+					</section>
+					<section>
+						<h2>The (one and only) runner</h2>
+					</section>
+					<section>
+						<h2>The projection class</h2>
+					</section>
+					<section>
+						<h2>Filtering the event stream</h2>
+					</section>
+					<section>
+						<h2>The executors</h2>
+					</section>
+					<section>
+						<h2>Intermediate state and correlation</h2>
+					</section>
+					<section>
+						<h2>The fulcrum: pushing state away</h2>
+					</section>
+				</section>
+				<section id="practical-issues">
+					<section>
+						<h2>What we gained</h2>
+					</section>
+					<section>
+						<h2>Duration of a projection</h2>
+					</section>
+					<section>
+						<h2>Runner concurrency</h2>
+					</section>
+					<section>
+						<h2>Updating past events</h2>
+					</section>
+					<section>
+						<h2>Resetting a projection</h2>
+					</section>
+					<section>
+						<h2>Storing a copy of the projection</h2>
+					</section>
+					<section>
+						<h2>Projections and code reuse</h2>
+					</section>
+				</section>
+				<section id="advantages">
+					<section>
+						<h2>Historical data without schema constraints</h2>
+					</section>
+					<section>
+						<h2>Complex projections with low effort</h2>
+					</section>
+					<section>
+						<h2>Complexity splitted</h2>
+					</section>
+					<section>
+						<h2>Debug superpowers</h2>
+					</section>
+				</section>
+				<section id="ending">
+					<section>
+						<h2>Thanks!</h2>
+					</section>
+					<section>
+						<h2>Contacts</h2>
+					</section>
+					<section>
+						<h2>Questions?</h2>
+					</section>
+					<section>
+						<h2>Attributions</h2>
+					</section>
+				</section>
 			</div>
 		</div>
 
