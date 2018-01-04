@@ -467,7 +467,7 @@
 					<section>
 						<h2>Real-time (delayed) storing</h2>
 						<ul class="fa-ul">
-							<li class="fragment">
+							<li>
 								<span class="fa-li"><i class="fa fa-hourglass-half"></i></span>
 								... so we used our (RabbitMQ) queue to delay the event storing
 								and avoid failures in critical processes
@@ -547,7 +547,7 @@ interface ProjectorInterface
 					<section>
 						<h2>The (one and only) Runner</h2>
 						<pre><code data-trim data-noescape>
-class ProjectionsRunner
+class Runner
 {
     public function run(ProjectorInterface $projector);
 }					
@@ -584,19 +584,21 @@ class RunState implements MongoDocumentInterface
     /** @var Mongo\ObjectId */
     private $lastMaxId;
     /** @var \DateTimeInterface */
-    private $lastProjectedCreateAt;
+    private $lastProjectedEventCreatedAt;
 
     // ...
 }
 						</code></pre>
 					</section>
 					<section>
-                        <h6>Pre-execution checks</h6>
+                        <div>
+                            <code>Runner::run()</code><br>
+                            <small>Pre-execution checks</small>
+                        </div>
 						<pre class="stretch"><code data-trim data-noescape>
 $runState = $this->loadRunState($projection);
 if ($runState->isStillRunning()) {
-    $this->resetProjection($projector, $runState);
-    return; 
+    return $this->resetProjection($projector, $runState);
 }
 
 $iterator = $this->loadEventsIterator($projection, $runState);
@@ -611,13 +613,15 @@ if (! $iterator->valid()) {
 $firstEvent = $iterator->current();
 
 if ($this->eventIsOlderThanLastProjected($runState, $firstEvent)) {
-    $this->resetProjection($projector, $runState);
-    return; 
+    return $this->resetProjection($projector, $runState);
 }
                         </code></pre>
                     </section>
                     <section>
-                        <h6>The loop</h6>
+                        <div>
+                            <code>Runner::run()</code><br>
+                            <small>The loop</small>
+                        </div>
                         <pre class="stretch"><code data-trim data-noescape>
 do {
     $lastEvent = $iterator->current();
@@ -630,9 +634,7 @@ do {
     
         break;
     }
-    
-    $iterator->next();
-} while ($iterator->valid());
+} while ($iterator->next());
 
 $projection->normalizeAfterRun(
     $firstEvent->getCreatedAt(), 
