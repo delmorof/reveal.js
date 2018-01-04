@@ -162,17 +162,17 @@
 							<li class="fragment">
 								<span class="fa-li"><i class="fas fa-forward"></i></span>
 								We store performed actions <br>
-								<span style="font-size: smaller">(withdrawal, deposit)</span>
+								<span class="smaller">(withdrawal, deposit)</span>
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fas fa-sort-numeric-down"></i></span>
 								Concurrency is no longer a big issue<br>
-								<span style="font-size: smaller">(negative balance)</span>
+								<span class="smaller">(negative balance)</span>
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fas fa-fast-forward"></i></span>
 								Aggregating events gives me the current state<br>
-								<span style="font-size: smaller">(current balance)</span>
+								<span class="smaller">(current balance)</span>
 							</li>
 						</ul>
 					</section>
@@ -227,6 +227,10 @@
 								<span class="fa-li"><i class="fas fa-cogs"></i></span>
 								Inherent business complexity comes only with time, while adding new features
 							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fas fa-times"></i></span>
+								Hard to justify adding event sourcing from the start
+							</li>
 						</ul>
 					</section>
 				</section>
@@ -234,26 +238,6 @@
 				<section id="our-use-case">
 					<section>
 						<h2>Background</h2>
-						<ul class="fa-ul">
-							<li class="fragment">
-								<span class="fa-li"><i class="fas fa-car"></i></span>
-								Facile.it main business is comparison, <br>
-								especially car insurances
-							</li>
-							<li class="fragment">
-								<span class="fa-li"><i class="fas fa-exchange-alt"></i></span>
-								We basically act as an adapter between <br>
-								insurance companies and end customer
-							</li>
-							<li class="fragment">
-								<span class="fa-li"><i class="fas fa-comment"></i></span>
-								Business complexity is intermediate
-							</li>
-							<li class="fragment">
-								<span class="fa-li"><i class="far fa-credit-card"></i></span>
-								Not so much to do after the product is sold...
-							</li>
-						</ul>
 					</section>
 					<section>
 						<h2>Our use case</h2>
@@ -270,12 +254,12 @@
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-desktop"></i></span>
 								We offer the platform to insurance agents <br>
-								with physical stores
+								that already have their own physical business
 							</li>
 						</ul>
 					</section>
 					<section>
-						<h2>Complexity is increased</h2>
+						<h2>Complex domain</h2>
 						<ul class="fa-ul">
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-reply-all"></i></span>
@@ -287,7 +271,7 @@
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fab fa-usb"></i></span>
-								We have to be an adapter for a lot more processes
+								We have to be an adapter for a lot of processes
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-users"></i></span>
@@ -299,12 +283,12 @@
 						<h2>Our issues</h2>
 						<ul class="fa-ul">
 							<li class="fragment">
-								<span class="fa-li"><i class="fa fa-chart-bar"></i></span>
-								New reports are requested often
-							</li>
-							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-tasks"></i></span>
 								Business rules evolve really fast!
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-chart-bar"></i></span>
+								New reports are requested often
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-history"></i></span>
@@ -312,8 +296,9 @@
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-database"></i></span>
-								By coincidence, we also had a small piece of functionality
-								that was having growing pains inside our RDBMS (MySQL + Doctrine)
+								We also had a small piece of functionality<br>
+								that was having growing pains inside our RDBMS
+								<div class="smaller">(MySQL + Doctrine)</div>
 							</li>
 						</ul>
 					</section>
@@ -404,13 +389,13 @@
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-long-arrow-alt-right"></i></span>
 								The type is the event name
-								<div class="fragment" style="font-size: smaller">It represent the kind of document that we will have, and the structure</div>
+								<div class="fragment smaller">It represents the kind of document that we will have</div>
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-long-arrow-alt-right"></i></span>
-								Family is a more generic grouping<br>
-								(depends on business domain)
-								<div class="fragment" style="font-size: smaller">
+								Family is a more generic grouping
+								<div class="smaller">(depends on business domain)</div>
+								<div class="fragment smaller">
 									It's helpful for searching/filtering: <br>
 									you normally work with 1 or 2 families at a time
 								</div>
@@ -489,7 +474,8 @@
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-university"></i></span>
-								In theory, events should be append only, immutable and ordered in time...
+								In theory, events should be append only,<br> 
+								immutable and ordered in time...
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-tasks"></i></span>
@@ -506,7 +492,7 @@
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-history"></i></span>
-								It allowed us to easily generate events for the past
+								The trade-off allowed us to easily generate events for the past
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-copy"></i></span>
@@ -527,12 +513,134 @@
 					</section>
 					<section>
 						<h2>Projections</h2>
+						<ul class="fa-ul">
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-window-restore"></i></span>
+								Aggregated result of multiple events
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-step-forward"></i></span>
+								They are produced replaying events one at a time,<br>
+								and using them to reconstruct the desired result
+							</li>
+						</ul>
 					</section>
 					<section>
-						<h2>The (one and only) runner</h2>
+						<h2>The Projectors</h2>
+						<pre><code data-trim data-noescape>
+interface ProjectorInterface
+{
+    // event filters
+    public function getEventTypes(): array;
+
+    public function getAdditionalEventFilters(): array;
+
+    // projection execution
+    public function initializeProjector();
+
+    public function projectAndSave(Event $event): Result;
+
+    public function normalizeAfterRun(\DateTime $from, \DateTime $to);
+}
+						</code></pre>						
 					</section>
 					<section>
-						<h2>The projection class</h2>
+						<h2>The (one and only) Runner</h2>
+						<pre><code data-trim data-noescape>
+class ProjectionsRunner
+{
+    public function run(ProjectorInterface $projector);
+}					
+						</code></pre>
+						<ul class="fa-ul">
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-sync"></i></span>
+								Handles the cycle, one event at a time
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-cogs"></i></span>
+								Handles event filters provided by the Projector
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-database"></i></span>
+								Iterates through the events, one at a time
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>The RunState document</h2>
+						<p>Used by the runner to persist execution state</p>
+						<pre class="stretch"><code data-trim data-noescape>
+class RunState implements MongoDocumentInterface
+{
+    /** @var string The Projector FQCN */
+    private $class; 
+
+    /** @var bool */
+    private $stillRunning;
+    /** @var \DateTimeInterface */
+    private $lastRunAt;
+
+    /** @var Mongo\ObjectId */
+    private $lastMaxId;
+    /** @var \DateTimeInterface */
+    private $lastProjectedCreateAt;
+
+    // ...
+}
+						</code></pre>
+					</section>
+					<section>
+                        <h6>Pre-execution checks</h6>
+						<pre class="stretch"><code data-trim data-noescape>
+$runState = $this->loadRunState($projection);
+if ($runState->isStillRunning()) {
+    $this->resetProjection($projector, $runState);
+    return; 
+}
+
+$iterator = $this->loadEventsIterator($projection, $runState);
+$iterator->next();
+if (! $iterator->valid()) {
+    $runState->setLastRunningAt(new \DateTime());
+    $this->persistanceManager->update($runState);
+
+    return;
+}
+
+$firstEvent = $iterator->current();
+
+if ($this->eventIsOlderThanLastProjected($runState, $firstEvent)) {
+    $this->resetProjection($projector, $runState);
+    return; 
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h6>The loop</h6>
+                        <pre class="stretch"><code data-trim data-noescape>
+do {
+    $lastEvent = $iterator->current();
+    $projection->projectAndSave($lastEvent);
+    
+    $this->updateRunStateAfterExecution($runState, $lastEvent);
+    
+    if ($this->shouldStop($start, $projection)) {
+        $this->updateRunStateOnStopped($runState);
+    
+        break;
+    }
+    
+    $iterator->next();
+} while ($iterator->valid());
+
+$projection->normalizeAfterRun(
+    $firstEvent->getCreatedAt(), 
+    $lastEvent->getCreatedAt()
+);
+
+$this->updateRunStateOnAccomplished($runState, $lastEvent);
+						</code></pre>
 					</section>
 					<section>
 						<h2>Filtering the event stream</h2>
