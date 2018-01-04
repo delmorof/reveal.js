@@ -72,7 +72,7 @@
 							<li>
 								<span class="fa-li fa-layers">
 									<i class="fas fa-certificate"></i>
-									<i class="fas fa-xs fa-inverse fa-check"></i>
+									<i class="fas fa-inverse fa-check" data-fa-transform="shrink-8"></i>
 								</span>
 								PHP-FIG Secretary
 							</li>
@@ -126,7 +126,7 @@
 						<p>What's Event Sourcing?</p>
 					</section>
 					
-					<section data-background-image="img/money.jpg">
+					<section data-background-image="img/money.jpg" data-transition="none">
 						<div class="stretch">
 							<div class="credit white"><a href="https://flic.kr/p/6c6Q6r">https://flic.kr/p/6c6Q6r</a></div>
 						</div>
@@ -179,17 +179,17 @@
 					
 					<section>
 						<h2>And CQRS?</h2>
-						<p>It's a design pattern, it stands for:</p>
-						<ul>
-							<li><b>C</b>ommand</li>
-							<li><b>Q</b>uery</li>
+                        <p>
+                            It's normally opposed to CRUD,<br>
+                            see <a href="https://martinfowler.com/bliki/CQRS.html">Martin Fowler's article</a>
+                        </p>
+                        <p>It's a design pattern, it stands for:</p>
+                        <ul>
+							<li><b>C</b>ommand <span class="fragment grey">(write)</span></li>
+							<li><b>Q</b>uery <span class="fragment grey">(read)</span></li>
 							<li><b>R</b>esponsibility</li>
 							<li><b>S</b>egregation</li>
 						</ul>
-						<p>
-							It's normally opposed to CRUD,<br>
-							see <a href="https://martinfowler.com/bliki/CQRS.html">Martin Fowler's article</a>
-						</p>
 					</section>
 				</section>
 				
@@ -197,17 +197,17 @@
 					<section>
 						<h2>Story time!</h2>
 					</section>
-					<section data-background-image="img/star-wars-intro.jpg">
+					<section data-background-image="img/star-wars-intro.jpg" data-transition="none">
 						<div class="stretch">
 							<div class="credit white"><a href="https://flic.kr/p/SuqTZG">https://flic.kr/p/SuqTZG</a></div>
 						</div>
 					</section>
-					<section data-background-image="img/greenfield.jpg">
+					<section data-background-image="img/greenfield.jpg" data-transition="none">
 						<div class="stretch">
 							<div class="credit white"><a href="https://flic.kr/p/rVrVkv">https://flic.kr/p/rVrVkv</a></div>
 						</div>
 					</section>
-					<section data-background-image="img/legacy-project.jpg">
+					<section data-background-image="img/legacy-project.jpg" data-transition="none">
 						<div class="stretch">
 							<div class="credit white"><a href="https://flic.kr/p/VAU3d">https://flic.kr/p/VAU3d</a></div>
 						</div>
@@ -261,23 +261,27 @@
 					<section>
 						<h2>Complex domain</h2>
 						<ul class="fa-ul">
-							<li class="fragment">
+                            <li class="fragment">
 								<span class="fa-li"><i class="fa fa-reply-all"></i></span>
 								We handle the product after it's sold
 							</li>
-							<li class="fragment">
+                            <li class="fragment">
 								<span class="fa-li"><i class="fa fa-handshake"></i></span>
 								We handle customer relationships
 							</li>
-							<li class="fragment">
+                            <li class="fragment">
 								<span class="fa-li"><i class="fab fa-usb"></i></span>
 								We have to be an adapter for a lot of processes
 							</li>
-							<li class="fragment">
+                            <li class="fragment">
 								<span class="fa-li"><i class="fa fa-users"></i></span>
 								Last but not least, we have a team of 40+ accounts
 							</li>
-						</ul>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-hourglass-end"></i></span>
+                                The project is 5+ years old
+                            </li>
+                        </ul>
 					</section>
 					<section>
 						<h2>Our issues</h2>
@@ -302,38 +306,15 @@
 							</li>
 						</ul>
 					</section>
-				</section>
-				
-				<section id="solution">
-					<section>
-						<h2>Our solutions</h2>
-						<ol>
-							<li>Gabriele</li>
-							<li>MongoDB</li>
-							<li>Event sourcing</li>
-						</ol>
-					</section>
-					<section>
-						<h2>Our Symfony bundle</h2>
-						<ul class="fa-ul">
-							<li>
-								<span class="fa-li"><i class="fab fa-github"></i></span>
-								<a href="https://github.com/facile-it/mongodb-bundle">
-									<code>facile-it/mongodb-bundle</code>
-								</a>
-							</li>
-							<li>
-								<span class="fa-li"><i class="fa fa-database"></i></span>
-								Barebone integration with <code>ext-mongodb</code>
-							</li>
-							<li>
-								<span class="fa-li"><i class="far fa-window-maximize"></i></span>
-								Nice profile addon<br>
-								<img src="img/mongodb-bundle.png">
-							</li>
-						</ul>
-					</section>
-				</section>
+                    <section>
+                        <h2>Our solutions</h2>
+                        <ol>
+                            <li>Gabriele</li>
+                            <li>MongoDB</li>
+                            <li>Event sourcing</li>
+                        </ol>
+                    </section>
+                </section>
 
 				<section id="events-explained">
 					<section>
@@ -389,16 +370,17 @@
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-long-arrow-alt-right"></i></span>
 								The type is the event name
-								<div class="fragment smaller">It represents the kind of document that we will have</div>
+								<div class="smaller">It represents the kind of document that we will have</div>
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-long-arrow-alt-right"></i></span>
 								Family is a more generic grouping
 								<div class="smaller">(depends on business domain)</div>
-								<div class="fragment smaller">
-									It's helpful for searching/filtering: <br>
-									you normally work with 1 or 2 families at a time
-								</div>
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-search"></i></span>
+                                Helpful for searching/filtering: <br>
+                                you normally work with a specific list of events
 							</li>
 						</ul>
 					</section>
@@ -479,7 +461,7 @@
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-tasks"></i></span>
-								We made made this as an intentional trade-off
+								We made this exception as an intentional trade-off
 							</li>
 						</ul>
 					</section>
@@ -648,7 +630,7 @@ $this->updateRunStateOnAccomplished($runState, $lastEvent);
 						<h2>The executors</h2>
                         <p>
                             The Projector delegates the calculations<br>
-                            to a group of Executor classes
+                            to a group of <code>Executor</code> classes
                         </p>
                         <pre><code data-trim data-noescape>
 interface ExecutorInterface
@@ -706,7 +688,7 @@ class ProjectionState implements MongoDocumentInterface
                             <li class="fragment">
                                 <span class="fa-li"><i class="fa fa-random"></i></span>
                                 Executors must be idempotent:<br>
-                                <small>if a bug produces a duplicate event, we must handle it gracefully</small>
+                                <small>if a bug produces a duplicated event, we must handle it gracefully</small>
                             </li>
                             <li class="fragment">
                                 <span class="fa-li"><i class="fa fa-trash-alt"></i></span>
@@ -909,6 +891,26 @@ db.projection_state.createIndex(
                             is now easier than ever
                         </p>
 					</section>
+                    <section>
+                        <h2>Our Symfony bundle</h2>
+                        <ul class="fa-ul">
+                            <li>
+                                <span class="fa-li"><i class="fab fa-github"></i></span>
+                                <a href="https://github.com/facile-it/mongodb-bundle">
+                                    <code>facile-it/mongodb-bundle</code>
+                                </a>
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="fa fa-database"></i></span>
+                                Barebone integration with <code>ext-mongodb</code>
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="far fa-window-maximize"></i></span>
+                                Nice profile addon<br>
+                                <img src="img/mongodb-bundle.png">
+                            </li>
+                        </ul>
+                    </section>
 				</section>
 				<section id="ending">
 					<section>

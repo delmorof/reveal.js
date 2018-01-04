@@ -9,7 +9,7 @@ img#logo-engineering {
     left: 10px;
 }
 
-div.credit.white,
+div.credit.white a,
 .reveal section.white h1,
 .reveal section.white h2,
 .reveal section.white h3,
@@ -20,6 +20,10 @@ div.credit.white,
 .reveal section.white div {
     text-shadow: 0 0 5px rgba(0, 0, 0, 1);
     color: white;
+}
+
+span.grey {
+    color: grey;
 }
 
 .reveal ul {
