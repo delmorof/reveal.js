@@ -128,7 +128,7 @@
 					
 					<section data-background-image="img/money.jpg">
 						<div class="stretch">
-							<div class="credit white">https://flic.kr/p/6c6Q6r</div>
+							<div class="credit white"><a href="https://flic.kr/p/6c6Q6r">https://flic.kr/p/6c6Q6r</a></div>
 						</div>
 					</section>
 					
@@ -199,17 +199,17 @@
 					</section>
 					<section data-background-image="img/star-wars-intro.jpg">
 						<div class="stretch">
-							<div class="credit white">https://flic.kr/p/SuqTZG</div>
+							<div class="credit white"><a href="https://flic.kr/p/SuqTZG">https://flic.kr/p/SuqTZG</a></div>
 						</div>
 					</section>
 					<section data-background-image="img/greenfield.jpg">
 						<div class="stretch">
-							<div class="credit white">https://flic.kr/p/rVrVkv</div>
+							<div class="credit white"><a href="https://flic.kr/p/rVrVkv">https://flic.kr/p/rVrVkv</a></div>
 						</div>
 					</section>
 					<section data-background-image="img/legacy-project.jpg">
 						<div class="stretch">
-							<div class="credit white">https://flic.kr/p/VAU3d</div>
+							<div class="credit white"><a href="https://flic.kr/p/VAU3d">https://flic.kr/p/VAU3d</a></div>
 						</div>
 					</section>
 					<section>
@@ -559,7 +559,7 @@ class Runner
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-cogs"></i></span>
-								Handles event filters provided by the Projector
+                                Handles event filters provided by the <code>Projector</code>
 							</li>
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-database"></i></span>
@@ -701,25 +701,6 @@ class ProjectionState implements MongoDocumentInterface
                         <!--<p>example: Renewals/product selling not expected</p>-->
 					</section>
 					<section>
-						<h2>The real truck: pushing state away</h2>
-                        <ul class="fa-ul">
-                            <li class="fragment">
-                                <span class="fa-li"><i class="fa fa-thumbs-up"></i></span>
-                                Every class is stateless:<br>
-                                no properties contain data, only dependencies
-                            </li>
-                            <li class="fragment">
-                                <span class="fa-li"><i class="fa fa-database"></i></span>
-                                When we have state, we save it as documents on MongoDB
-                            </li>
-                            <li class="fragment">
-                                <span class="fa-li"><i class="fa fa-undo"></i></span>
-                                We rollback changes on MongoDB in case of failures<br>
-                                <small>(yes, we implemented software transactions)</small>
-                            </li>
-                        </ul>
-					</section>
-					<section>
 						<h2>Tricks toward resilience</h2>
                         <ul class="fa-ul">
                             <li class="fragment">
@@ -740,36 +721,94 @@ db.projection_state.createIndex(
                             </code></pre>
                         </ul>
 					</section>
-				</section>
+                    <section>
+                        <h2>The real trick: pushing state away</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-thumbs-up"></i></span>
+                                Every class is stateless:<br>
+                                no properties contain data, only dependencies
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-database"></i></span>
+                                When we have state<br>
+                                <small style="display: block">(<code>RunState</code>, <code>ProjectionState</code>, the projection itself)</small>
+                                we save it as documents on MongoDB
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-undo"></i></span>
+                                We rollback changes on MongoDB in case of failures<br>
+                                <small>(yes, we implemented software transactions)</small>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
 				<section id="practical-issues">
 					<section>
 						<h2>Practical issues</h2>
 					</section>
 					<section>
 						<h2>Duration of a projection</h2>
-						<p>stoppable projections</p>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-signal"></i></span>
+                                Since events' collection grows really fast,<br>
+                                projections can take a very long time to complete from the beginning
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-hourglass-half"></i></span>
+                                Long running processes are not great with PHP<br>
+                                <small class="fragment">We found multiple memory leaks (<code>gc_collect_cycles</code> , <code>ext-mongodb</code>)</small>
+                            </li>
+                        </ul>
 					</section>
 					<section>
-						<h2>Long running processes</h2>
-						<p>memory leaks (gc_clear failure)</p>
-						<p>memory leaks (mongo driver)</p>
-					</section>
-					<section>
-						<h2>Runner concurrency</h2>
-						<p>NonConcurrentCommandTrait</p>
+						<h2>Runner execution</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-sync"></i></span>
+                                We execute the runner in short intervals
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-lock"></i></span>
+                                We check if an other instance of the projector is already running
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-lightbulb"></i></span>
+                                Not ideal, we could migrate to better solutions
+                            </li>
+                        </ul>
 					</section>
 					<section>
 						<h2>Updating past events</h2>
-					</section>
-					<section>
-						<h2>Resetting a projection</h2>
-					</section>
-					<section>
-						<h2>Storing a copy of the projection</h2>
-						<p>Production estractor (snapshot)</p>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-exclamation-triangle"></i></span>
+                                Especially early in the development phase,<br>
+                                we forgot to add some payload data...
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-lightbulb"></i></span>
+                                Since we did that trade-off to start with,<br>
+                                we were able to fix it
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-fire-extinguisher"></i></span>
+                                Solution: fix events + fix code + reset projection 
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-copy"></i></span>
+                                To avoid report outages, <br>
+                                we started to take snapshots of projected data 
+                            </li>
+                        </ul>
 					</section>
 					<section>
 						<h2>Projections and code reuse</h2>
+                        <p>
+                            Due to CQRS and our objects' architecture,<br> 
+                            reusing code between projections is impractical
+                        </p>
 					</section>
 				</section>
 				<section id="advantages">
@@ -777,20 +816,98 @@ db.projection_state.createIndex(
 						<h2>What we gained</h2>
 					</section>
 					<section>
-						<h2>Historical data without schema constraints</h2>
-					</section>
+						<h2>We reached our goal!!!</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-leaf"></i></span>
+                                We added MongoDB to our tech stack
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-history"></i></span>
+                                We gained "time traveling" super-powers!
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-chart-line"></i></span>
+                                We obtained an easy way to produce <br>
+                                new complex reports with historical reliability
+                            </li>
+                        </ul>
+                    </section>
 					<section>
-						<h2>Complex projections with low effort</h2>
+						<h2>Projection reuse</h2>
+						<p>
+                            A projector can produce an intermediate result:<br>
+                            a simple denormalization that can be easily queried
+                        </p>
+                        <p class="fragment">
+                            Events 
+                            <i class="fa fa-arrow-right"></i>
+                            <span class="black-box">Projector</span>
+                            <i class="fa fa-arrow-right"></i>
+                            Projection (intermediate)
+                        </p>
+                        <p class="fragment">
+                            Projection
+                            <i class="fa fa-arrow-right"></i>
+                            <span class="black-box"><i class="fa fa-leaf"></i> aggregation</span>
+                            <i class="fa fa-arrow-right"></i>
+                            Final result (snapshot)
+                        </p>
 					</section>
-					<section>
-						<h2>Intermediate results used multiple times</h2>
-						<p>Production estractor bis (rete production per collaboratri & account)</p>
-					</section>
-					<section>
+					<section style="text-align: center">
 						<h2>Complexity splitted</h2>
+                        <p>Small context, easily testable</p>
+                        <table id="schema-table">
+                            <tbody>
+                                <tr>
+                                    <td colspan="3"><span class="black-box">Runner</span></td>
+                                </tr>
+                                <tr class="fa-2x">
+                                    <td style="text-align: right">
+                                        <i class="fa fa-arrow-down fa-lg" data-fa-transform="rotate-45"></i>
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-arrow-down fa-lg"></i>
+                                    </td>
+                                    <td style="text-align: left">
+                                        <i class="fa fa-arrow-down fa-lg" data-fa-transform="rotate--45"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="black-box">Projector1</span></td>
+                                    <td><span class="black-box">Projector2</span></td>
+                                    <td><span class="black-box">Projector3</span></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-arrow-down"></i></td>
+                                    <td><i class="fa fa-arrow-down"></i></td>
+                                    <td><i class="fa fa-arrow-down"></i></td>
+                                </tr>
+                                <tr class="smaller">
+                                    <td><span class="black-box">Executor1a</span></td>
+                                    <td><span class="black-box">Executor2a</span></td>
+                                    <td><span class="black-box">Executor3a</span></td>
+                                </tr>
+                                <tr class="smaller">
+                                    <td><span class="black-box">Executor1b</span></td>
+                                    <td><span class="black-box">Executor2b</span></td>
+                                    <td><span class="black-box">Executor3b</span></td>
+                                </tr>
+                                <tr class="smaller">
+                                    <td><span class="black-box">...</span></td>
+                                    <td><span class="black-box">...</span></td>
+                                    <td><span class="black-box">...</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
 					</section>
 					<section>
 						<h2>Debug superpowers</h2>
+                        <p>Since we have events, we know EVERITHING</p>
+                        <p>
+                            Investigating a strange bug report <br>
+                            is now easier than ever
+                        </p>
 					</section>
 				</section>
 				<section id="ending">
@@ -799,12 +916,50 @@ db.projection_state.createIndex(
 					</section>
 					<section>
 						<h2>Contacts</h2>
-					</section>
+                        <ul class="fa-ul">
+                            <li>
+                                <span class="fa-li"><i class="fas fa-envelope"></i></span>
+                                <a href="mailto:alessandro.lai85@gmail.com">alessandro.lai85@gmail.com</a>
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="fas fa-envelope"></i></span>
+                                <a href="mailto:alessandro.lai85@gmail.com">alessandro.lai@facile.it</a><br>
+                                <small>(we are hiring!)</small>
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="fab fa-github"></i></span>
+                                <a href="https://github.com/Jean85">@Jean85</a>
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="fab fa-twitter"></i></span>
+                                <a href="https://twitter.com/AlessandroLai">@AlessandroLai</a>
+                            </li>
+                        </ul>
+                        <hr>
+                        <h6>Attributions</h6>
+                        <small>
+                            <ul class="fa-ul">
+                                <li>
+                                    <span class="fa-li"><i class="fas fa-image"></i></span>
+                                    <a title="money" href="https://flickr.com/photos/khrawlings/3407402643">money</a>, flickr photo by <a href="https://flickr.com/people/khrawlings">khrawlings</a> shared under a <a href="https://creativecommons.org/licenses/by-nc/2.0/">Creative Commons (BY-NC) license</a>
+                                </li>
+                                <li>
+                                    <span class="fa-li"><i class="fas fa-image"></i></span>
+                                    <a title="Going to a movie that Doug chose - one of the Little Things....." href="https://flickr.com/photos/75885098@N05/33139557886">Going to a movie that Doug chose - one of the Little Things.....</a>, flickr photo by <a href="https://flickr.com/people/75885098@N05">Bennilover</a> shared under a <a href="https://creativecommons.org/licenses/by-nd/2.0/">Creative Commons (BY-ND) license</a>
+                                </li>
+                                <li>
+                                    <span class="fa-li"><i class="fas fa-image"></i></span>
+                                    <a title="window2" href="https://flickr.com/photos/132178549@N08/17013750711">window2</a>, flickr photo by <a href="https://flickr.com/people/132178549@N08">Pascale Doria</a> shared under a <a href="https://creativecommons.org/licenses/by/2.0/">Creative Commons (BY) license</a>
+                                </li>
+                                <li>
+                                    <span class="fa-li"><i class="fas fa-image"></i></span>
+                                    <a title="mess" href="https://flickr.com/photos/ilovehappy/606583152">mess</a>, flickr photo by <a href="https://flickr.com/people/ilovehappy">i ♥ happy!!</a> shared under a <a href="https://creativecommons.org/licenses/by/2.0/">Creative Commons (BY) license</a>
+                                </li>
+                            </ul>
+                        </small>
+                    </section>
 					<section>
 						<h2>Questions?</h2>
-					</section>
-					<section>
-						<h2>Attributions</h2>
 					</section>
 				</section>
 			</div>
