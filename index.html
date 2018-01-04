@@ -418,6 +418,24 @@
 						</ul>
 					</section>
 					<section>
+						<h2>Metadata</h2>
+						<ul class="fa-ul">
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-search"></i></span>
+								We use it for search purposes
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-exclamation-triangle"></i></span>
+								Indexes are a must, at least on <code>createdAt</code>
+							</li>
+							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-list"></i></span>
+								We can also use it to store system info
+								<div><small>(user, origin, application...)</small></div>
+							</li>
+						</ul>
+					</section>
+					<section>
 						<h2>The payload</h2>
 						<ul class="fa-ul">
 							<li class="fragment">
@@ -432,25 +450,6 @@
 								<span class="fa-li"><i class="fa fa-question-circle"></i></span>
 								How many things should I put in there?
 								<div class="fragment">When in doubt, do not omit</div>
-							</li>
-						</ul>
-						<p></p>
-					</section>
-					<section>
-						<h2>Metadata</h2>
-						<ul class="fa-ul">
-							<li class="fragment">
-								<span class="fa-li"><i class="fa fa-search"></i></span>
-								We use it for search purposes
-							</li>
-							<li class="fragment">
-								<span class="fa-li"><i class="fa fa-exclamation-triangle"></i></span>
-								Indexes are a must, at least on <code>createdAt</code> 
-							</li>
-							<li class="fragment">
-								<span class="fa-li"><i class="fa fa-list"></i></span>
-								We can also use it to store system info
-								<div><small>(user, origin, application...)</small></div> 
 							</li>
 						</ul>
 					</section>
@@ -502,6 +501,10 @@
 						<h2>Generating events for the past</h2>
 						<ul class="fa-ul">
 							<li class="fragment">
+								<span class="fa-li"><i class="fa fa-university"></i></span>
+								In theory, you shouldn't do it...
+							</li>
+							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-history"></i></span>
 								It allowed us to easily generate events for the past
 							</li>
@@ -512,10 +515,6 @@
 							<li class="fragment">
 								<span class="fa-li"><i class="fa fa-bug"></i></span>
 								Deriving events from the current (lossy) state
-							</li>
-							<li class="fragment">
-								<span class="fa-li"><i class="fa fa-university"></i></span>
-								In theory, you shouldn't do it...
 							</li>
 						</ul>
 						<!--<p>example: RinnovvoDiary needed +12months from event origin</p>-->
@@ -544,14 +543,16 @@
 					<section>
 						<h2>Intermediate state and correlation</h2>
 						<p>example: Renewals/product selling not expected</p>
+					</section>
+					<section>
+						<h2>The fulcrum: pushing state away</h2>
+					</section>
+					<section>
 						<h2>Executors must be idempotent</h2>
 						<p>Se per un bug riprocesso un evento non devo fare errori</p>
 						<h2>projection state has TTL</h2>
 						<p>I dati di correlazione possono scadere (es.: polizza dopo 12 mesi)</p>
 						<p>Ogni executor decide come fare</p>
-					</section>
-					<section>
-						<h2>The fulcrum: pushing state away</h2>
 					</section>
 				</section>
 				<section id="practical-issues">
