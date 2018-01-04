@@ -645,24 +645,100 @@ $this->updateRunStateOnAccomplished($runState, $lastEvent);
 						</code></pre>
 					</section>
 					<section>
-						<h2>Filtering the event stream</h2>
-					</section>
-					<section>
 						<h2>The executors</h2>
-					</section>
+                        <p>
+                            The Projector delegates the calculations<br>
+                            to a group of Executor classes
+                        </p>
+                        <pre><code data-trim data-noescape>
+interface ExecutorInterface
+{
+    public function supportEventsType(): array;
+
+    public function execute(Event $event): Result;
+}
+                        </code></pre>
+                        <pre><code data-trim data-noescape>
+class SomeProjector implements ProjectorInterface
+{
+    public function projectAndSave(Event $event): Result
+    {
+        return $this->getExecutor($event)->execute($event);
+    }
+}
+                        </code></pre>
+                    </section>
 					<section>
 						<h2>Intermediate state and correlation</h2>
-						<p>example: Renewals/product selling not expected</p>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-sync"></i></span>
+                                Executor work on a single event at a time,<br>
+                                but they need to correlate between events
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-file-alt"></i></span>
+                                We use a <code>ProjectionState</code> document <br>
+                                to store additional informations
+                            </li>
+                        </ul>
+                        <pre class="fragment" style="font-size: large"><code data-trim data-noescape>
+class ProjectionState implements MongoDocumentInterface
+{
+    /** @var string The Projector FQCN */
+    private $class;
+
+    /** @var string */
+    private $correlationId;
+
+    /** @var mixed */
+    private $data;
+
+    /** @var \DateTime|null */
+    private $expireAt;
+}
+                        </code></pre>
+                        <!--<p>example: Renewals/product selling not expected</p>-->
 					</section>
 					<section>
-						<h2>The fulcrum: pushing state away</h2>
+						<h2>The real truck: pushing state away</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-thumbs-up"></i></span>
+                                Every class is stateless:<br>
+                                no properties contain data, only dependencies
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-database"></i></span>
+                                When we have state, we save it as documents on MongoDB
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-undo"></i></span>
+                                We rollback changes on MongoDB in case of failures<br>
+                                <small>(yes, we implemented software transactions)</small>
+                            </li>
+                        </ul>
 					</section>
 					<section>
-						<h2>Executors must be idempotent</h2>
-						<p>Se per un bug riprocesso un evento non devo fare errori</p>
-						<h2>projection state has TTL</h2>
-						<p>I dati di correlazione possono scadere (es.: polizza dopo 12 mesi)</p>
-						<p>Ogni executor decide come fare</p>
+						<h2>Tricks toward resilience</h2>
+                        <ul class="fa-ul">
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-random"></i></span>
+                                Executors must be idempotent:<br>
+                                <small>if a bug produces a duplicate event, we must handle it gracefully</small>
+                            </li>
+                            <li class="fragment">
+                                <span class="fa-li"><i class="fa fa-trash-alt"></i></span>
+                                <code>ProjectionStates::$expirationDate</code><br>
+                                makes data disappear
+                            </li>
+                            <pre class="fragment"><code data-trim data-noescape>
+db.projection_state.createIndex(
+    { "expireAt": 1 },
+    { expireAfterSeconds: 0 }
+);
+                            </code></pre>
+                        </ul>
 					</section>
 				</section>
 				<section id="practical-issues">
