@@ -584,11 +584,9 @@ if ($runState->isStillRunning()) {
 }
 
 $iterator = $this->loadEventsIterator($projection, $runState);
-if (! $iterator->valid()) {
-    $runState->setLastRunningAt(new \DateTime());
-    $this->persistanceManager->update($runState);
 
-    return;
+if (! $iterator->valid()) {
+    return $this->updateRunStateOnAccomplished($runState, $lastEvent);
 }
 
 $firstEvent = $iterator->current();
@@ -596,6 +594,9 @@ $firstEvent = $iterator->current();
 if ($this->eventIsOlderThanLastProjected($runState, $firstEvent)) {
     return $this->resetProjection($projector, $runState);
 }
+
+$this->updateRunStateOnStarted($runState);
+// ...
                         </code></pre>
                     </section>
                     <section>
@@ -605,8 +606,8 @@ if ($this->eventIsOlderThanLastProjected($runState, $firstEvent)) {
                         </div>
                         <pre class="stretch"><code data-trim data-noescape>
 do {
-
     $lastEvent = $iterator->current();
+
     $projection->projectAndSave($lastEvent);
     
     if ($this->shouldStop($start, $projection)) {
