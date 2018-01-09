@@ -496,11 +496,11 @@
 					<section>
 						<h2>Projections</h2>
 						<ul class="fa-ul">
-							<li class="fragment">
+							<li>
 								<span class="fa-li"><i class="fa fa-window-restore"></i></span>
 								Aggregated result of multiple events
 							</li>
-							<li class="fragment">
+							<li>
 								<span class="fa-li"><i class="fa fa-step-forward"></i></span>
 								They are produced replaying events one at a time,<br>
 								and using them to reconstruct the desired result
@@ -508,23 +508,12 @@
 						</ul>
 					</section>
 					<section>
-						<h2>The Projectors</h2>
-						<pre><code data-trim data-noescape>
-interface ProjectorInterface
-{
-    // event filters
-    public function getEventTypes(): array;
-
-    public function getAdditionalEventFilters(): array;
-
-    // projection execution
-    public function initializeProjector();
-
-    public function projectAndSave(Event $event): Result;
-
-    public function normalizeAfterRun(\DateTime $from, \DateTime $to);
-}
-						</code></pre>						
+						<h2>Our implementation</h2>
+						<ol>
+							<li><code>Runner</code> + <code>RunState</code></li>
+							<li><code>Projector</code> + <code>Executor</code></li>
+							<li><code>ProjectionState</code></li>
+						</ol>
 					</section>
 					<section>
 						<h2>The (one and only) Runner</h2>
@@ -535,15 +524,15 @@ class Runner
 }					
 						</code></pre>
 						<ul class="fa-ul">
-							<li class="fragment">
+							<li>
 								<span class="fa-li"><i class="fa fa-sync"></i></span>
 								Handles the cycle, one event at a time
 							</li>
-							<li class="fragment">
+							<li>
 								<span class="fa-li"><i class="fa fa-cogs"></i></span>
                                 Handles event filters provided by the <code>Projector</code>
 							</li>
-							<li class="fragment">
+							<li>
 								<span class="fa-li"><i class="fa fa-database"></i></span>
 								Iterates through the events, one at a time
 							</li>
@@ -599,7 +588,7 @@ $this->updateRunStateOnStarted($runState);
 // ...
                         </code></pre>
                     </section>
-                    <section>
+					<section>
                         <div>
                             <code>Runner::run()</code><br>
                             <small>The loop</small>
@@ -624,6 +613,25 @@ $projection->normalizeAfterRun(
 );
 
 $this->updateRunStateOnAccomplished($runState, $lastEvent);
+						</code></pre>
+					</section>
+					<section>
+						<h2>The Projectors</h2>
+						<pre><code data-trim data-noescape>
+interface ProjectorInterface
+{
+    // event filters
+    public function getEventTypes(): array;
+
+    public function getAdditionalEventFilters(): array;
+
+    // projection execution
+    public function initializeProjector();
+
+    public function projectAndSave(Event $event): Result;
+
+    public function normalizeAfterRun(\DateTime $from, \DateTime $to);
+}
 						</code></pre>
 					</section>
 					<section>
@@ -653,18 +661,18 @@ class SomeProjector implements ProjectorInterface
 					<section>
 						<h2>Intermediate state and correlation</h2>
                         <ul class="fa-ul">
-                            <li class="fragment">
-                                <span class="fa-li"><i class="fa fa-sync"></i></span>
-                                Executor work on a single event at a time,<br>
-                                but they need to correlate between events
-                            </li>
-                            <li class="fragment">
+							<li>
+								<span class="fa-li"><i class="fa fa-random"></i></span>
+								Executors must be idempotent:<br>
+								<small>i.e. if a bug produces a duplicated event, we must handle it gracefully</small>
+							</li>
+                            <li>
                                 <span class="fa-li"><i class="fa fa-file-alt"></i></span>
                                 We use a <code>ProjectionState</code> document <br>
                                 to store additional informations
                             </li>
                         </ul>
-                        <pre class="fragment" style="font-size: large"><code data-trim data-noescape>
+                        <pre style="font-size: large"><code data-trim data-noescape>
 class ProjectionState implements MongoDocumentInterface
 {
     /** @var string The Projector FQCN */
@@ -683,19 +691,19 @@ class ProjectionState implements MongoDocumentInterface
                         <!--<p>example: Renewals/product selling not expected</p>-->
 					</section>
 					<section>
-						<h2>Tricks toward resilience</h2>
+						<h2>Reducing the amount of data</h2>
                         <ul class="fa-ul">
-                            <li class="fragment">
-                                <span class="fa-li"><i class="fa fa-random"></i></span>
-                                Executors must be idempotent:<br>
-                                <small>if a bug produces a duplicated event, we must handle it gracefully</small>
+                            <li>
+                                <span class="fa-li"><i class="fa fa-trash-alt"></i></span>
+                                The <code>Executor</code> should delete the <code>ProjectionState</code>
+								as soon as it's no longer needed
                             </li>
-                            <li class="fragment">
+                            <li>
                                 <span class="fa-li"><i class="fa fa-trash-alt"></i></span>
                                 <code>ProjectionStates::$expirationDate</code><br>
                                 makes data disappear
                             </li>
-                            <pre class="fragment"><code data-trim data-noescape>
+                            <pre><code data-trim data-noescape>
 db.projection_state.createIndex(
     { "expireAt": 1 },
     { expireAfterSeconds: 0 }
@@ -706,21 +714,16 @@ db.projection_state.createIndex(
                     <section>
                         <h2>The real trick: pushing state away</h2>
                         <ul class="fa-ul">
-                            <li class="fragment">
+                            <li>
                                 <span class="fa-li"><i class="fa fa-thumbs-up"></i></span>
                                 Every class is stateless:<br>
                                 no properties contain data, only dependencies
                             </li>
-                            <li class="fragment">
+                            <li>
                                 <span class="fa-li"><i class="fa fa-database"></i></span>
                                 When we have state<br>
                                 <small style="display: block">(<code>RunState</code>, <code>ProjectionState</code>, the projection itself)</small>
                                 we save it as documents on MongoDB
-                            </li>
-                            <li class="fragment">
-                                <span class="fa-li"><i class="fa fa-undo"></i></span>
-                                We rollback changes on MongoDB in case of failures<br>
-                                <small>(yes, we implemented software transactions)</small>
                             </li>
                         </ul>
                     </section>
@@ -732,53 +735,50 @@ db.projection_state.createIndex(
 					<section>
 						<h2>Duration of a projection</h2>
                         <ul class="fa-ul">
-                            <li class="fragment">
+                            <li>
                                 <span class="fa-li"><i class="fa fa-signal"></i></span>
                                 Since events' collection grows really fast,<br>
                                 projections can take a very long time to complete from the beginning
                             </li>
-                            <li class="fragment">
+                            <li>
                                 <span class="fa-li"><i class="fa fa-hourglass-half"></i></span>
                                 Long running processes are not great with PHP<br>
-                                <small class="fragment">We found multiple memory leaks (<code>gc_collect_cycles</code> , <code>ext-mongodb</code>)</small>
+                                <small>We found multiple memory leaks (<code>gc_collect_cycles</code> , <code>ext-mongodb</code>)</small>
                             </li>
                         </ul>
 					</section>
 					<section>
 						<h2>Runner execution</h2>
                         <ul class="fa-ul">
-                            <li class="fragment">
+                            <li>
                                 <span class="fa-li"><i class="fa fa-sync"></i></span>
                                 We execute the runner in short intervals
                             </li>
-                            <li class="fragment">
+                            <li>
                                 <span class="fa-li"><i class="fa fa-lock"></i></span>
-                                We check if an other instance of the projector is already running
-                            </li>
-                            <li class="fragment">
-                                <span class="fa-li"><i class="fa fa-lightbulb"></i></span>
-                                Not ideal, we could migrate to better solutions
+                                We check if an other instance of the projector is already running<br>
+								<small>We use the Symfony's <code>LockableTrait</code></small>
                             </li>
                         </ul>
 					</section>
 					<section>
 						<h2>Updating past events</h2>
                         <ul class="fa-ul">
-                            <li class="fragment">
+                            <li>
                                 <span class="fa-li"><i class="fa fa-exclamation-triangle"></i></span>
                                 Especially early in the development phase,<br>
                                 we forgot to add some payload data...
                             </li>
-                            <li class="fragment">
+                            <li>
                                 <span class="fa-li"><i class="fa fa-lightbulb"></i></span>
                                 Since we did that trade-off to start with,<br>
                                 we were able to fix it
                             </li>
-                            <li class="fragment">
+                            <li>
                                 <span class="fa-li"><i class="fa fa-fire-extinguisher"></i></span>
                                 Solution: fix events + fix code + reset projection 
                             </li>
-                            <li class="fragment">
+                            <li>
                                 <span class="fa-li"><i class="fa fa-copy"></i></span>
                                 To avoid report outages, <br>
                                 we started to take snapshots of projected data 
