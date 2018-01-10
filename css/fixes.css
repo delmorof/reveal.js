@@ -2,6 +2,14 @@
     border: 0;
 }
 
+.reveal section img.avatar {
+    height: 4em;
+    width: 4em;
+    border-radius: 0.5em;
+    margin-right: 1em;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
 img#logo-engineering {
     position: absolute;
     height: 12%;
@@ -51,19 +59,16 @@ span.grey {
     border-radius: 0.2em;
 }
 
-table#schema-table tr
-{
+table#schema-table tr {
     border: none;
 }
 
-table#schema-table td
-{
+table#schema-table td {
     border: none;
-    text-align:center;
-    vertical-align:middle;
+    text-align: center;
+    vertical-align: middle;
 }
 
-table#schema-table td span.black-box
-{
+table#schema-table td span.black-box {
     margin: 0.5em;
 }
