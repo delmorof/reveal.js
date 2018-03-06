@@ -564,6 +564,25 @@ class RunState implements MongoDocumentInterface
 						</code></pre>
             </section>
             <section>
+                <h2>The Projectors</h2>
+                <pre><code data-trim data-noescape>
+interface ProjectorInterface
+{
+     // projection execution
+    public function initializeProjector();
+
+    public function projectAndSave(Event $event): Result;
+
+    public function normalizeAfterRun(\DateTime $from, \DateTime $to);
+
+    // event filters
+    public function getEventTypes(): array;
+
+    public function getAdditionalEventFilters(): array;
+}
+						</code></pre>
+            </section>
+            <section>
                 <div>
                     <code>Runner::run()</code><br>
                     <small>Pre-execution checks</small>
@@ -615,25 +634,6 @@ $projection->normalizeAfterRun(
 );
 
 $this->updateRunStateOnAccomplished($runState, $maxId, $lastCreatedAt);
-						</code></pre>
-            </section>
-            <section>
-                <h2>The Projectors</h2>
-                <pre><code data-trim data-noescape>
-interface ProjectorInterface
-{
-    // event filters
-    public function getEventTypes(): array;
-
-    public function getAdditionalEventFilters(): array;
-
-    // projection execution
-    public function initializeProjector();
-
-    public function projectAndSave(Event $event): Result;
-
-    public function normalizeAfterRun(\DateTime $from, \DateTime $to);
-}
 						</code></pre>
             </section>
             <section>
@@ -807,17 +807,17 @@ db.projection_state.createIndex(
                 <h2>We reached our goal!!!</h2>
                 <ul class="fa-ul">
                     <li class="fragment">
+                        <span class="fa-li"><i class="fa fa-chart-line"></i></span>
+                        We obtained an easy way to produce <br>
+                        new complex reports with historical reliability
+                    </li>
+                    <li class="fragment">
                         <span class="fa-li"><i class="fa fa-leaf"></i></span>
                         We added MongoDB to our tech stack
                     </li>
                     <li class="fragment">
                         <span class="fa-li"><i class="fa fa-history"></i></span>
                         We gained "time traveling" super-powers!
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-chart-line"></i></span>
-                        We obtained an easy way to produce <br>
-                        new complex reports with historical reliability
                     </li>
                 </ul>
             </section>
