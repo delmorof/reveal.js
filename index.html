@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>Adding Event Sourcing to an existing PHP project (for the right reasons)</title>
-    <meta name="description" content="Talk about a case history in integrating an event sourcing system for reports; presented at the PUG Milano meetup, January 10th 2018 -- hosted by Facile.it Engineering">
+    <meta name="description" content="Talk about a case history in integrating an event sourcing system for reports; presented at PHPDay 2018, May 12th 2018">
     <meta name="author" content="Alessandro Lai">
-    <meta name="author" content="Iacopo Pancotti">
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/beige.css">
@@ -588,12 +587,12 @@ interface ProjectorInterface
                     <small>Pre-execution checks</small>
                 </div>
                 <pre class="stretch"><code data-trim data-noescape>
-$runState = $this->loadRunState($projection);
+$runState = $this->loadRunState($projector);
 if ($runState->isStillRunning()) {
     return $this->resetProjection($projector, $runState);
 }
 
-$iterator = $this->loadEventsIterator($projection, $runState);
+$iterator = $this->loadEventsIterator($projector, $runState);
 
 if (! $iterator->valid()) {
     return $this->updateRunStateOnAccomplished($runState, $lastEvent);
@@ -618,9 +617,9 @@ $this->updateRunStateOnStarted($runState);
 do {
     $lastEvent = $iterator->current();
 
-    $projection->projectAndSave($lastEvent);
+    $projector->projectAndSave($lastEvent);
 
-    if ($this->shouldStop($start, $projection)) {
+    if ($this->shouldStop($start, $projector)) {
         $this->updateRunStateOnStopped($runState, $lastEvent);
 
         break;
@@ -628,7 +627,7 @@ do {
 
 } while ($iterator->next());
 
-$projection->normalizeAfterRun(
+$projector->normalizeAfterRun(
     $firstEvent->getCreatedAt(), 
     $lastEvent->getCreatedAt()
 );
@@ -782,7 +781,7 @@ db.projection_state.createIndex(
                     </li>
                     <li>
                         <span class="fa-li"><i class="fa fa-fire-extinguisher"></i></span>
-                        Solution: fix events + fix code + reset projection
+                        Solution: fix code + fix events + reset projection
                     </li>
                     <li>
                         <span class="fa-li"><i class="fa fa-copy"></i></span>
@@ -925,25 +924,7 @@ db.projection_state.createIndex(
             <section>
                 <h2>Contacts</h2>
                 <div style="font-size: smaller">
-                    <ul class="fa-ul" style="float: right">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-envelope"></i></span>
-                            <a href="mailto:iac@pasixlab.com">iac@pasixlab.com</a>
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-envelope"></i></span>
-                            <a href="mailto:iacopo.pancotti@facile.it">iacopo.pancotti@facile.it</a><br>
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fab fa-github"></i></span>
-                            <a href="https://github.com/pasix">@pasix</a>
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fab fa-twitter"></i></span>
-                            <a href="https://twitter.com/siuvdlec">@siuvdlec</a>
-                        </li>
-                    </ul>
-                    <ul class="fa-ul" style="float: left">
+                    <ul class="fa-ul">
                         <li>
                             <span class="fa-li"><i class="fas fa-envelope"></i></span>
                             <a href="mailto:alessandro.lai85@gmail.com">alessandro.lai85@gmail.com</a>
@@ -1009,9 +990,6 @@ db.projection_state.createIndex(
                 </div>
             </section>
             <section>
-                <h2>Questions?</h2>
-            </section>
-            <section>
                 <h2>Additional references</h2>
                 <ul class="fa-ul">
                     <li>
@@ -1043,6 +1021,9 @@ db.projection_state.createIndex(
                         <small>Workshop - WebSC 2017</small>
                     </li>
                 </ul>
+            </section>
+            <section>
+                <h2>Questions?</h2>
             </section>
         </section>
     </div>
