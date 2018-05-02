@@ -35,14 +35,18 @@
                 Adding Event Sourcing <br>
                 to an existing PHP project
             </h1>
-            <h6>(for the right reasons)</h6>
+            <h4>(for the right reasons)</h4>
             <p>
                 <a href="https://github.com/Jean85">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>
             </p>
-            <p>
-                <a href="https://2018.phpday.it/talks.html#alessandro-lai">PHPDay 2018</a>
-                - May 10th-11th 2018, Verona
-            </p>
+            <small>
+                <p>
+                    <a href="https://2018.phpday.it/talks.html#alessandro-lai">PHPDay 2018</a> - May 10th-11th 2018, Verona
+                </p>
+                <p class="smaller">
+                    <a href="https://joind.in/talk/87e9e">https://joind.in/talk/87e9e</a>
+                </p>
+            </small>
         </section>
 
         <section id="intro">
@@ -80,9 +84,12 @@
             </section>
 
             <section>
-                <h2>Disclaimer 1/3:</h2>
-                <h3>It's a case history</h3>
+                <h2>What this talks is about?</h2>
                 <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-users"></i></span>
+                        It's a case history
+                    </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-book"></i></span>
                         Just a brief theory explanation
@@ -93,24 +100,24 @@
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-rocket"></i></span>
-                        Let's jump into practical implementation details!
+                        We'll see practical implementation details!
                     </li>
                 </ul>
             </section>
-
+ 
             <section class="white" data-background-image="img/shark-team.jpg">
                 <h2>
                     <br>
                     <br>
                     <br>
-                    Disclaimer 2/3:<br>
+                    Disclaimer 0:<br>
                 </h2>
                 <h2>It's a group effort!</h2>
                 <h3>The Facile.it Shark team</h3>
             </section>
 
             <section>
-                <h2>Disclaimer 3/3:</h2>
+                <h2>Disclaimer 1:</h2>
                 <img src="img/gabriele-lana.jpg" class="avatar stretch" style="float: left">
                 <h3>We got help!</h3>
                 <div>
@@ -138,7 +145,7 @@
 
             <section>
                 <h2>The prime example:</h2>
-                <h3>money transactions</h3>
+                <h3>Money transactions, without events...</h3>
                 <ul class="fa-ul">
                     <li class="fragment">
                         <span class="fa-li"><i class="fas fa-edit"></i></span>
@@ -227,16 +234,16 @@
                         Projects start small and simple
                     </li>
                     <li class="fragment">
+                        <span class="fa-li"><i class="fas fa-times"></i></span>
+                        Adding event sourcing from the beginning is costly
+                    </li>
+                    <li class="fragment">
                         <span class="fa-li"><i class="fas fa-angle-double-right"></i></span>
                         Especially with PHP, a fast CRUD approach <br> is used 99% of the time
                     </li>
                     <li class="fragment">
                         <span class="fa-li"><i class="fas fa-cogs"></i></span>
                         Inherent business complexity comes only with time, while adding new features
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fas fa-times"></i></span>
-                        Hard to justify adding event sourcing from the start
                     </li>
                 </ul>
             </section>
@@ -289,7 +296,7 @@
                     </li>
                     <li class="fragment">
                         <span class="fa-li"><i class="fa fa-hourglass-end"></i></span>
-                        The project is 5+ years old
+                        The project is 6+ years old
                     </li>
                 </ul>
             </section>
@@ -943,6 +950,10 @@ db.projection_state.createIndex(
         <section id="ending">
             <section>
                 <h2>Thanks!</h2>
+                <p>
+                    Please rate my talk on Joind.in: <a href="https://joind.in/talk/87e9e">https://joind.in/talk/87e9e</a>
+                </p>
+                <img class="stretch" src="img/joindin-qr.png" alt="Joind.in link: https://joind.in/talk/87e9e">
                 <aside class="notes">
                     45:00
                 </aside>
