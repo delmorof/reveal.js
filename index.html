@@ -1,109 +1,170 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<title>reveal.js</title>
 		<meta name="description" content="{{ Descrizione }}">
-		<meta name="author" content="Alessandro Lai">
+    <meta name="author" content="Alessandro Lai">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/beige.css">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/beige.css">
 
-		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="css/fixes.css">
-		<link rel="stylesheet" href="lib/css/highlight-js/idea.css">
-		<!-- FontAwesome -->
-		<script defer src="lib/font/fontawesome-free-5.0.2/js/fontawesome-all.js"></script>
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="css/fixes.css">
+    <link rel="stylesheet" href="lib/css/highlight-js/idea.css">
+    <!-- FontAwesome -->
+    <script defer src="lib/font/fontawesome-free-5.0.2/js/fontawesome-all.js"></script>
 		<style>
 			.reveal ul {
 				list-style-type: none;
 			}
 		</style>
 
-		<!-- Printing and PDF exports -->
-		<script>
+    <!-- Printing and PDF exports -->
+    <script>
 			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<img id="logo-engineering" src="img/logo_engineering.png" style="height: 12%; position: absolute; bottom: 10px; left: 10px;">
-			<div class="slides">
-				<section id="title">
-					<h1>{{ Title }}</h1>
-					<h3>{{ Second level title }}</h3>
-					<p>
-						<small>By <a href="https://github.com/Jean85">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a></small>
-					</p>
-					<p>
-						<small><a href="#">{{ Event }}</a> - {{ date }}, {{ location }}</small>
-					</p>
-				</section>
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <img id="logo-engineering" src="img/logo_engineering.png" style="height: 12%; position: absolute; bottom: 10px; left: 10px;">
+    <div class="slides">
+        <section id="title">
+            <h1>{{ Title }}</h1>
+            <h3>{{ Second level title }}</h3>
+            <p>
+                <a href="https://github.com/Jean85">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>
+            </p>
+            <small>
+                <p>
+                    <a href="https://2018.phpday.it/talks.html#alessandro-lai">PHPDay 2018</a> - May 10th-11th 2018, Verona
+                </p>
+                <p class="smaller">
+                    <a href="https://joind.in/talk/87e9e">https://joind.in/talk/87e9e</a>
+                </p>
+            </small>
+        </section>
 
-				<section id="intro">
-					<section>
-						<h2>Who am I?</h2>
-						<img src="img/github_avatar.jpg" class="stretch" style="border-radius: 0.5em; margin-right: 1em; text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);">
-						<ul class="fa-ul" style="float: right">
-							<li><span class="fa-li"><i class="fas fa-user"></i></span>Alessandro Lai</li>
-							<li>
-								<span class="fa-li"><i class="fab fa-github"></i></span>
-								<a href="https://github.com/Jean85">@Jean85</a>
-							</li>
-							<li>
-								<span class="fa-li"><i class="fab fa-twitter"></i></span>
-								<a href="https://twitter.com/AlessandroLai">@AlessandroLai</a>
-							</li>
-							<li>
-								<span>
-									<span class="fa-li"><i class="fas fa-keyboard"></i></span>
-									PHP developer @
-								</span>
-								<img src="img/logo_engineering_full.png" style="height: 1.6em; box-shadow: none; vertical-align: middle; margin-bottom: 0; margin-top: -0.8em">
-							</li>
-							<li>
-								<span class="fa-li"><i class="fas fa-users"></i></span>
-								PHP UG Milan Coordinator
-							</li>
-							<li>
-								<span class="fa-li"><i class="fas fa-check-circle"></i></span>
-								PHP-FIG Secretary
-							</li>
-						</ul>
-					</section>
+        <section id="intro">
+            <section>
+                <h2>Who am i?</h2>
+                <img src="img/github_avatar.jpg" class="avatar stretch">
+                <div style="float: right">
+                    <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-user"></i></span>Alessandro Lai</li>
+                        <li>
+                            <span class="fa-li"><i class="fas fa-desktop"></i></span>
+                            Project lead @ <img src="img/logo_engineering_full.png" style="height: 1.6em; box-shadow: none; vertical-align: middle; margin-bottom: 0; margin-top: -0.8em">
+                        </li>
+                        <li>
+                            <span class="fa-li"><i class="fab fa-github"></i></span>
+                            <a href="https://github.com/Jean85">@Jean85</a>
+                        </li>
+                        <li>
+                            <span class="fa-li"><i class="fab fa-twitter"></i></span>
+                            <a href="https://twitter.com/AlessandroLai">@AlessandroLai</a>
+                        </li>
+                        <li>
+                            <span class="fa-li"><i class="fas fa-users"></i></span>
+                            PHP UG Milan Coordinator
+                        </li>
+                        <li>
+                            <span class="fa-li fa-layers">
+                                <i class="fas fa-certificate"></i>
+                                <i class="fas fa-inverse fa-check" data-fa-transform="shrink-8"></i>
+                            </span>
+                            PHP-FIG Secretary
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </section>
 
-                    <section>Slide 2</section>
-                </section>
-			</div>
-		</div>
+        <section id="ending">
+            <section>
+                <h2>Thanks!</h2>
+                <p>
+                    Please rate my talk on Joind.in: <a href="https://joind.in/talk/87e9e">https://joind.in/talk/87e9e</a>
+                </p>
+                <img class="stretch" src="img/joindin-qr.png" alt="Joind.in link: https://joind.in/talk/87e9e">
+                <aside class="notes">
+                    45:00
+                </aside>
+            </section>
+            <section>
+                <h2>Contacts</h2>
+                <div style="font-size: smaller">
+                    <ul class="fa-ul">
+                        <li>
+                            <span class="fa-li"><i class="fas fa-envelope"></i></span>
+                            <a href="mailto:alessandro.lai85@gmail.com">alessandro.lai85@gmail.com</a>
+                        </li>
+                        <li>
+                            <span class="fa-li"><i class="fas fa-envelope"></i></span>
+                            <a href="mailto:alessandro.lai@facile.it">alessandro.lai@facile.it</a>
+                            <small style="vertical-align: middle">(we are hiring!)</small>
+                        </li>
+                        <li>
+                            <span class="fa-li"><i class="fab fa-github"></i></span>
+                            <a href="https://github.com/Jean85">@Jean85</a>
+                        </li>
+                        <li>
+                            <span class="fa-li"><i class="fab fa-twitter"></i></span>
+                            <a href="https://twitter.com/AlessandroLai">@AlessandroLai</a>
+                        </li>
+                    </ul>
+                </div>
+                <div style="clear: both; padding-top: 1em">
+                    <h6>Attributions</h6>
+                    <small>
+                        <ul class="fa-ul">
+                            <li>
+                                <span class="fa-li"><i class="fas fa-image"></i></span>
+                                <a title="money" href="https://flickr.com/photos/khrawlings/3407402643">money</a>,
+                                flickr photo by
+                                <a href="https://flickr.com/people/khrawlings">khrawlings</a>
+                                shared under a
+                                <a href="https://creativecommons.org/licenses/by-nc/2.0/">Creative Commons (BY-NC)
+                                    license</a>
+                            </li>
+                        </ul>
+                    </small>
+                </div>
+            </section>
+            <section>
+                <h2>Questions?</h2>
+            </section>
+        </section>
+    </div>
+</div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-                history: true,
-                keyboard: {
-                    38: 'prev', // go to the prev slide/fragment when the UP key is pressed
-                    40: 'next', // go to the next slide/fragment when the DOWN key is pressed
-                },
-				dependencies: [
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        history: true,
+        keyboard: {
+            38: 'prev', // go to the prev slide/fragment when the UP key is pressed
+            40: 'next', // go to the next slide/fragment when the DOWN key is pressed
+        },
+        dependencies: [
                     { src: 'plugin/zoom-js/zoom.js', async: true },
                     { src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+        ]
+    });
+</script>
+</body>
 </html>

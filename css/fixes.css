@@ -1,21 +1,43 @@
-.reveal code {
-    background: rgba(200, 200, 200, 0.5);
-    border-radius: 0.1em;
-    padding: 0 0.22em 0.1em;
-    margin: 0 0.1em;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-.reveal pre > code {
-    background: white;
-    color: inherit;
-    margin: 0;
-}
-
-a[title='JavaScript charts'] {
-    display: none !important;
-}
-
 .reveal section img {
     border: 0;
+}
+
+.reveal section img.avatar {
+    float: left;
+    border-radius: 0.5em;
+    margin-right: 1em;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+img#logo-engineering {
+    position: absolute;
+    height: 12%;
+    bottom: 10px;
+    left: 10px;
+}
+
+div.credit.white a,
+.reveal section.white h1,
+.reveal section.white h2,
+.reveal section.white h3,
+.reveal section.white h4,
+.reveal section.white p,
+.reveal section.white li,
+.reveal section.white span,
+.reveal section.white div {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 1);
+    color: white;
+}
+
+span.grey {
+    color: grey;
+}
+
+.reveal ul {
+    list-style-type: none;
+}
+
+.reveal section div.smaller,
+.reveal section span.smaller {
+    font-size: smaller;
 }
