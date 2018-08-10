@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
-		<meta name="description" content="{{ Descrizione }}">
+		<title>Symfony + Docker, dall'ambiente di sviluppo alla produzione</title>
+		<meta name="description" content="Symfony + Docker, dall'ambiente di sviluppo alla produzione">
     <meta name="author" content="Alessandro Lai">
 
     <link rel="stylesheet" href="css/reveal.css">
@@ -31,14 +31,14 @@
     <img id="logo-engineering" src="img/logo_engineering.png" style="height: 12%; position: absolute; bottom: 10px; left: 10px;">
     <div class="slides">
         <section id="title">
-            <h1>{{ Title }}</h1>
-            <h3>{{ Second level title }}</h3>
+            <h1>Symfony + Docker</h1>
+            <h3>dall'ambiente di sviluppo alla produzione</h3>
             <p>
                 <a href="https://github.com/Jean85">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>
             </p>
             <small>
                 <p>
-                    <a href="https://2018.phpday.it/talks.html#alessandro-lai">PHPDay 2018</a> - May 10th-11th 2018, Verona
+                    <a href="https://2018.symfonyday.it/talks.html#alessandro-lai">SymfonyDay 2018</a> - 19 ottobre 2018, Verona
                 </p>
                 <p class="smaller">
                     <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>
@@ -55,7 +55,7 @@
                         <li><span class="fa-li"><i class="fas fa-user"></i></span>Alessandro Lai</li>
                         <li>
                             <span class="fa-li"><i class="fas fa-desktop"></i></span>
-                            Project lead @ <img src="img/logo_engineering_full.png" style="height: 1.6em; box-shadow: none; vertical-align: middle; margin-bottom: 0; margin-top: -0.8em">
+                            Project lead dev @ <img src="img/logo_engineering_full.png" style="height: 1.6em; box-shadow: none; vertical-align: middle; margin-bottom: 0; margin-top: -0.8em">
                         </li>
                         <li>
                             <span class="fa-li"><i class="fab fa-github"></i></span>
@@ -67,7 +67,7 @@
                         </li>
                         <li>
                             <span class="fa-li"><i class="fas fa-users"></i></span>
-                            PHP UG Milan Coordinator
+                            Coordinatore PUG Milano
                         </li>
                         <li>
                             <span class="fa-li fa-layers">
@@ -81,6 +81,88 @@
             </section>
         </section>
 
+        <section>
+            <section>
+                <h1>Docker in sviluppo</h1>
+            </section>
+            <section>
+                <ul>
+                    <li>Usato nel 2014</li>
+                    <li>Cross OS</li>
+                    <li>Niente più ingombranti VM</li>
+                </ul>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h1>Obiettivi di Docker in prod</h1>
+            </section>
+            <section>
+                <ul>
+                    <li>Stesso ambiente dev-prod</li>
+                    <li>Uso "vero" del cloud (K8S)</li>
+                    <li>App realmente pacchettizzata</li>
+                    <li>Solo le app, non i servizi con persistenza!</li>
+                    <li>CD, perché si!</li>
+                </ul>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h1>Dockerfile</h1>
+            </section>
+            <section>
+                <ul>
+                    <li>File base + ci/dev/prod</li>
+                    <li>Base Alpine</li>
+                    <li>Installare tutto in maniera pulita</li>
+                    <li>Lock di tutte le versioni</li>
+                    <li>No root!</li>
+                    <li>Utente base 1000 che funzioni anche in dev linux</li>
+                    <li>Composer (perché tanto serve dopo)</li>
+                </ul>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h1>Dockerfile dev</h1>
+            </section>
+            <section>
+                <ul>
+                    <li>xDebug</li>
+                    <li>Mount volumi</li>
+                    <li>Node? Container a parte!</li>
+                </ul>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h1>Dockerfile prod</h1>
+            </section>
+            <section>
+                <ul>
+                    <li>Cache-friendly</li>
+                    <li>Prima composer, poi install no script, poi src, poi install</li>
+                    <li>Stesso dockerfile, Symfony env in ARG</li>
+                </ul>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h1>CI/CD</h1>
+            </section>
+            <section>
+                <ul>
+                    <li>GitLab</li>
+                    <li>DinD, why?</li>
+                    <li>Caching build: pull</li>
+                    <li>Registry privato</li>
+                    <li>Strategia di tagging</li>
+                    <li>Strategia di cleanup</li>
+                    <li>Sequenza di build: build - test - deploy</li>
+                </ul>
+            </section>
+        </section>
         <section id="ending">
             <section>
                 <h2>Thanks!</h2>
