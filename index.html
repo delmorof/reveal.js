@@ -139,6 +139,98 @@
                 <img src="img/k8s.svg"  class="stretch"/>
             </section>
         </section>
+        
+        <section>
+            <section>
+                <h1>Docker Compose</h1>
+            </section>
+            <section>
+                <h3>Vantaggi</h3>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-cogs"></i></span>
+                        Tool utile sia in dev che in CI
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-file-alt"></i></span>
+                        Configurazione centralizzata
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-drafting-compass"></i></span>
+                        Flessibilità e personalizzazione
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h3>File di configurazione (1/4)</h3>
+                <code>docker-compose.yml</code>
+                <pre><code>
+services:
+  php:
+    image: php:7.2
+    depends_on:
+      - mysql
+  nginx:
+    image: nginx:1.14
+    depends_on:
+      - php
+  mysql:
+    image: mysql:8
+                </code></pre>
+            </section>
+            <section>
+                <h3>File di configurazione (2/4)</h3>
+                <code>docker-compose.override.yml</code>
+                <small>(da mettere in <code>.gitignore</code>!)</small>
+                <pre><code>
+services:
+  php:
+    volumes:
+      - '.:/var/www/project'
+    environment:
+      SECRET_TOKEN: ********-****-****-****-************
+  nginx:
+    volumes:
+      - './web:/var/www/project/web'
+    ports:
+      - '127.0.0.10:80:80'
+                </code></pre>
+            </section>
+            <section>
+                <h3>File di configurazione (3/4)</h3>
+                <code>docker-compose.override.yml.dist</code>
+                <small>(da salvare nel repository)</small>
+                <pre><code>
+services:
+  php:
+    volumes:
+      - '.:/var/www/project'
+    environment:
+      SECRET_TOKEN: 'insert-your-token-here'
+  nginx:
+    volumes:
+      - './web:/var/www/project/web'
+    ports:
+      - '80:80'
+                </code></pre>
+            </section>
+            <section>
+                <h3>File di configurazione (4/4)</h3>
+                <code>docker-compose.yml.ci</code>
+                <pre><code>
+services:
+  php:
+    volumes:
+      - '.:/var/www/project'
+  nginx:
+    volumes:
+      - './web:/var/www/project/web'
+    ports:
+      - '127.0.0.10:80:80'
+                </code></pre>
+                <small>Durante la build, da rinominare in <code class="no-wrap">docker-compose.override.yml</code></small>
+            </section>
+        </section>
         <section>
             <section>
                 <h1>Dockerfile</h1>

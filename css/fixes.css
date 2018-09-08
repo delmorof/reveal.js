@@ -40,3 +40,8 @@ span.grey {
 .reveal section span.smaller {
     font-size: smaller;
 }
+
+.no-wrap {
+    white-space: nowrap;
+    text-wrap: none;
+}
