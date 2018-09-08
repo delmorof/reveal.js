@@ -267,12 +267,12 @@ services:
 services:
   php:
     volumes:
-      - '.:/var/www/project'
+      - '.:/var/www/facile-it'
     environment:
       SECRET_TOKEN: ********-****-****-****-************
   nginx:
     volumes:
-      - './web:/var/www/project/web'
+      - './web:/var/www/facile-it/web'
     ports:
       - '127.0.0.10:80:80'
                 </code></pre>
@@ -285,12 +285,12 @@ services:
 services:
   php:
     volumes:
-      - '.:/var/www/project'
+      - '.:/var/www/facile-it'
     environment:
       SECRET_TOKEN: 'insert-your-token-here'
   nginx:
     volumes:
-      - './web:/var/www/project/web'
+      - './web:/var/www/facile-it/web'
     ports:
       - '80:80'
                 </code></pre>
@@ -302,10 +302,10 @@ services:
 services:
   php:
     volumes:
-      - '.:/var/www/project'
+      - '.:/var/www/facile-it'
   nginx:
     volumes:
-      - './web:/var/www/project/web'
+      - './web:/var/www/facile-it/web'
                 </code></pre>
                 <small>Durante la build, da rinominare in <code class="no-wrap">docker-compose.override.yml</code>
                 </small>
@@ -316,15 +316,89 @@ services:
                 <h1>Dockerfile</h1>
             </section>
             <section>
-                <ul>
-                    <li>File base + ci/dev/prod</li>
-                    <li>Base Alpine</li>
-                    <li>Installare tutto in maniera pulita</li>
-                    <li>Lock di tutte le versioni</li>
-                    <li>No root!</li>
-                    <li>Utente base 1000 che funzioni anche in dev linux</li>
-                    <li>Composer (perché tanto serve dopo)</li>
+                <h3>Organizzazione in cartelle</h3>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-folder-open"></i></span>
+                        docker
+                        <ul class="fa-ul">
+                            <li>
+                                <span class="fa-li"><i class="fas fa-folder-open"></i></span>
+                                base
+                                <ul class="fa-ul">
+                                    <li>
+                                        <span class="fa-li"><i class="fas fa-folder-open"></i></span>
+                                        php
+                                        <ul class="fa-ul">
+                                            <li>
+                                                <span class="fa-li"><i class="fas fa-folder"></i></span>
+                                                etc
+                                            </li>
+                                            <li>
+                                                <span class="fa-li"><i class="fas fa-file"></i></span>
+                                                Dockerfile
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="fas fa-folder"></i></span>
+                                dev
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="fas fa-folder"></i></span>
+                                prod
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
+            </section>
+            <section>
+                <h3>1) Estensioni PHP</h3>
+                <pre class="stretch"><code class="dockerfile">FROM php:7.2.8-fpm-alpine
+
+RUN apk add --no-cache \
+        git \
+        icu-dev \
+        libmemcached-libs \
+        netcat-openbsd \
+        zlib-dev \
+    && apk add --no-cache --virtual .ext-build-deps \
+        libmemcached-dev \
+    && pecl install -o \
+        memcached-3.0.4 \
+    && docker-php-ext-enable \
+        memcached \
+    && docker-php-ext-install -j5 \
+        intl \
+        opcache \
+        pdo_mysql \
+        zip \
+    && apk del .ext-build-deps</code></pre>
+            </section>
+            <section>
+                <h3>2) Utente non-root & Composer</h3>
+                <pre class="stretch"><code class="dockerfile">WORKDIR /var/www/facile-it
+
+RUN adduser -D -u 1000 facile-it -G www-data \
+    && mkdir -p /home/facile-it \
+    && chown -R facile-it /home/facile-it \
+    && chown -R facile-it /var/www/facile-it \
+ ## Composer
+    && curl -sS https://getcomposer.org/installer | php -- \
+        --install-dir=/usr/local/bin --filename=composer \
+        --version 1.7.2
+
+USER facile-it
+
+ARG $GITHUB_TOKEN
+                
+RUN composer config -g github-oauth.github.com $GITHUB_TOKEN \
+    && composer global require \
+        --no-suggest --no-interaction \
+        hirak/prestissimo \
+    && rm -rf ~/.composer/cache</code></pre>                
             </section>
         </section>
         <section>
