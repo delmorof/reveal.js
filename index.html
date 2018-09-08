@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Symfony + Docker, dall'ambiente di sviluppo alla produzione</title>
-		<meta name="description" content="Symfony + Docker, dall'ambiente di sviluppo alla produzione">
+    <title>Symfony + Docker, dall'ambiente di sviluppo alla produzione</title>
+    <meta name="description" content="Symfony + Docker, dall'ambiente di sviluppo alla produzione">
     <meta name="author" content="Alessandro Lai">
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/beige.css">
-    <link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico" />
+    <link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico"/>
 
     <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="css/fixes.css">
@@ -19,16 +19,17 @@
     <script defer src="lib/font/fontawesome-free-5.2.0-web/js/all.js"></script>
     <!-- Printing and PDF exports -->
     <script>
-			var link = document.createElement( 'link' );
+        var link = document.createElement('link');
         link.rel = 'stylesheet';
         link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
     </script>
 </head>
 <body>
 <div class="reveal">
-    <img id="logo-engineering" src="img/logo_engineering.png" style="height: 12%; position: absolute; bottom: 10px; left: 10px;">
+    <img id="logo-engineering" src="img/logo_engineering.png"
+         style="height: 12%; position: absolute; bottom: 10px; left: 10px;">
     <div class="slides">
         <section id="title">
             <h1>Symfony + Docker</h1>
@@ -52,7 +53,8 @@
                         <li><span class="fa-li"><i class="fas fa-user"></i></span>Alessandro Lai</li>
                         <li>
                             <span class="fa-li"><i class="fas fa-desktop"></i></span>
-                            Project lead dev @ <img src="img/logo_engineering_full.png" style="height: 1.6em; box-shadow: none; vertical-align: middle; margin-bottom: 0; margin-top: -0.8em">
+                            Project lead dev @ <img src="img/logo_engineering_full.png"
+                                                    style="height: 1.6em; box-shadow: none; vertical-align: middle; margin-bottom: 0; margin-top: -0.8em">
                         </li>
                         <li>
                             <span class="fa-li"><i class="fab fa-github"></i></span>
@@ -109,7 +111,7 @@
                 </p>
             </section>
             <section>
-                <img src="img/beyond-the-twelve-factor-app.jpg" title="Beyond the twelve-factor app" />
+                <img src="img/beyond-the-twelve-factor-app.jpg" title="Beyond the twelve-factor app"/>
             </section>
             <section>
                 <h3>App realmente pacchettizzata</h3>
@@ -136,10 +138,89 @@
             </section>
             <section>
                 <h3>Uso "vero" del cloud (Kubernetes)</h3>
-                <img src="img/k8s.svg"  class="stretch"/>
+                <img src="img/k8s.svg" class="stretch"/>
             </section>
         </section>
-        
+        <section>
+            <section>
+                <h1>
+                    Container <br> best practices
+                </h1>
+            </section>
+            <section>
+                <h2>Un processo per container</h2>
+                <blockquote class="stretch" cite="https://cloud.google.com/solutions/best-practices-for-building-containers">
+                    &ldquo;For example, take a classic Apache/MySQL/PHP stack: <br>
+                    you might be tempted to run all the components in a single container. <br><br>
+                    However, the best practice is to use 2 or 3 different containers:
+                    one for Apache, one for MySQL, and potentially one for PHP if you are running PHP-FPM.&rdquo;
+                </blockquote>
+                <p><a href="https://cloud.google.com/solutions/best-practices-for-building-containers">Best Practices for Building Containers (Google)</a></p>
+            </section>
+            <section>
+                <h3>Build riproducibili</h3>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-thumbtack"></i></span>
+                        Versioni fissate, fino alla patch
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-eraser"></i></span>
+                        Non persistere cache locale durante la build
+                    </li>
+                </ul>
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <pre><code>
+FROM debian:9
+
+RUN apt-get update
+RUN apt-get install -y nginx
+                            </code></pre>
+                        </td>
+                        <td>
+                            <pre><code>
+FROM debian:9
+
+RUN apt-get update && \
+    apt-get install -y nginx
+                            </code></pre>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            <section>
+                <h3>Build rapide</h3>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-file-archive"></i></span>
+                        Immagini più piccole possibili
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-trash"></i></span>
+                        Eliminare tutto ciò che non è necessario
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-toolbox"></i></span>
+                        Ottimizzare per la cache di build
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h3>Stateless</h3>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-cloud-upload-alt"></i></span>
+                        Non salvare niente su "disco"
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-terminal"></i></span>
+                        Log in stdout
+                    </li>
+                </ul>
+            </section>
+        </section>
         <section>
             <section>
                 <h1>Docker Compose</h1>
@@ -225,10 +306,9 @@ services:
   nginx:
     volumes:
       - './web:/var/www/project/web'
-    ports:
-      - '127.0.0.10:80:80'
                 </code></pre>
-                <small>Durante la build, da rinominare in <code class="no-wrap">docker-compose.override.yml</code></small>
+                <small>Durante la build, da rinominare in <code class="no-wrap">docker-compose.override.yml</code>
+                </small>
             </section>
         </section>
         <section>
@@ -359,11 +439,15 @@ services:
             40: 'next', // go to the next slide/fragment when the DOWN key is pressed
         },
         dependencies: [
-                    { src: 'plugin/zoom-js/zoom.js', async: true },
-                    { src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/notes/notes.js', async: true},
+            {
+                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }
         ]
     });
 </script>

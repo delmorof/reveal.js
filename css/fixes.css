@@ -32,7 +32,8 @@ span.grey {
     color: grey;
 }
 
-.reveal ul {
+.reveal ul,
+.reveal ul.fa-ul {
     list-style-type: none;
 }
 
