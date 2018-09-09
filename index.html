@@ -508,6 +508,16 @@ RUN mv app/config/parameters.yml.$SYMFONY_ENV app/config/parameters.yml \
     && composer install $COMPOSER_FLAGS \
     && bin/console cache:warmup</code></pre>
             </section>
+            <section>
+                <h3>Dockerfile web server</h3>
+                <pre><code class="dockerfile">FROM nginx:1.13.3
+
+COPY docker/prod/nginx/conf  /etc/nginx/
+
+COPY ./web/favicon.ico       /var/www/facile-it/web/
+COPY ./web/bundles           /var/www/facile-it/web/bundles/
+COPY ./web/build             /var/www/facile-it/web/build/</code></pre>
+            </section>
         </section>
         <section>
             <section>
