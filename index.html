@@ -357,15 +357,14 @@ services:
             <section>
                 <h3>1) Estensioni PHP</h3>
                 <pre class="stretch"><code class="dockerfile">FROM php:7.2.8-fpm-alpine
-
 RUN apk add --no-cache \
         git \
         icu-dev \
         libmemcached-libs \
-        netcat-openbsd \
         zlib-dev \
     && apk add --no-cache --virtual .ext-build-deps \
         libmemcached-dev \
+                    
     && pecl install -o \
         memcached-3.0.4 \
     && docker-php-ext-enable \
@@ -375,6 +374,7 @@ RUN apk add --no-cache \
         opcache \
         pdo_mysql \
         zip \
+                    
     && apk del .ext-build-deps</code></pre>
             </section>
             <section>
@@ -426,6 +426,7 @@ RUN composer config -g github-oauth.github.com $GITHUB_TOKEN \
                 <pre class="stretch"><code class="dockerfile">FROM docker.facile.it/facile-it/php-base
 
 USER root
+
 RUN apk --no-cache add \
     nano \
     sudo \
@@ -442,7 +443,9 @@ RUN apk add --no-cache --virtual .xdebug-build-deps $PHPIZE_DEPS \
 
 COPY conf/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
-USER facile-it</code></pre>
+USER facile-it
+                
+## shell custom? altri tool?</code></pre>
             </section>
         </section>
         <section>
@@ -464,7 +467,21 @@ USER facile-it</code></pre>
                         <span class="fa-li"><i class="fas fa-server"></i></span>
                         <code>SYMFONY_ENV</code> come <code>ARG</code>
                     </li>
+                    <li>
+                        <span class="fa-li"><i class="fab fa-docker"></i></span>
+                        Utilizzo di <code>.dockerignore</code>
+                    </li>
                 </ul>
+                <pre><code class="gitignore">node_modules/
+var/
+vendor/*
+.git
+.dockerignore
+.gitignore
+.gitlab-ci.yml
+.php_cs.cache
+docker-compose*
+README.md</code></pre>
             </section>
             <section>
                 <pre class="stretch"><code class="dockerfile">FROM docker.facile.it/facile-it/php-base
@@ -472,7 +489,7 @@ USER facile-it</code></pre>
 ARG SYMFONY_ENV=prod
 ENV SYMFONY_ENV=$SYMFONY_ENV
 
-ARG COMPOSER_FLAGS="--no-dev --optimize-autoloader --classmap-authoritative --no-interaction --no-suggest --no-progress --ansi --prefer-dist"
+ARG COMPOSER_FLAGS="--no-dev --prefer-dist --optimize-autoloader --classmap-authoritative --no-interaction --no-suggest --no-progress --ansi"
 
 COPY --chown=facile-it:www-data composer.* ./
 RUN composer install $COMPOSER_FLAGS --no-scripts --no-autoloader \
@@ -640,7 +657,7 @@ PHPStan:
   - kubectl rollout status deployment/facile-it-app
   only: *prod-deployable-branches</code></pre>
                 <p>Risultato:</p>
-                <pre class="stretch"><code>$ kubectl set image deployment/facile-it-app php="${!PHP_IMAGE_VAR}" nginx="${!WEB_IMAGE_VAR}"
+                <pre class="stretch"><code class="shell">$ kubectl set image deployment/facile-it-app php="${!PHP_IMAGE_VAR}" nginx="${!WEB_IMAGE_VAR}"
 deployment "facile-it-app" images updated
 $ kubectl rollout status deployment/facile-it-app
 Waiting for rollout to finish: 3 out of 6 new replicas have been updated...
