@@ -181,7 +181,7 @@ RUN apt-get install -y nginx
                         </td>
                         <td>
                             <pre><code>
-FROM debian:9
+FROM debian:9.5
 
 RUN apt-get update && \
     apt-get install -y nginx
@@ -494,10 +494,12 @@ RUN mv app/config/parameters.yml.$SYMFONY_ENV app/config/parameters.yml \
         </section>
         <section>
             <section>
-                <h1>
-                    Continuous <br/>
-                    integration & delivery
-                </h1>
+                <h1>Build automatica</h1>
+                <h2>
+                    Continuous Integration<br/>
+                    & <br/>
+                    Continuous Delivery
+                </h2>
             </section>
             <section>
                 <h2>Obiettivo: pipeline di test & deploy</h2>
@@ -538,6 +540,29 @@ RUN mv app/config/parameters.yml.$SYMFONY_ENV app/config/parameters.yml \
                 </ul>
             </section>
             <section>
+                <h3>Docker Compose CI config</h3>
+                <pre class="stretch"><code class="yaml">version: '3.2'
+
+services:
+  php-base:
+    image: ${PHP_BASE_IMAGE}
+
+  php-prod-latest:
+    image: ${PHP_PROD_IMAGE}:latest
+
+  php-prod:
+    image: ${PHP_PROD_IMAGE}:${CI_COMMIT_SHA}
+    build:
+      dockerfile: docker/prod/php/Dockerfile
+      context: .
+      args:
+        SYMFONY_ENV: prod
+        RELEASE_SHA: $CI_COMMIT_SHA
+      cache_from:
+        - ${PHP_BASE_IMAGE}
+        - ${PHP_PROD_IMAGE}:latest</code></pre>                
+            </section>
+            <section>
                 <h3>GitLab CI pipeline setup</h3>
                 <pre class="stretch"><code class="yaml">image: docker.facile.it/facile-it/ci-tools:1.3.1
 
@@ -548,8 +573,8 @@ services:
 variables:
   DOCKER_DRIVER: overlay2
   DOCKER_HOST: tcp://docker:2375
-  PHP_PROD_TAG: docker.facile.it/facile-it/php-prod:$CI_COMMIT_SHA
-  WEB_PROD_TAG: docker.facile.it/facile-it/nginx-prod:$CI_COMMIT_SHA
+  PHP_PROD_IMAGE: docker.facile.it/facile-it/php-prod
+  WEB_PROD_IMAGE: docker.facile.it/facile-it/nginx-prod
 
 before_script:
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN docker.facile.it
