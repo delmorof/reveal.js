@@ -406,11 +406,43 @@ RUN composer config -g github-oauth.github.com $GITHUB_TOKEN \
                 <h1>Dockerfile dev</h1>
             </section>
             <section>
-                <ul>
-                    <li>xDebug</li>
-                    <li>Mount volumi</li>
-                    <li>Node? Container a parte!</li>
+                <h3>Tool di sviluppo</h3>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-bug"></i></span>
+                        xDebug
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-folder-open"></i></span>
+                        Mount volumi
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fab fa-js-square"></i></span>
+                        Node? Container a parte!
+                    </li>
                 </ul>
+            </section>
+            <section>
+                <pre class="stretch"><code class="dockerfile">FROM docker.facile.it/facile-it/php-base
+
+USER root
+RUN apk --no-cache add \
+    nano \
+    sudo \
+    vim \
+    wget \
+    zsh
+
+RUN apk add --no-cache --virtual .xdebug-build-deps $PHPIZE_DEPS \
+    && pecl install -o xdebug \
+    && docker-php-ext-enable xdebug \
+    && apk del .xdebug-build-deps \
+    && pecl clear-cache \
+    && docker-php-source delete
+
+COPY conf/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
+USER facile-it</code></pre>
             </section>
         </section>
         <section>
@@ -418,11 +450,46 @@ RUN composer config -g github-oauth.github.com $GITHUB_TOKEN \
                 <h1>Dockerfile prod</h1>
             </section>
             <section>
-                <ul>
-                    <li>Cache-friendly</li>
-                    <li>Prima composer, poi install no script, poi src, poi install</li>
-                    <li>Stesso dockerfile, Symfony env in ARG</li>
+                <h3>Attenzione ai dettagli!</h3>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-toolbox"></i></span>
+                        Cache-friendly
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-copy"></i></span>
+                        Sequenza di copia dei file
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-server"></i></span>
+                        <code>SYMFONY_ENV</code> come <code>ARG</code>
+                    </li>
                 </ul>
+            </section>
+            <section>
+                <pre class="stretch"><code class="dockerfile">FROM docker.facile.it/facile-it/php-base
+
+ARG SYMFONY_ENV=prod
+ENV SYMFONY_ENV=$SYMFONY_ENV
+
+ARG COMPOSER_FLAGS="--no-dev --optimize-autoloader --classmap-authoritative --no-interaction --no-suggest --no-progress --ansi --prefer-dist"
+
+COPY --chown=facile-it:www-data composer.* ./
+RUN composer install $COMPOSER_FLAGS --no-scripts --no-autoloader \
+    && mkdir var
+
+COPY --chown=facile-it:www-data web/app.php web/favicon.ico web/
+COPY --chown=facile-it:www-data bin/console bin/
+COPY --chown=facile-it:www-data app app
+COPY --chown=facile-it:www-data web/build/manifest.* web/build/
+COPY --chown=facile-it:www-data src src
+
+ARG RELEASE_SHA
+ENV RELEASE_VERSION=$RELEASE_SHA
+
+RUN mv app/config/parameters.yml.$SYMFONY_ENV app/config/parameters.yml \
+    && composer install $COMPOSER_FLAGS \
+    && bin/console cache:warmup</code></pre>
             </section>
         </section>
         <section>
