@@ -132,11 +132,11 @@
             <section>
                 <h3>Ambiente speculare dev-prod</h3>
                 <p>
-                    <i class="fas fa-2x fa-laptop-code"></i>
-                    <i class="fas fa-angle-double-right"></i>
-                    <i class="fab fa-2x fa-docker"></i>
-                    <i class="fas fa-angle-double-right"></i>
-                    <i class="fas fa-2x fa-server"></i>
+                    <i class="fas fa-4x fa-laptop-code"></i>
+                    <i class="fas fa-2x fa-angle-double-right"></i>
+                    <i class="fab fa-4x fa-docker"></i>
+                    <i class="fas fa-2x fa-angle-double-right"></i>
+                    <i class="fas fa-4x fa-server"></i>
                 </p>
             </section>
             <section>
@@ -542,7 +542,7 @@ COPY ./web/build             /var/www/facile-it/web/build/</code></pre>
                 <img src="img/gitlab-pipeline.png" class="stretch" title="Pipeline di build in GitLab CI" />
             </section>
             <section>
-                <h3>Docker in Docker</h3>
+                <h2>Docker in Docker</h2>
                 <ul class="fa-ul">
                     <li class="fragment">
                         <span class="fa-li"><i class="fab fa-docker"></i></span>
@@ -558,7 +558,7 @@ COPY ./web/build             /var/www/facile-it/web/build/</code></pre>
                 </ul>
             </section>
             <section>
-                <h3>Build, tag & push</h3>
+                <h2>Build, tag & push</h2>
                 <ul class="fa-ul">
                     <li>
                         <span class="fa-li"><i class="fas fa-database"></i></span>
@@ -666,7 +666,7 @@ PHPStan:
 </code></pre>
             </section>
             <section>
-                <h3>Deploy!</h3>
+                <h2>Deploy!</h2>
                 <pre><code class="yaml">Deploy:
   stage: Deploy
   script:
@@ -679,7 +679,6 @@ PHPStan:
                 <pre class="stretch"><code class="shell">$ kubectl set image deployment/facile-it-app php="${!PHP_IMAGE_VAR}" nginx="${!WEB_IMAGE_VAR}"
 deployment "facile-it-app" images updated
 $ kubectl rollout status deployment/facile-it-app
-Waiting for rollout to finish: 3 out of 6 new replicas have been updated...
 Waiting for rollout to finish: 1 old replicas are pending termination...
 Waiting for rollout to finish: 1 old replicas are pending termination...
 Waiting for rollout to finish: 5 of 6 updated replicas are available...
