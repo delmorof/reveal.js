@@ -3,7 +3,9 @@
 }
 
 .reveal section img.avatar {
+    float: left;
     border-radius: 0.5em;
+    margin-right: 1em;
     text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -35,7 +37,37 @@ span.grey {
     list-style-type: none;
 }
 
+.reveal section div.credit {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: smaller;
+}
+
+.reveal section tr.smaller td span.black-box,
 .reveal section div.smaller,
 .reveal section span.smaller {
     font-size: smaller;
+}
+
+.reveal span.black-box {
+    color: white;
+    padding: 0.1em 0.3em 0.2em;
+    background: slategrey;
+    border-radius: 0.2em;
+}
+
+table#schema-table tr {
+    border: none;
+}
+
+table#schema-table td {
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+}
+
+table#schema-table td span.black-box {
+    margin: 0.5em;
 }
