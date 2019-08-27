@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>reveal.js</title>
-    <meta name="description" content="{{ Descrizione }}">
+    <meta name="description" content="Symfony ❤ Kubernetes: dynamic feature-review environments">
     <meta name="author" content="Alessandro Lai">
 
     <link rel="stylesheet" href="css/reset.css">
@@ -33,14 +33,14 @@
          style="height: 12%; position: absolute; bottom: 10px; left: 10px;">
     <div class="slides">
         <section id="title">
-            <h1>{{ Title }}</h1>
-            <h3>{{ Second level title }}</h3>
+            <h1>Symfony ❤︎ K8S</h1>
+            <h3>dynamic feature-review environments</h3>
             <p>
                 <a href="https://alessandrolai.dev/">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>
             </p>
             <small>
                 <p>
-                    <a href="{{ event-link }}">{{ Event name }}</a> - May 10th-11th 2018,
+                    <a href="https://2019.sfday.it/">SFDay 2019</a> - October 18th 2019,
                     Verona
                 </p>
                 <p class="smaller">
@@ -85,6 +85,109 @@
             </section>
         </section>
 
+        <section>
+            <section>
+                <img src="img/k8s_php.png" class="stretch" />
+            </section>
+            <section>
+                <h2>Kubernetes: where it came from</h2>
+                <p>
+                    TODO history
+                </p>
+            </section>
+            <section>
+                <h2>Kubernetes: basic structure</h2>
+                <p>
+                    TODO master + nodes, basic components
+                </p>
+            </section>
+            <section>
+                <h2>Kubernetes: what's inside</h2>
+                <p>
+                    Kubernetes is a REST API for the cloud
+                </p>
+            </section>
+            <section>
+                <h2>
+                    <code>kubectl</code>
+                </h2>
+                <p>
+                    Installation: <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">https://kubernetes.io/docs/tasks/tools/install-kubectl/</a>
+                </p>
+            </section>
+        </section>
+        <section id="demo-resources">
+            <section>
+                <h2>Main resources</h2>
+                <table id="table-schema">
+                    <tr>
+                        <td width="33%"></td>
+                        <td width="33%">
+                            <span class="black-box">Pod</span>
+                        </td>
+                        <td width="33%"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">
+                            <i class="fa fa-arrow-up" data-fa-transform="rotate-45"></i>
+                        </td>
+                        <td>
+                            <i class="fa fa-arrow-up"></i>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="black-box">Job</span>
+                        </td>
+                        <td>
+                            <span class="black-box">Deployment</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <i class="fa fa-arrow-up"></i>
+                        </td>
+                        <td>
+                            <i class="fa fa-arrow-up"></i>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="black-box">CronJob</span>
+                        </td>
+                        <td>
+                            <span class="black-box">Service</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <i class="fa fa-arrow-up"></i>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <span class="black-box">Ingress</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <i class="fa fa-arrow-up"></i>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+                <span></span>
+            </section>
+        </section>
         <section id="ending">
             <section>
                 <h2>Thanks!</h2>
