@@ -187,6 +187,30 @@
                 </table>
                 <span></span>
             </section>
+            <section>
+                <h2>Deployment</h2>
+                <pre><code class="yaml stretch">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+      - image: docker.facile.it/facile/my-sf-demo-nginx:prod
+        name: nginx
+        ports:
+        - containerPort: 80
+      - image: docker.facile.it/facile/my-sf-demo-php:prod
+        name: php
+        env:
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: my-database
+                key: password</code></pre>
+            </section>
         </section>
         <section id="ending">
             <section>
