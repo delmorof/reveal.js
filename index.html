@@ -188,6 +188,40 @@
                 <span></span>
             </section>
             <section>
+                <h2>Ingress</h2>
+                <pre><code class="yaml stretch">apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-sf-demo
+spec:
+  rules:
+    - host: my-sf-demo.alessandrolai.dev
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: nginx
+              servicePort: 80
+  tls:
+    - hosts:
+        - my-sf-demo.alessandrolai.dev
+</code></pre>
+            </section>
+            <section>
+                <h2>Service</h2>
+                <pre><code class="yaml stretch">apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: my-sf-demo
+    tier: php
+</code></pre>
+            </section>
+            <section>
                 <h2>Deployment</h2>
                 <pre><code class="yaml stretch">apiVersion: apps/v1
 kind: Deployment
@@ -211,6 +245,7 @@ spec:
                 name: my-database
                 key: password</code></pre>
             </section>
+            
         </section>
         <section id="ending">
             <section>
