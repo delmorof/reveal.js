@@ -245,8 +245,32 @@ spec:
                 name: my-database
                 key: password</code></pre>
             </section>
-            
         </section>
+        <section>
+            <section>
+                <h2>Objective: CI/CD pipeline</h2>
+                <img src="img/gitlab-pipeline.png" class="stretch" alt="Example of a build pipeline in GitLab CI" />
+            </section>
+            <section>
+                <h2>Deploy (?)</h2>
+                <pre><code class="yaml">Deploy:
+  stage: Deploy
+  script:
+  - kubectl set image deployment/very-simple-app php=$PHP_IMAGE 
+  - kubectl rollout status deployment/very-simple-app
+  only:
+  - master</code></pre>
+                <p>Result:</p>
+                <pre class="stretch shell"><code>$ kubectl set image deployment/very-simple-app php="${!PHP_IMAGE_VAR}"
+deployment "very-simple-app" images updated
+$ kubectl rollout status deployment/very-simple-app
+Waiting for rollout to finish: 1 old replicas are pending termination...
+Waiting for rollout to finish: 1 old replicas are pending termination...
+Waiting for rollout to finish: 5 of 6 updated replicas are available...
+deployment "very-simple-app" successfully rolled out</code></pre>
+            </section>
+        </section>
+
         <section id="ending">
             <section>
                 <h2>Thanks!</h2>
