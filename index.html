@@ -263,11 +263,63 @@ spec:
                 <p>Result:</p>
                 <pre class="stretch shell"><code>$ kubectl set image deployment/very-simple-app php="${!PHP_IMAGE_VAR}"
 deployment "very-simple-app" images updated
+
 $ kubectl rollout status deployment/very-simple-app
 Waiting for rollout to finish: 1 old replicas are pending termination...
 Waiting for rollout to finish: 1 old replicas are pending termination...
 Waiting for rollout to finish: 5 of 6 updated replicas are available...
 deployment "very-simple-app" successfully rolled out</code></pre>
+            </section>
+        </section>
+        
+        <section>
+            <section>
+                <div class="stretch">
+                    <img src="img/helm-logo.svg" width="100%" alt="Helm logo" />
+                </div>
+                <div>
+                    <img src="img/cncf-logo.png" alt="Cloud Native Computing Foundation logo" />
+                </div>
+            </section>
+            <section>
+                <h2>What Helm does:</h2>
+                <ul>
+                    <li class="fragment">
+                        Templating
+                    </li>
+                    <li class="fragment">
+                        Package manager (charts)
+                    </li>
+                    <li class="fragment">
+                        Deployer
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h2>Chart folder</h2>
+                <img src="img/chart-folder.png" class="stretch" alt="Folder structure of an Helm chart from the demo" />
+            </section>
+            <section>
+                <h2>Template example</h2>
+                <pre class="stretch yaml"><code>{{- $host := $.Values.app.url | trimPrefix "https://" | quote -}}
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $.Values.app.name }}-ingress
+spec:
+  rules:
+    - host: {{ $host }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ $.Values.nginx.name }}
+              servicePort: {{ $.Values.nginx.port }}
+  tls:
+    - hosts:
+        - {{ $host }}
+</code></pre>
             </section>
         </section>
 
