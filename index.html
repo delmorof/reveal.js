@@ -286,6 +286,11 @@ deployment "very-simple-app" successfully rolled out</code></pre>
                     </li>
                 </ul>
             </section>
+        </section>
+        <section>
+            <section>
+                <h2>Demo!</h2>
+            </section>
             <section>
                 <h2>Chart folder</h2>
                 <img src="img/chart-folder.png" class="stretch" alt="Folder structure of an Helm chart from the demo" />
@@ -310,6 +315,129 @@ spec:
   tls:
     - hosts:
         - {{ $host }}
+</code></pre>
+            </section>
+            <section>
+                <h2>values.yaml</h2>
+                <pre class="stretch yaml"><code>app:
+  name: sfday-demo
+  env: ~
+  url: ~
+
+nginx:
+  port: 80
+  name: nginx
+  image: ~
+  resources:
+    requests:
+      memory: 16M
+      cpu: 10m
+    limits:
+      memory: 32M
+      cpu: 50m
+php:
+  name: php
+  image: ~
+  replicas: 2
+  resources:
+    requests:
+      memory: 63M
+      cpu: 25m
+    limits:
+      memory: 128M
+      cpu: 250m
+</code></pre>
+            </section>
+            <section>
+                <h2>Local dump/test</h2>
+                <pre class="stretch makefile"><code>helm-template: helm-template-prod helm-template-staging
+
+helm-template-prod:
+  rm -rf k8s/prod/*
+  @docker-compose run --rm helm /bin/sh -c "
+    helm template /var/www/sfday/charts/SFday-demo/ \
+      --output-dir /var/www/sfday/k8s/prod \
+      --set app.env=prod \
+      --set app.tag=prod-abcd1234 \
+      --set app.url=https://prod.example.com/ \
+      --set gitlabRegistrySecret=secret-sfday-prod \
+      --set php.image=registry.com/myproject/php \
+      --set nginx.image=registry.com/myproject/nginx"
+
+helm-template-staging:
+  rm -rf k8s/staging/*
+  @docker-compose run --rm helm /bin/sh -c "
+    helm template /var/www/sfday/charts/SFday-demo/ \
+      --output-dir /var/www/sfday/k8s/staging \
+      --set app.env=staging \
+      --set app.tag=staging-abcd1234 \
+      --set app.url=https://staging.example.com/ \
+      --set gitlabRegistrySecret=secret-sfday-staging \
+      --set php.image=registry.com/myproject/php \
+      --set nginx.image=registry.com/myproject/nginx"</code></pre>
+            </section>
+            <section>
+                <h2>Helm in action</h2>
+                <pre class="stretch yaml"><code>.helm_job:
+  image: $CI_REGISTRY_IMAGE/helm:2.14.3
+  before_script: []
+  cache: {}
+  services: []
+
+.deploy_template:
+  stage: Deploy
+  extends: .helm_job
+  script:
+    - >
+      helm init \
+        --upgrade \
+        --wait \
+        --tiller-namespace="$KUBE_NAMESPACE"
+    - >
+      helm upgrade \
+        --install \
+        --atomic \
+        --namespace="$KUBE_NAMESPACE" \
+        --tiller-namespace="$KUBE_NAMESPACE" \
+        --set app.env="$CI_ENVIRONMENT_SLUG" \
+        --set app.tag="$APP_ENV-$CI_COMMIT_SHORT_SHA" \
+        --set app.url="$CI_ENVIRONMENT_URL" \
+        --set gitlabRegistrySecret="gitlab-docker-registry" \
+        --set php.image=$PHP_IMAGE \
+        --set nginx.image=$NGINX_IMAGE \
+        --set dockerRegistry="$CI_REGISTRY_IMAGE" \
+        "sfday-demo-$CI_ENVIRONMENT_SLUG" \
+        charts/SFday-demo/
+</code></pre>
+            </section>
+            <section>
+                <h3>...and now, dynamic review environments!</h3>
+                <img src="img/gitlab-environments.png" alt="Environment listing in GitLab" class="stretch"/>
+            </section>
+            <section>
+                <pre class="stretch yaml"><code>Deploy review:
+  extends:
+    - .deploy_template
+    - .review_template
+  variables:
+    APP_ENV: review
+  environment:
+    url: http://$CI_ENVIRONMENT_SLUG.sfday.demo/
+    on_stop: Stop review
+
+Stop review:
+  stage: Stop
+  when: manual
+  extends:
+    - .review_template
+    - .helm_job
+  environment:
+    action: stop
+  script:
+    - >
+      helm delete \
+        --tiller-namespace="$KUBE_NAMESPACE" \
+        "sfday-demo-$CI_ENVIRONMENT_NAME"
 </code></pre>
             </section>
         </section>
