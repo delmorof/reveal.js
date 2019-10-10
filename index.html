@@ -92,28 +92,34 @@
             <section>
                 <h2>Kubernetes: where it came from</h2>
                 <p>
-                    TODO history
+                    Inspired by Google's Borg project (C++) 
+                    <a href="https://en.wikipedia.org/wiki/Kubernetes#History">https://en.wikipedia.org/wiki/Kubernetes#History</a>
                 </p>
             </section>
             <section>
                 <h2>Kubernetes: basic structure</h2>
-                <p>
-                    TODO master + nodes, basic components
-                </p>
-            </section>
-            <section>
-                <h2>Kubernetes: what's inside</h2>
-                <p>
-                    Kubernetes is a REST API for the cloud
-                </p>
-            </section>
-            <section>
-                <h2>
-                    <code>kubectl</code>
-                </h2>
-                <p>
-                    Installation: <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">https://kubernetes.io/docs/tasks/tools/install-kubectl/</a>
-                </p>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-server"></i></span>
+                        Master node(s)
+                        <br>
+                        etcd, API server, scheduler, controller manager
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-server"></i></span>
+                        Worker nodes
+                        <br>
+                        kubelet, Kube-proxy & container runtime
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-terminal"></i></span>
+                        <code>kubectl</code>
+                        <br>
+                        <span style="font-size: smaller">
+                            Installation: <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">https://kubernetes.io/docs/tasks/tools/install-kubectl/</a>
+                        </span>
+                    </li>
+                </ul>
             </section>
         </section>
         <section id="demo-resources">
