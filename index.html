@@ -102,22 +102,23 @@
                     <li>
                         <span class="fa-li"><i class="fas fa-server"></i></span>
                         Master node(s)
-                        <br>
-                        etcd, API server, scheduler, controller manager
+                        <div class="font-smaller">
+                            etcd, API server, scheduler, controller manager
+                        </div>
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-server"></i></span>
                         Worker nodes
-                        <br>
-                        kubelet, Kube-proxy & container runtime
+                        <div class="font-smaller">
+                            kubelet, Kube-proxy & container runtime
+                        </div>
                     </li>
                     <li>
                         <span class="fa-li"><i class="fas fa-terminal"></i></span>
                         <code>kubectl</code>
-                        <br>
-                        <span style="font-size: smaller">
+                        <div class="font-smaller">
                             Installation: <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">https://kubernetes.io/docs/tasks/tools/install-kubectl/</a>
-                        </span>
+                        </div>
                     </li>
                 </ul>
             </section>
@@ -238,6 +239,35 @@ spec:
               secretKeyRef:
                 name: my-database
                 key: password</code></pre>
+            </section>
+            <section>
+                <h2>Cron</h2>
+                <pre><code class="yaml stretch">apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: prod-cron-hello-world
+spec:
+  schedule: "0 23 * * *"
+  suspend: false
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+  template:
+    spec:
+      template:
+        spec:
+          containers:
+          - image: docker.facile.it/facile/my-sf-demo-nginx:prod
+            name: nginx
+            ports:
+            - containerPort: 80
+          - image: docker.facile.it/facile/my-sf-demo-php:prod
+            name: php
+            env:
+              - name: DATABASE_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: my-database
+                    key: password</code></pre>
             </section>
         </section>
         <section>
