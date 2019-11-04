@@ -16,6 +16,14 @@ img#logo-engineering {
     left: 10px;
 }
 
+img#logo-sfcon {
+    position: absolute;
+    width: 5em;
+    bottom: 0.1em;
+    left: 50%;
+    margin-left: -2.5em;
+}
+
 div.credit.white a,
 .reveal section.white h1,
 .reveal section.white h2,
