@@ -168,23 +168,22 @@
 
             <section>
                 <h2>With events, instead...</h2>
-                <ul class="fa-ul">
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fas fa-forward"></i></span>
-                        We store performed actions <br>
-                        <span class="smaller">(withdrawal, deposit)</span>
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fas fa-sort-numeric-down"></i></span>
-                        Concurrency is no longer a big issue<br>
-                        <span class="smaller">(negative balance)</span>
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fas fa-fast-forward"></i></span>
-                        Aggregating events gives me the current state<br>
-                        <span class="smaller">(current balance)</span>
-                    </li>
-                </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            We store performed actions <br>
+                            <span class="smaller">(withdrawal, deposit)</span>
+                        </li>
+                        <li>
+                            Concurrency is no longer a big issue<br>
+                            <span class="smaller">(negative balance)</span>
+                        </li>
+                        <li>
+                            Aggregating events gives me the current state<br>
+                            <span class="smaller">(current balance)</span>
+                        </li>
+                    </ul>
+                </aside>
             </section>
 
             <section>
@@ -228,23 +227,31 @@
             <section>
                 <h2>In the real world...</h2>
                 <ul class="fa-ul">
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fas fa-child"></i></span>
-                        Projects start small and simple
-                    </li>
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fas fa-times"></i></span>
                         Adding event sourcing from the beginning is costly
                     </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fas fa-angle-double-right"></i></span>
-                        Especially with PHP, a fast CRUD approach <br> is used 99% of the time
-                    </li>
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fas fa-cogs"></i></span>
-                        Inherent business complexity comes only with time, while adding new features
+                        Business complexity comes only with time
                     </li>
                 </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            Projects start small and simple
+                        </li>
+                        <li>
+                            Adding event sourcing from the beginning is costly
+                        </li>
+                        <li>
+                            Especially with PHP, a fast CRUD approach <br> is used 99% of the time
+                        </li>
+                        <li>
+                            Inherent business complexity comes only with time, while adding new features
+                        </li>
+                    </ul>
+                </aside>
             </section>
         </section>
 
@@ -258,16 +265,16 @@
             <section>
                 <h2>Our use case</h2>
                 <ul class="fa-ul">
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-users"></i></span>
                         The Shark team works on the <br>
                         Facile Partner Network (FPN) project
                     </li>
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-handshake"></i></span>
                         It's a B2B platform for car insurance brokering
                     </li>
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-desktop"></i></span>
                         We offer the platform to insurance agents <br>
                         that already have their own physical business
@@ -277,50 +284,44 @@
             <section>
                 <h2>Complex domain</h2>
                 <ul class="fa-ul">
-                    <li class="fragment">
+                    <li>
+                        <span class="fa-li"><i class="fa fa-hourglass-end"></i></span>
+                        The project is 8+ years old (started from SF1)
+                    </li>
+                    <li>
                         <span class="fa-li"><i class="fa fa-reply-all"></i></span>
                         We handle the product after it's sold
                     </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-handshake"></i></span>
-                        We handle customer relationships
-                    </li>
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fab fa-usb"></i></span>
                         We have to be an adapter for a lot of processes
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-users"></i></span>
-                        Last but not least, we have a team of 40+ accounts
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-hourglass-end"></i></span>
-                        The project is 6+ years old
                     </li>
                 </ul>
             </section>
             <section>
                 <h2>Our issues</h2>
                 <ul class="fa-ul">
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-tasks"></i></span>
                         Business rules evolve really fast!
                     </li>
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-chart-bar"></i></span>
                         New reports are requested often
                     </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-history"></i></span>
-                        We still have to provide historical data
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-database"></i></span>
-                        We also had a small piece of functionality<br>
-                        that was having growing pains inside our RDBMS
-                        <div class="smaller">(MySQL + Doctrine)</div>
-                    </li>
                 </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            We still have to provide historical data
+                        </li>
+                        <li>
+                            We also had a small piece of functionality<br>
+                            that was having growing pains inside our RDBMS
+                            <div class="smaller">(MySQL + Doctrine)</div>
+                        </li>
+                    </ul>
+                </aside>
             </section>
             <section>
                 <h2>Our solutions</h2>
@@ -384,60 +385,52 @@
 						</code></pre>
             </section>
             <section>
-                <h2>Type & Family</h2>
+                <h2>Event fields</h2>
                 <ul class="fa-ul">
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-long-arrow-alt-right"></i></span>
-                        The type is the event name
-                        <div class="smaller">It represents the kind of document that we will have</div>
+                        <b>Type</b>: event name
                     </li>
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-long-arrow-alt-right"></i></span>
-                        Family is a more generic grouping
-                        <div class="smaller">(depends on business domain)</div>
+                        <b>Family</b>: generic event grouping
                     </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fab fa-searchengin"></i></span>
-                        Helpful for searching/filtering: <br>
-                        you normally work with a specific list of events
+                    <li>
+                        <span class="fa-li"><i class="fa fa-long-arrow-alt-right"></i></span>
+                        <b>Metadata</b>: generic event info, <code>createdAt</code>
                     </li>
-                </ul>
-            </section>
-            <section>
-                <h2>Metadata</h2>
-                <ul class="fa-ul">
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fab fa-searchengin"></i></span>
-                        We use it for search purposes
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-exclamation-triangle"></i></span>
-                        Indexes are a must, at least on <code>createdAt</code>
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-list"></i></span>
-                        We can also use it to store system info<br>
-                        <small>(user, origin, application...)</small>
+                    <li>
+                        <span class="fa-li"><i class="fa fa-long-arrow-alt-right"></i></span>
+                        <b>Payload</b>: event informations
                     </li>
                 </ul>
-            </section>
-            <section>
-                <h2>The payload</h2>
-                <ul class="fa-ul">
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-file-alt"></i></span>
-                        Should contain all the data related to the event
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-history"></i></span>
-                        Remember, events are always in the past
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-question-circle"></i></span>
-                        How many things should I put in there?
-                        <div class="fragment">When in doubt, do not omit</div>
-                    </li>
-                </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            Family is a more generic grouping
+                            <div class="smaller">(depends on business domain)</div>
+                        </li>
+                        <li>
+                            Family, metadata are helpful for searching/filtering: <br>
+                            you normally work with a specific list of (ordered) events
+                        </li>
+                        <li>
+                            Indexes are a must, at least on <code>createdAt</code>
+                        </li>
+                        <li>
+                            We can also use metadata to store system info<br>
+                            <small>(user, origin, application...)</small>
+                        </li>
+                        <li>
+                            <span class="fa-li"><i class="fa fa-history"></i></span>
+                            Remember, events are always in the past
+                        </li>
+                        <li>
+                            How many things should I put in there?<br>
+                            "When in doubt, do not omit"
+                        </li>
+                    </ul>
+                </aside>
             </section>
         </section>
 
@@ -445,26 +438,26 @@
             <section>
                 <h2>Storing events</h2>
                 <ul class="fa-ul">
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-bullhorn"></i></span>
-                        We already used the (Symfony) Event Dispatcher <br>
-                        a lot to drive our business logic
+                        Symfony Event Dispatcher
                     </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-indent"></i></span>
-                        We easily identified the points where we needed to store events
-                    </li>
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-tasks"></i></span>
                         Base event + decorators
                     </li>
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-leaf"></i></span>
                         We didn't have enough confidence with MongoDB...
                     </li>
                 </ul>
                 <aside class="notes">
                     18:12
+                    <ul>
+                        <li>
+                            We easily identified the points where we needed to store events
+                        </li>
+                    </ul>
                 </aside>
             </section>
             <section>
@@ -472,40 +465,49 @@
                 <ul class="fa-ul">
                     <li>
                         <span class="fa-li"><i class="fa fa-hourglass-half"></i></span>
-                        ... so we used our (RabbitMQ) queue to delay the event storing
-                        and avoid failures in critical processes
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-university"></i></span>
-                        In theory, events should be append only,<br>
-                        immutable and ordered in time...
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-tasks"></i></span>
-                        We made this exception as an intentional trade-off
+                        ... so we used our (RabbitMQ) queue
                     </li>
                 </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            (RabbitMQ) queue to delay the event storing
+                            and avoid failures in critical processes
+                        </li>
+                        <li>
+                            In theory, events should be append only,<br>
+                            immutable and ordered in time...
+                        </li>
+                        <li>
+                            We made this exception as an intentional trade-off
+                        </li>
+                    </ul>
+                </aside>
             </section>
             <section>
                 <h2>Generating events for the past</h2>
                 <ul class="fa-ul">
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-university"></i></span>
-                        In theory, you shouldn't do it...
-                    </li>
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-history"></i></span>
-                        The trade-off allowed us to easily generate events for the past
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-copy"></i></span>
-                        We had to avoid writing duplicates
-                    </li>
-                    <li class="fragment">
-                        <span class="fa-li"><i class="fa fa-bug"></i></span>
-                        Deriving events from the current (lossy) state
+                        The trade-off allowed us to easily back-fill events
                     </li>
                 </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            In theory, you shouldn't do it...
+                        </li>
+                        <li>
+                            We needed them for renewals (-1 year in the past)
+                        </li>
+                        <li>
+                            We had to avoid writing duplicates
+                        </li>
+                        <li>
+                            Deriving events from the current (lossy) state
+                        </li>
+                    </ul>
+                </aside>
                 <!--<p>example: RinnovvoDiary needed +12months from event origin</p>-->
                 <!--<p>What's the correct created at? You're reading current state</p>-->
             </section>
@@ -533,11 +535,31 @@
             </section>
             <section>
                 <h2>Our implementation</h2>
-                <ol>
-                    <li><code>Runner</code> + <code>RunState</code></li>
-                    <li><code>Projector</code> + <code>Executor</code></li>
-                    <li><code>ProjectionState</code></li>
-                </ol>
+                <table class="stretch">
+                    <thead>
+                    <tr>
+                        <th width="50%">Classes</th>
+                        <th width="50%">Documents</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <ol>
+                                <li><code>Runner</code>
+                                <li><code>Projectors</code>
+                                <li><code>Executors</code></li>
+                            </ol>
+                        </td>
+                        <td style="vertical-align: top">
+                            <ol>
+                                <li><code>RunState</code></li>
+                                <li><code>ProjectionState</code></li>
+                            </ol>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </section>
             <section>
                 <h2>The (one and only) Runner</h2>
@@ -546,21 +568,23 @@ class Runner
 {
     public function run(ProjectorInterface $projector);
 }					
-						</code></pre>
-                <ul class="fa-ul">
-                    <li>
-                        <span class="fa-li"><i class="fa fa-sync"></i></span>
-                        Handles the cycle, one event at a time
-                    </li>
-                    <li>
-                        <span class="fa-li"><i class="fa fa-cogs"></i></span>
-                        Handles event filters provided by the <code>Projector</code>
-                    </li>
-                    <li>
-                        <span class="fa-li"><i class="fa fa-database"></i></span>
-                        Iterates through the events, one at a time
-                    </li>
-                </ul>
+                </code></pre>
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            Started by a SF Console command
+                        </li>
+                        <li>
+                            Handles the cycle, one event at a time
+                        </li>
+                        <li>
+                            Handles event filters provided by the <code>Projector</code>
+                        </li>
+                        <li>
+                            Iterates through the events, one at a time
+                        </li>
+                    </ul>
+                </aside>
             </section>
             <section>
                 <h2>The RunState document</h2>
@@ -580,14 +604,12 @@ class RunState implements MongoDocumentInterface
     private $lastMaxId;
     /** @var \DateTimeInterface */
     private $lastProjectedEventCreatedAt;
-
-    // ...
 }
 						</code></pre>
             </section>
             <section>
                 <h2>The Projectors</h2>
-                <pre><code data-trim data-noescape>
+                <pre style="width: 100%"><code data-trim data-noescape>
 interface ProjectorInterface
 {
      // projection execution
@@ -687,16 +709,14 @@ class SomeProjector implements ProjectorInterface
                 <ul class="fa-ul">
                     <li>
                         <span class="fa-li"><i class="fa fa-random"></i></span>
-                        Executors must be idempotent:<br>
-                        <small>i.e. if a bug produces a duplicated event, we must handle it gracefully</small>
+                        Executors must be idempotent
                     </li>
                     <li>
                         <span class="fa-li"><i class="fa fa-file-alt"></i></span>
-                        We use a <code>ProjectionState</code> document <br>
-                        to store additional informations
+                        <code>ProjectionState</code> stores additional information
                     </li>
                 </ul>
-                <pre style="font-size: large"><code data-trim data-noescape>
+                <pre><code data-trim data-noescape>
 class ProjectionState implements MongoDocumentInterface
 {
     /** @var string The Projector FQCN */
@@ -712,15 +732,17 @@ class ProjectionState implements MongoDocumentInterface
     private $expireAt;
 }
                         </code></pre>
-                <!--<p>example: Renewals/product selling not expected</p>-->
+                <aside class="notes">
+                    <p>i.e. if a bug produces a duplicated event, we must handle it gracefully</p>
+                    <p>example: Renewals/product selling not expected</p>
+                </aside>
             </section>
             <section>
                 <h2>Reducing the amount of data</h2>
                 <ul class="fa-ul">
                     <li>
                         <span class="fa-li"><i class="fa fa-trash-alt"></i></span>
-                        The <code>Executor</code> should delete the <code>ProjectionState</code>
-                        as soon as it's no longer needed
+                        Delete <code>ProjectionState</code> ASAP
                     </li>
                     <li>
                         <span class="fa-li"><i class="fa fa-trash-alt"></i></span>
@@ -731,9 +753,11 @@ class ProjectionState implements MongoDocumentInterface
 db.projection_state.createIndex(
     { "expireAt": 1 },
     { expireAfterSeconds: 0 }
-);
-                            </code></pre>
+);</code></pre>
                 </ul>
+                <aside class="notes">
+                    <p>Any document adds to the performance toll</p>
+                </aside>
             </section>
             <section>
                 <h2>The real trick: pushing state away</h2>
@@ -757,72 +781,94 @@ db.projection_state.createIndex(
         <section id="practical-issues">
             <section>
                 <h2>Practical issues</h2>
-                <aside class="notes">
-                    37:28
-                </aside>
             </section>
             <section>
-                <h2>Duration of a projection</h2>
+                <h2>The runner</h2>
                 <ul class="fa-ul">
                     <li>
                         <span class="fa-li"><i class="fa fa-signal"></i></span>
+                        Duration of a projection
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fa fa-hourglass-half"></i></span>
+                        Long running processes
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fa fa-rocket"></i></span>
+                        Fix: short burst executions
+                    </li>
+                </ul>
+                <aside class="notes">
+                    37:28
+                    <ul>
+                        <li>
                         Since events' collection grows really fast,<br>
                         projections can take a very long time to complete from the beginning
                     </li>
                     <li>
-                        <span class="fa-li"><i class="fa fa-hourglass-half"></i></span>
-                        Long running processes are not great with PHP<br>
-                        <small>
-                            We found multiple memory leaks (<code>gc_collect_cycles</code> , <code>ext-mongodb</code>)
-                        </small>
-                    </li>
-                </ul>
-            </section>
-            <section>
-                <h2>Runner execution</h2>
-                <ul class="fa-ul">
-                    <li>
-                        <span class="fa-li"><i class="fa fa-sync"></i></span>
-                        We execute the runner in short intervals
+                        We found multiple memory leaks (<code>gc_collect_cycles</code> , <code>ext-mongodb</code>)
                     </li>
                     <li>
-                        <span class="fa-li"><i class="fa fa-lock"></i></span>
                         We check if an other instance of the projector is already running<br>
                         <small>We use the Symfony's <code>LockableTrait</code></small>
                     </li>
                 </ul>
+                </aside>
             </section>
             <section>
                 <h2>Updating past events</h2>
                 <ul class="fa-ul">
                     <li>
                         <span class="fa-li"><i class="fa fa-exclamation-triangle"></i></span>
-                        Especially early in the development phase,<br>
-                        we forgot to add some payload data...
+                        We forgot to add some payload data...
                     </li>
                     <li>
                         <span class="fa-li"><i class="fa fa-lightbulb"></i></span>
-                        Since we did that trade-off to start with,<br>
-                        we were able to fix it
+                        Fix: The trade-off paid again
                     </li>
                     <li>
-                        <span class="fa-li"><i class="fa fa-fire-extinguisher"></i></span>
-                        Solution: fix code + fix events + reset projection
+                        &nbsp;
                     </li>
                     <li>
-                        <span class="fa-li"><i class="fa fa-copy"></i></span>
-                        To avoid report outages, <br>
-                        we started to take snapshots of projected data
+                        <span class="fa-li"><i class="fa fa-clock"></i></span>
+                        Report outages during rewrites
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fa fa-camera-retro"></i></span>
+                        Fix: snapshots
                     </li>
                 </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            Especially early in the development phase,<br>
+                            we forgot to add some payload data...
+                        </li>
+                        <li>
+                            Since we did that trade-off to start with,<br>
+                            we were able to fix it
+                        </li>
+                        <li>
+                            Solution: fix code + fix events + reset projection
+                        </li>
+                    </ul>
+                </aside>
             </section>
             <section>
                 <h2>Projections and code reuse</h2>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fa fa-biohazard"></i></span>
+                        Tempting to reuse <code>Executors</code> code...
+                    </li>
+                </ul>
+            </section>
+            <aside class="notes">
                 <p>
                     Due to CQRS and our objects' architecture,<br>
                     reusing code between projections is impractical
                 </p>
-            </section>
+            </aside>
         </section>
         <section id="advantages">
             <section>
@@ -834,37 +880,42 @@ db.projection_state.createIndex(
             <section>
                 <h2>We reached our goal!!!</h2>
                 <ul class="fa-ul">
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-chart-line"></i></span>
-                        We obtained an easy way to produce <br>
-                        new complex reports with historical reliability
+                        New complex reports
                     </li>
-                    <li class="fragment">
+                    <li>
                         <span class="fa-li"><i class="fa fa-leaf"></i></span>
-                        We added MongoDB to our tech stack
+                        MongoDB
                     </li>
                 </ul>
+                <aside class="notes">
+                    <p>
+                        We obtained an easy way to produce <br>
+                        new complex reports with historical reliability
+                    </p>
+                </aside>
             </section>
             <section>
                 <h2>Projection reuse</h2>
                 <p>
-                    A projector can produce an intermediate result:<br>
-                    a simple denormalization that can be easily queried
-                </p>
-                <p class="fragment">
                     Events
                     <i class="fa fa-arrow-right"></i>
                     <span class="black-box">Projector</span>
                     <i class="fa fa-arrow-right"></i>
                     Projection (intermediate)
                 </p>
-                <p class="fragment">
+                <p>
                     Projection
                     <i class="fa fa-arrow-right"></i>
                     <span class="black-box"><i class="fa fa-leaf"></i> aggregation</span>
                     <i class="fa fa-arrow-right"></i>
                     Final result (snapshot)
                 </p>
+                <aside class="notes">
+                    A projector can produce an intermediate result:<br>
+                    a simple denormalization that can be easily queried
+                </aside>
             </section>
             <section style="text-align: center">
                 <h2>Complexity splitted</h2>
