@@ -79,3 +79,8 @@ table#schema-table td {
 table#schema-table td span.black-box {
     margin: 0.5em;
 }
+
+section aside.notes p.time {
+    font-size: larger;
+    font-weight: bolder;
+}
