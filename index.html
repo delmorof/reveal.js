@@ -43,7 +43,7 @@
             </p>
             <small>
                 <p>
-                    <a href="https://amsterdam2019.symfony.com/speakers">SymfonyCon 2019</a> - November 21st-21nd 2019,
+                    <a href="https://amsterdam2019.symfony.com/speakers">SymfonyCon 2019</a> - November 21st-22nd 2019,
                     Amsterdam
                 </p>
                 <p class="smaller">
@@ -632,23 +632,23 @@ interface ProjectorInterface
                 </div>
                 <pre class="stretch"><code data-trim data-noescape>
 $runState = $this->loadRunState($projector);
-if ($runState->isStillRunning()) {
-    return $this->resetProjection($projector, $runState);
-}
-
-$iterator = $this->loadEventsIterator($projector, $runState);
+$iterator = $this->loadIterator($runState, $projector);
+$event = $iterator->rewind();
 
 if (! $iterator->valid()) {
     return $this->updateRunStateOnAccomplished($runState, $lastEvent);
 }
 
-$firstEvent = $iterator->current();
+if ($this->isInvalidRun($runState, $event)) {
+    $runState->setLastProjectedCreateAt($event->getCreatedAt());
+    $runState->setStopped(true);
+    $this->persistanceManager->save($runState);
 
-if ($this->eventIsOlderThanLastProjected($runState, $firstEvent)) {
-    return $this->resetProjection($projector, $runState);
+    return $this->run($projector);
 }
 
 $this->updateRunStateOnStarted($runState);
+
 // ...
                         </code></pre>
             </section>
