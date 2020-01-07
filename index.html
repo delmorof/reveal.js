@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>reveal.js</title>
-    <meta name="description" content="{{ Descrizione }}">
+    <title>Code reviews - How-to, do & dont's</title>
+    <meta name="description" content="Internal presentation">
     <meta name="author" content="Alessandro Lai">
 
     <link rel="stylesheet" href="css/reset.css">
@@ -33,109 +33,83 @@
          style="height: 12%; position: absolute; bottom: 10px; left: 10px;">
     <div class="slides">
         <section id="title">
-            <h1>{{ Title }}</h1>
-            <h3>{{ Second level title }}</h3>
+            <h1>Code reviews</h1>
+            <h3>How-to, do & dont's</h3>
             <p>
                 <a href="https://alessandrolai.dev/">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>
             </p>
             <small>
                 <p>
-                    <a href="{{ event-link }}">{{ Event name }}</a> - May 10th-11th 2018,
-                    Verona
-                </p>
-                <p class="smaller">
-                    <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>
+                    <a href="https://engineering.facile.it/">Facile.it</a> - January 10th 2020,
+                    Milano
                 </p>
             </small>
         </section>
-
-        <section id="intro">
+        
+        <section>
+            <h3>Source material</h3>
+            <ul class="fa-ul">
+                <li>
+                    <span class="fa-li"><i class="fab fa-youtube"></i></span>
+                    <a href="https://www.youtube.com/watch?v=jXi8h44cbQA">
+                        Trisha Gee - Code Review Best Practices
+                    </a>
+                    <span style="display: block; font-size: smaller">SCLConf 2018</span>
+                </li>
+                <li>
+                    <span class="fa-li"><i class="fab fa-youtube"></i></span>
+                    <a href="https://www.youtube.com/watch?v=c_-maGEY2Ck">
+                        Dave Liddament - Effective Code Review
+                    </a>
+                    <span style="display: block; font-size: smaller">phpday 2018</span>
+                </li>
+            </ul>
+        </section>
+        
+        <section>
             <section>
-                <h2>Who am I?</h2>
-                <img src="img/github_avatar.jpg" class="avatar stretch">
-                <div style="float: right">
-                    <ul class="fa-ul">
-                        <li><span class="fa-li"><i class="fas fa-user"></i></span>Alessandro Lai</li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-desktop"></i></span>
-                            Project lead @ <img src="img/logo_engineering_full.png"
-                                                style="height: 1.6em; box-shadow: none; vertical-align: middle; margin-bottom: 0; margin-top: -0.8em">
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fab fa-github"></i></span>
-                            <a href="https://github.com/Jean85">@Jean85</a>
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fab fa-twitter"></i></span>
-                            <a href="https://twitter.com/AlessandroLai">@AlessandroLai</a>
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-users"></i></span>
-                            PHP UG Milan Coordinator
-                        </li>
-                        <li>
-                            <span class="fa-li fa-layers">
-                                <i class="fas fa-certificate"></i>
-                                <i class="fas fa-inverse fa-check" data-fa-transform="shrink-8"></i>
-                            </span>
-                            PHP-FIG Secretary
-                        </li>
-                    </ul>
-                </div>
+                <h3>Formal definition</h3>
+                <blockquote>
+                    Code review is the systematic examination of source code, <br> 
+                    and is intended to find mistake overlooked in software development, <br> 
+                    improving the overall quality of software
+                </blockquote>
+                <div style="text-align: right">Wikipedia</div>
+            </section>
+
+            <section data-background="img/bad_code.png"></section>
+            <section>
+                <h2>But...</h2>
+                That code works as intended.
+            </section>
+            <section>
+                <h2>Everyone has an opinion</h2>
+            </section>
+            <section>
+                <h2>Are we harder on other people's code than our own?</h2>
+            </section>
+
+            <section>
+                <h2>So, what should we look for <br> in a code review?</h2>
+                <a href="https://leanpub.com/whattolookforinacodereview">
+                    https://leanpub.com/whattolookforinacodereview
+                </a>
             </section>
         </section>
 
+        <section>
+            <section>
+                <h2>Different workflows</h2>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-dungeon"></i></span>
+
+                    </li>
+                </ul>
+            </section>
+        </section>
+        
         <section id="ending">
-            <section>
-                <h2>Thanks!</h2>
-                <p>
-                    Please rate my talk on Joind.in: <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>
-                </p>
-                <img class="stretch" src="img/joindin-qr.png" alt="Joind.in link: https://joind.in/talk/TODO-CHANGEME">
-                <aside class="notes">
-                    45:00
-                </aside>
-            </section>
-            <section>
-                <h2>Contacts</h2>
-                <div style="font-size: smaller">
-                    <ul class="fa-ul">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-envelope"></i></span>
-                            <a href="mailto:alessandro.lai85@gmail.com">alessandro.lai85@gmail.com</a>
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-envelope"></i></span>
-                            <a href="mailto:alessandro.lai@facile.it">alessandro.lai@facile.it</a>
-                            <small style="vertical-align: middle">(we are hiring!)</small>
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fab fa-github"></i></span>
-                            <a href="https://github.com/Jean85">@Jean85</a>
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fab fa-twitter"></i></span>
-                            <a href="https://twitter.com/AlessandroLai">@AlessandroLai</a>
-                        </li>
-                    </ul>
-                </div>
-                <div style="clear: both; padding-top: 1em">
-                    <h6>Attributions</h6>
-                    <small>
-                        <ul class="fa-ul">
-                            <li>
-                                <span class="fa-li"><i class="fas fa-image"></i></span>
-                                <a title="money" href="https://flickr.com/photos/khrawlings/3407402643">money</a>,
-                                flickr photo by
-                                <a href="https://flickr.com/people/khrawlings">khrawlings</a>
-                                shared under a
-                                <a href="https://creativecommons.org/licenses/by-nc/2.0/">Creative Commons (BY-NC)
-                                    license</a>
-                            </li>
-                        </ul>
-                    </small>
-                </div>
-            </section>
             <section>
                 <h2>Questions?</h2>
             </section>
