@@ -1,10 +1,15 @@
 .reveal section img {
     border: 0;
+    box-shadow: none;
 }
 
 .reveal section img.avatar {
     border-radius: 0.5em;
     text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+.font-smaller {
+    font-size: 0.7em;
 }
 
 img#logo-engineering {
@@ -38,4 +43,16 @@ span.grey {
 .reveal section div.smaller,
 .reveal section span.smaller {
     font-size: smaller;
+}
+
+table#table-schema td {
+    border: none;
+    text-align: center;
+}
+
+span.black-box {
+    color: white;
+    padding: 0.1em 0.3em 0.2em;
+    background: slategrey;
+    border-radius: 0.2em;
 }
