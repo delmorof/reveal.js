@@ -186,10 +186,10 @@
                 <pre><code class="yaml stretch">apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: my-sf-demo
+  name: my-phpday-demo
 spec:
   rules:
-    - host: my-sf-demo.alessandrolai.dev
+    - host: my-phpday-demo.alessandrolai.dev
       http:
         paths:
           - path: /
@@ -198,7 +198,7 @@ spec:
               servicePort: 80
   tls:
     - hosts:
-        - my-sf-demo.alessandrolai.dev
+        - my-phpday-demo.alessandrolai.dev
 </code></pre>
             </section>
             <section>
@@ -211,26 +211,47 @@ spec:
   ports:
     - port: 80
   selector:
-    app: my-sf-demo
+    app: my-phpday-demo
     tier: php
 </code></pre>
             </section>
             <section>
-                <h2>Deployment</h2>
+                <h2>Deployment (1/2)</h2>
                 <pre><code class="yaml stretch">apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: php
+  labels: # ...
 spec:
+  selector:
+    matchLabels:
+      conf: phpday
   replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 50%
   template:
+    metadata:
+      labels:
+        conf: phpday
+    # ...</code></pre>
+            </section>
+            <section>
+                <h2>Deployment (2/2)</h2>
+                <pre><code class="yaml stretch">kind: Deployment
+# ...
+spec:
+  template:
+    # ...
     spec:
       containers:
-      - image: docker.facile.it/facile/my-sf-demo-nginx:prod
+      - image: docker.facile.it/my-phpday-demo/nginx-prod:abc123
         name: nginx
         ports:
         - containerPort: 80
-      - image: docker.facile.it/facile/my-sf-demo-php:prod
+      - image: docker.facile.it/my-phpday-demo/php-prod:abc123
         name: php
         env:
           - name: DATABASE_PASSWORD
@@ -250,39 +271,22 @@ spec:
   suspend: false
   successfulJobsHistoryLimit: 3
   jobTemplate:
-  template:
-    spec:
-      template:
-        spec:
-          containers:
-          - image: docker.facile.it/facile/my-sf-demo-nginx:prod
-            name: nginx
-            ports:
-            - containerPort: 80
-          - image: docker.facile.it/facile/my-sf-demo-php:prod
-            name: php
-            env:
-              - name: DATABASE_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: my-database
-                    key: password</code></pre>
+    template:
+      spec:
+        template:
+          spec:
+            containers:
+            - image: docker.facile.it/my-phpday-demo/php-prod:abc123
+              command:
+              - bin/console
+              - # ...
+</code></pre>
             </section>
         </section>
         <section>
             <section>
                 <h2>Objective: CI/CD pipeline</h2>
                 <img src="img/gitlab-pipeline.png" class="stretch" alt="Example of a build pipeline in GitLab CI"/>
-                <p class="font-smaller">
-                    <a href="">
-                        Last year's talk
-                    </a>
-                    -
-                    <a href="https://www.youtube.com/watch?v=ULTvEB46f8E&t=1932">
-                        <i class="fab fa-youtube"></i>
-                        Video
-                    </a>
-                </p>
             </section>
             <section>
                 <h2>Deploy (?)</h2>
@@ -365,7 +369,7 @@ spec:
             <section>
                 <h2>values.yaml</h2>
                 <pre class="stretch yaml"><code>app:
-  name: sfday-demo
+  name: phpday-demo
   env: ~
   url: ~
 
@@ -400,63 +404,38 @@ php:
 helm-template-prod:
   rm -rf k8s/prod/*
   @docker-compose run --rm helm /bin/sh -c "
-    helm template /var/www/sfday/charts/SFday-demo/ \
-      --output-dir /var/www/sfday/k8s/prod \
-      --set app.env=prod \
-      --set app.tag=prod-abcd1234 \
-      --set app.url=https://prod.example.com/ \
-      --set gitlabRegistrySecret=secret-sfday-prod \
-      --set php.image=registry.com/myproject/php \
-      --set nginx.image=registry.com/myproject/nginx"
+    helm template /var/www/phpday/charts/phpday-demo/ \
+      --output-dir /var/www/phpday/k8s/prod \
+      --set app.env=prod
+      # ..."
 
 helm-template-staging:
   rm -rf k8s/staging/*
   @docker-compose run --rm helm /bin/sh -c "
-    helm template /var/www/sfday/charts/SFday-demo/ \
-      --output-dir /var/www/sfday/k8s/staging \
-      --set app.env=staging \
-      --set app.tag=staging-abcd1234 \
-      --set app.url=https://staging.example.com/ \
-      --set gitlabRegistrySecret=secret-sfday-staging \
-      --set php.image=registry.com/myproject/php \
-      --set nginx.image=registry.com/myproject/nginx"</code></pre>
+    helm template /var/www/phpday/charts/phpday-demo/ \
+      --output-dir /var/www/phpday/k8s/staging \
+      --set app.env=staging
+      # ..."</code></pre>
             </section>
             <section>
                 <h2>Helm in action</h2>
-                <pre class="stretch yaml"><code>.helm_job:
-  image: $CI_REGISTRY_IMAGE/helm:2.14.3
-  before_script: []
-  cache: {}
-  services: []
-
-.deploy_template:
+                <pre class="yaml"><code>Deploy:
   stage: Deploy
-  extends: .helm_job
+  image: $CI_REGISTRY_IMAGE/helm
   script:
-    - >
-      helm init \
-        --upgrade \
-        --wait \
-        --tiller-namespace="$KUBE_NAMESPACE"
     - >
       helm upgrade \
         --install \
         --atomic \
         --namespace="$KUBE_NAMESPACE" \
-        --tiller-namespace="$KUBE_NAMESPACE" \
         --set app.env="$CI_ENVIRONMENT_SLUG" \
-        --set app.tag="$APP_ENV-$CI_COMMIT_SHORT_SHA" \
-        --set app.url="$CI_ENVIRONMENT_URL" \
-        --set gitlabRegistrySecret="gitlab-docker-registry" \
-        --set php.image=$PHP_IMAGE \
-        --set nginx.image=$NGINX_IMAGE \
-        --set dockerRegistry="$CI_REGISTRY_IMAGE" \
-        "sfday-demo-$CI_ENVIRONMENT_SLUG" \
-        charts/SFday-demo/
+        # ...
+        "phpday-demo-$CI_ENVIRONMENT_SLUG" \
+        charts/phpday-demo/
 </code></pre>
             </section>
             <section>
-                <h3>...and now, dynamic review environments!</h3>
+                <h3>...and going forward? Per-branch deploys!</h3>
                 <img src="img/gitlab-environments.png" alt="Environment listing in GitLab" class="stretch"/>
             </section>
             <section>
@@ -467,7 +446,7 @@ helm-template-staging:
   variables:
     APP_ENV: review
   environment:
-    url: http://$CI_ENVIRONMENT_SLUG.sfday.demo/
+    url: http://$CI_ENVIRONMENT_SLUG.phpday.demo/
     on_stop: Stop review
 
 Stop review:
@@ -482,7 +461,7 @@ Stop review:
     - >
       helm delete \
         --tiller-namespace="$KUBE_NAMESPACE" \
-        "sfday-demo-$CI_ENVIRONMENT_NAME"
+        "phpday-demo-$CI_ENVIRONMENT_NAME"
 </code></pre>
             </section>
         </section>
