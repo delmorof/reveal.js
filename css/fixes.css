@@ -1,3 +1,13 @@
+div.pyramid {
+    background: slategrey;
+    color: white;
+    padding: 1em 0;
+    border-radius: 0.2em;
+    margin: 0 auto;
+    font-size: larger;
+    font-weight: bolder;
+}
+
 .reveal section img {
     border: 0;
 }

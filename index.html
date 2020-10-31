@@ -84,6 +84,103 @@
             </section>
         </section>
 
+        <section>
+            <section>
+                <a href="https://alessandrolai.dev/talks/2015-symfonyday-paraunit/">
+                    <img src="img/sfday_2015.jpg" class="stretch" alt="Alessandro @ SFDay 2015" />
+                    <small>SFDay 2015 - Reggio Emilia</small>
+                </a>
+            </section>
+            <section>
+                <h2>Slow test suites</h2>
+                <p>If a build / test suite takes more than 10 minutes to run, it's worthless.</p>
+            </section>
+            <section>
+                <a href="https://alessandrolai.dev/slides/2015-09-paraunit-pugmi/#/comparazione-prestazioni">
+                    <img src="img/paraunit-slide.png" height="80%" alt="Paraunit performace slide @ SFDay 2015" />
+                </a>
+            </section>
+            <section>
+                <h2>The testing pyramid</h2>
+                <div class="pyramid" style="width: 30%">E2E</div>
+                <div class="pyramid" style="width: 60%">Functional tests</div>
+                <div class="pyramid" style="width: 90%">Unit tests</div>
+            </section>
+            <section>
+                <h2>...and what was going wrong</h2>
+                <div class="pyramid" style="font-size: smaller; background-color: lightgrey; width: 20%">E2E</div>
+                <div class="pyramid" style="width: 90%">Functional tests</div>
+                <div class="pyramid" style="font-size: smaller; width: 20%">Unit tests</div>
+            </section>
+            <section>
+                <h2>My pyramid foundation</h2>
+                <div class="pyramid" style="width: 40%">Functional tests</div>
+                <div class="pyramid" style="width: 60%">Unit tests</div>
+                <div class="pyramid" style="width: 90%">Static code analysis</div>
+            </section>
+            <section>
+                <h2>Static code analysis</h2>
+                <table class="stretch">
+                    <tr>
+                        <td width="50%" style="text-align: center">
+                            <a href="https://phpstan.org">
+                                <img src="img/phpstan.png" alt="The PHPStan website">
+                                https://phpstan.org
+                            </a>
+                        </td>
+                        <td width="50%" style="text-align: center">
+                            <a href="https://psalm.dev">
+                                <img src="img/psalm.png" alt="The Psalm website">
+                                https://psalm.dev
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Speed up your tests</h2>
+            </section>
+            <section>
+                <h2>Parallelization & isolation</h2>
+                <p>When you ran multiple tests on the same DB at the same time, you run intro troubles...</p>
+                <ul class="fa-ul">
+                    <li class="fragment">
+                        <span class="fa-li"><i class="fab fa-github"></i></span>
+                        <a href="https://github.com/facile-it/paraunit-testcase">
+                            <code>facile-it/paraunit-testcase</code>
+                        </a>
+                        <small class="fragment" style="vertical-align: middle">(deprecated)</small>
+                    </li>
+                    <li class="fragment">
+                        <span class="fa-li"><i class="fab fa-github"></i></span>
+                        <a href="https://github.com/dmaicher/doctrine-test-bundle">
+                            <code>dama/doctrine-test-bundle</code>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h2>Kernel caching</h2>
+                <p><code>facile-it/paraunit-testcase</code> was built on top of something else...</p>
+                <ul class="fa-ul">
+                    <li class="fragment">
+                        <span class="fa-li"><i class="fab fa-github"></i></span>
+                        <a href="https://github.com/liip/LiipFunctionalTestBundle/">
+                            <code>liip/functional-test-bundle</code>
+                        </a>
+                        <small class="fragment" style="vertical-align: middle">(forked)</small>
+                    </li>
+                    <li class="fragment">
+                        <span class="fa-li"><i class="fab fa-github"></i></span>
+                        <a href="https://github.com/facile-it/symfony-functional-testcase">
+                            <code>facile-it/symfony-functional-testcase</code>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </section>
         <section id="ending">
             <section>
                 <h2>Thanks!</h2>
