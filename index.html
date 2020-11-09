@@ -10,12 +10,12 @@
 
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/beige.css">
+    <link rel="stylesheet" href="css/theme/league.css">
     <link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico"/>
 
     <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="css/fixes.css">
-    <link rel="stylesheet" href="lib/css/highlight-js/idea.css">
+    <link rel="stylesheet" href="lib/css/highlight-js/monokai-sublime.css">
     <!-- FontAwesome -->
     <script defer src="lib/font/fontawesome-free-5.11.2-web/js/all.js"></script>
     <!-- Printing and PDF exports -->
@@ -179,6 +179,229 @@
                         </a>
                     </li>
                 </ul>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Good fixture hygiene</h2>
+            </section>
+            <section>
+                <h3>DB vendor is part of your system</h3>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-database"></i></span>
+                        It's not worth it to change DB vendor only for tests
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h3>Validation of entities</h3>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check-double"></i></span>
+                        I used strong validation before persistence
+                        <br>in multiple projects
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fab fa-github"></i></span>
+                        Strict validation ensures that data is good
+                        <br>once it reaches the DB 
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h3>Good fixtures lead to good tests</h3>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-users-cog"></i></span>
+                        Fixtures should resemble real data<br>
+                        <small>AKA don't put invalid data in your entities</small>
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-tools"></i></span>
+                        Build <code>*FixtureBuilder</code> utility classes to create fixtures in known valid states
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-dice"></i></span>
+                        Randomized fixtures are good<br>
+                        <small>(use Faker or similar libraries)</small>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h3>Fixture belong outside of <code>src/</code></h3>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-toolbox"></i></span>
+                        Fixtures are testing tools, not production code
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fab fa-github"></i></span>
+                        <a href="https://github.com/maglnet/ComposerRequireChecker"><code>maglnet/composer-require-checker</code></a>
+                        <br>will report them as failures 
+                    </li>
+                </ul>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Using the tools</h2>
+            </section>
+            <section>
+                <h3>No reload, no cleanup required</h3>
+                <pre><code>public function testDeleteFoo(): void
+{
+    // ...
+    $client->request('DELETE', '/api/foo/123');
+
+    $this->assertNull($fooRepo->find(123));
+    // no cleanup or fixture reload required!
+}
+
+public function testPutFoo(): void
+{
+    // ...
+    $client->request('PUT', '/api/foo/132', $payload);
+    // ...
+}
+                </code></pre>
+            </section>
+            <section>
+                <h3>Getting services from the container</h3>
+                <pre><code>/**
+ * @template T
+ * @param class-string&lt;T&gt; $serviceId
+ *
+ * @return T
+ */
+protected function getService(string $serviceId): object
+{
+    $service = $this->getContainer()->get($serviceId);
+    $this->assertInstanceOf($serviceId, $service);
+
+    return $service;
+}</code></pre>
+            </section>
+            <section>
+                <h3>Testing a service directly</h3>
+                <pre><code>public function testFindLatestReturnsOnlyOneResult(): void
+{
+    $repository = $this->getService(FooRepository::class);
+
+    $result = $repository->findLatest();
+
+    $this->assertCount(1, $result);
+    $this->assertContainsOnlyInstancesOf(Foo::class, $result);
+}</code></pre>
+            </section>
+            <section>
+                <h3>Testing entity validation (1/2)</h3>
+                <pre class="stretch"><code>protected function assertIsValid(object $entity): void
+{
+    $validator = $this->getContainer()->get('validator');
+    $result = $validator->validate($entity);
+
+    $this->assertCount(0, $result, 'Validation failed: ' . $result);
+}
+                    
+protected function assertValidationFailsAtPath(string $path, object $entity): void
+{
+    $violationList = $this->getContainer()->get('validator')->validate($entity);
+    foreach ($violationList as $violation) {
+        if ($violation->getPropertyPath() === $path) {
+            $this->increaseAssertionCount();
+    
+            return;
+        }
+    }
+    $this->fail('No violation found at path ' . $path);
+}</code></pre>
+            </section>
+            <section>
+                <h3>Testing entity validation (2/2)</h3>
+                <pre class="stretch"><code>public function testNewFooIsValid(): void
+{
+    $this->assertIsValid(new Foo('baz'));
+}
+                    
+/** @dataProvider invalidDataProvider */
+public function testFooIsInvalid(Foo $foo, string $errorPath): void
+{
+    $this->assertValidationFailsAtPath($errorPath, $foo);
+}
+                    
+public function testFooIsInvalidWithWrongBar(): void
+{
+    $foo = new Foo();
+    $this->assertIsValid($foo);
+
+    $foo->setBar('invalid');
+
+    $this->assertValidationFailsAtPath('bar', $foo);
+}</code></pre>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Pitfalls</h2>
+            </section>
+            <section>
+                <h2>Doctrine Test Bundle limitations</h2>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-house-damage"></i></span>
+                        Commands with implicit commits break it (<code>TRUNCATE</code> or any schema change)
+                    </li>
+                    <li class="fragment">
+                        <span class="fa-li"><i class="fas fa-ghost"></i></span>
+                        No logs nor after-test DB inspections<br>
+                        <small>(but invalid queries still crash)</small>
+                    </li>
+                    <li class="fragment">
+                        <span class="fa-li"><i class="fas fa-frown-open"></i></span>
+                        Last resort: force transaction commit <br>
+                        <pre><code class="php">\DAMA\DoctrineTestBundle\Doctrine\DBAL\StaticDriver::commit()</code></pre>
+                    </li>
+                    <li class="fragment">
+                        <span class="fa-li"><i class="fas fa-lock"></i></span>
+                        Tests can fail due to concurrency & DB locks<br>
+                        <small>(but Paraunit retries those)</small>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h2>All containers are not the same...</h2>
+                <pre><code>public function test(): void
+{
+    $client = self::createClient();
+                    
+    $this->assertNotSame(
+        $this->getContainer(), 
+        $client->getContainer(),
+        "Those are not the services you're looking for..."
+    );
+}</code></pre>
+            </section>
+            <section>
+                <h2>...so you may want the right one</h2>
+                <pre class="stretch"><code>protected function getService(
+    string $serviceId,
+    KernelBrowser $client = null
+): object 
+{
+    return $this->getContainerFrom($client)->get($serviceId);
+}
+
+protected function getContainer(KernelBrowser $client = null): ContainerInterface
+{
+    if ($client) {
+        $clientContainer = $client->getContainer();
+
+        return $clientContainer->get('test.service_container');
+    }
+
+    return parent::getContainer();
+}</code></pre>
             </section>
         </section>
         <section id="ending">
