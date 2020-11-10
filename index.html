@@ -50,7 +50,7 @@
 
         <section id="intro">
             <section>
-                <h2>Who am I?</h2>
+                <h3>Who am I?</h3>
                 <img src="img/github_avatar.jpg" class="avatar stretch">
                 <div style="float: right">
                     <ul class="fa-ul">
@@ -92,7 +92,7 @@
                 </a>
             </section>
             <section>
-                <h2>Slow test suites</h2>
+                <h3>Slow test suites</h3>
                 <p>If a build / test suite takes more than 10 minutes to run, it's worthless.</p>
             </section>
             <section>
@@ -101,25 +101,25 @@
                 </a>
             </section>
             <section>
-                <h2>The testing pyramid</h2>
+                <h3>The testing pyramid</h3>
                 <div class="pyramid" style="width: 30%">E2E</div>
                 <div class="pyramid" style="width: 60%">Functional tests</div>
                 <div class="pyramid" style="width: 90%">Unit tests</div>
             </section>
             <section>
-                <h2>...and what was going wrong</h2>
+                <h3>...and what was going wrong</h3>
                 <div class="pyramid" style="font-size: smaller; background-color: lightgrey; width: 20%">E2E</div>
                 <div class="pyramid" style="width: 90%">Functional tests</div>
                 <div class="pyramid" style="font-size: smaller; width: 20%">Unit tests</div>
             </section>
             <section>
-                <h2>My pyramid foundation</h2>
+                <h3>My pyramid foundation</h3>
                 <div class="pyramid" style="width: 40%">Functional tests</div>
                 <div class="pyramid" style="width: 60%">Unit tests</div>
-                <div class="pyramid" style="width: 90%">Static code analysis</div>
+                <div class="pyramid fragment" style="width: 90%">Static code analysis</div>
             </section>
             <section>
-                <h2>Static code analysis</h2>
+                <h3>Static code analysis</h3>
                 <table class="stretch">
                     <tr>
                         <td width="50%" style="text-align: center">
@@ -143,7 +143,7 @@
                 <h2>Speed up your tests</h2>
             </section>
             <section>
-                <h2>Parallelization & isolation</h2>
+                <h3>Parallelization & isolation</h3>
                 <p>When you ran multiple tests on the same DB at the same time, you run intro troubles...</p>
                 <ul class="fa-ul">
                     <li class="fragment">
@@ -162,7 +162,7 @@
                 </ul>
             </section>
             <section>
-                <h2>Kernel caching</h2>
+                <h3>Kernel caching</h3>
                 <p><code>facile-it/paraunit-testcase</code> was built on top of something else...</p>
                 <ul class="fa-ul">
                     <li class="fragment">
@@ -171,6 +171,13 @@
                             <code>liip/functional-test-bundle</code>
                         </a>
                         <small class="fragment" style="vertical-align: middle">(forked)</small>
+                        <pre><code>class MyTest extends WebTestCase
+{
+    public function test(): void
+    {
+        $this->getContainer()->get('...');
+    }
+}</code></pre>
                     </li>
                     <li class="fragment">
                         <span class="fa-li"><i class="fab fa-github"></i></span>
@@ -183,7 +190,7 @@
         </section>
         <section>
             <section>
-                <h2>Good fixture hygiene</h2>
+                <h2>Good fixtures hygiene</h2>
             </section>
             <section>
                 <h3>DB vendor is part of your system</h3>
@@ -217,11 +224,11 @@
                         Fixtures should resemble real data<br>
                         <small>AKA don't put invalid data in your entities</small>
                     </li>
-                    <li>
+                    <li class="fragment">
                         <span class="fa-li"><i class="fas fa-tools"></i></span>
                         Build <code>*FixtureBuilder</code> utility classes to create fixtures in known valid states
                     </li>
-                    <li>
+                    <li class="fragment">
                         <span class="fa-li"><i class="fas fa-dice"></i></span>
                         Randomized fixtures are good<br>
                         <small>(use Faker or similar libraries)</small>
@@ -269,7 +276,7 @@ public function testPutFoo(): void
             <section>
                 <h3>Getting services from the container</h3>
                 <pre><code>/**
- * @template T
+ * @template T of object
  * @param class-string&lt;T&gt; $serviceId
  *
  * @return T
@@ -296,7 +303,7 @@ protected function getService(string $serviceId): object
             </section>
             <section>
                 <h3>Testing entity validation (1/2)</h3>
-                <pre class="stretch"><code>protected function assertIsValid(object $entity): void
+                <pre class="stretch fragment"><code>protected function assertIsValid(object $entity): void
 {
     $validator = $this->getContainer()->get('validator');
     $result = $validator->validate($entity);
@@ -346,7 +353,7 @@ public function testFooIsInvalidWithWrongBar(): void
                 <h2>Pitfalls</h2>
             </section>
             <section>
-                <h2>Doctrine Test Bundle limitations</h2>
+                <h3>Doctrine Test Bundle limitations</h3>
                 <ul class="fa-ul">
                     <li>
                         <span class="fa-li"><i class="fas fa-house-damage"></i></span>
@@ -370,7 +377,20 @@ public function testFooIsInvalidWithWrongBar(): void
                 </ul>
             </section>
             <section>
-                <h2>All containers are not the same...</h2>
+                <h3>Data providers are a strange place...</h3>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-hourglass-start"></i></span>
+                        PHPUnit's data providers are executed ahead of time
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-house-damage"></i></span>
+                        Do not interact with the entity manager there
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h3>All containers are not the same...</h3>
                 <pre><code>public function test(): void
 {
     $client = self::createClient();
@@ -383,13 +403,13 @@ public function testFooIsInvalidWithWrongBar(): void
 }</code></pre>
             </section>
             <section>
-                <h2>...so you may want the right one</h2>
+                <h3>...so you may want the right one</h3>
                 <pre class="stretch"><code>protected function getService(
     string $serviceId,
     KernelBrowser $client = null
 ): object 
 {
-    return $this->getContainerFrom($client)->get($serviceId);
+    return $this->getContainer($client)->get($serviceId);
 }
 
 protected function getContainer(KernelBrowser $client = null): ContainerInterface
@@ -416,7 +436,7 @@ protected function getContainer(KernelBrowser $client = null): ContainerInterfac
                 </aside>
             </section>
             <section>
-                <h2>Contacts</h2>
+                <h3>Contacts</h3>
                 <div style="font-size: smaller">
                     <ul class="fa-ul">
                         <li>
