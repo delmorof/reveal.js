@@ -58,7 +58,7 @@
                         <li>
                             <span class="fa-li"><i class="fas fa-desktop"></i></span>
                             Lead developer @ <img src="img/logo_engineering_full.png"
-                                                style="height: 1.6em; box-shadow: none; vertical-align: middle; margin-bottom: 0; margin-top: -0.8em">
+                                                style="background: none; height: 1.6em; box-shadow: none; vertical-align: middle; margin-bottom: 0; margin-top: -0.8em">
                         </li>
                         <li>
                             <span class="fa-li"><i class="fab fa-github"></i></span>
@@ -108,7 +108,7 @@
             </section>
             <section>
                 <h3>...and what was going wrong</h3>
-                <div class="pyramid" style="font-size: smaller; background-color: lightgrey; width: 20%">E2E</div>
+                <div class="pyramid" style="font-size: smaller; background-color: rgba(120, 120, 120, 0.2); color: rgba(200, 200, 200, 0.8); text-decoration: line-through; width: 20%">E2E</div>
                 <div class="pyramid" style="width: 90%">Functional tests</div>
                 <div class="pyramid" style="font-size: smaller; width: 20%">Unit tests</div>
             </section>
@@ -303,7 +303,7 @@ protected function getService(string $serviceId): object
             </section>
             <section>
                 <h3>Testing entity validation (1/2)</h3>
-                <pre class="stretch fragment"><code>protected function assertIsValid(object $entity): void
+                <pre class="stretch"><code class="fragment ">protected function assertIsValid(object $entity): void
 {
     $validator = $this->getContainer()->get('validator');
     $result = $validator->validate($entity);
