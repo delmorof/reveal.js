@@ -1,36 +1,27 @@
 <!doctype html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>reveal.js</title>
-    <meta name="description" content="{{ Descrizione }}">
-    <meta name="author" content="Alessandro Lai">
+        <title>reveal.js</title>
+        <meta name="description" content="{{ Descrizione }}">
+        <meta name="author" content="Alessandro Lai">
+    
+        <link rel="stylesheet" href="dist/reset.css">
+        <link rel="stylesheet" href="dist/reveal.css">
+        <link rel="stylesheet" href="dist/theme/beige.css" id="theme">
+        <link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico"/>
 
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/beige.css">
-    <link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico"/>
-
-    <!-- Code syntax highlighting -->
-    <link rel="stylesheet" href="css/fixes.css">
-    <link rel="stylesheet" href="lib/css/highlight-js/idea.css">
-    <!-- FontAwesome -->
-    <script defer src="lib/font/fontawesome-free-5.11.2-web/js/all.js"></script>
-    <!-- Printing and PDF exports -->
-    <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
-    </script>
-</head>
-<body>
-<div class="reveal">
-    <img id="logo-engineering" src="img/logo_engineering.png"
-         style="height: 12%; position: absolute; bottom: 10px; left: 10px;">
+        <!-- Theme used for syntax highlighted code -->
+        <link rel="stylesheet" href="css/fixes.css">
+        <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+        <!-- FontAwesome -->
+        <script defer src="lib/font/fontawesome-free-5.11.2-web/js/all.js"></script>
+	</head>
+	<body>
+		<div class="reveal">
+    <img id="logo-engineering" src="img/logo_engineering.png" style="height: 12%; position: absolute; bottom: 10px; left: 10px;">
     <div class="slides">
         <section id="title">
             <h1>{{ Title }}</h1>
@@ -140,29 +131,29 @@
                 <h2>Questions?</h2>
             </section>
         </section>
-    </div>
-</div>
+			</div>
+		</div>
 
-<script src="js/reveal.js"></script>
+        <script src="dist/reveal.js"></script>
+        <script src="plugin/notes/notes.js"></script>
+        <script src="plugin/markdown/markdown.js"></script>
+        <script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/zoom/zoom.js"></script>
+        <script>
+            // More info about initialization & config:
+            // - https://revealjs.com/initialization/
+            // - https://revealjs.com/config/
+            Reveal.initialize({
+                hash: true,
 
-<script>
-    // More info about config & dependencies:
-    // - https://github.com/hakimel/reveal.js#configuration
-    // - https://github.com/hakimel/reveal.js#dependencies
-    Reveal.initialize({
-        history: true,
-        keyboard: {
-            38: 'prev', // go to the prev slide/fragment when the UP key is pressed
-            40: 'next', // go to the next slide/fragment when the DOWN key is pressed
-        },
-        dependencies: [
-            {src: 'plugin/zoom-js/zoom.js', async: true},
-            {src: 'plugin/markdown/marked.js'},
-            {src: 'plugin/markdown/markdown.js'},
-            {src: 'plugin/notes/notes.js', async: true},
-            {src: 'plugin/highlight/highlight.js', async: true}
-        ]
-    });
-</script>
-</body>
+                // Learn about plugins: https://revealjs.com/plugins/
+                plugins: [ 
+                    RevealMarkdown,
+                    RevealHighlight,
+                    RevealNotes,
+                    RevealZoom
+                ]
+            });
+        </script>
+	</body>
 </html>
