@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>reveal.js</title>
+    <title>API contracts - Leveraging OpenAPI during API development - Alessandro Lai</title>
     <meta name="description" content="{{ Descrizione }}">
     <meta name="author" content="Alessandro Lai">
 
@@ -21,15 +21,15 @@
 <div class="reveal">
     <div class="slides">
         <section id="title" data-background-image="img/theme/bg-cover.svg">
-            <h1>Kubernetes</h1>
-            <h2>for PHP developers</h2>
+            <h1 style="white-space: nowrap">API contracts</h1>
+            <h3>Leveraging OpenAPI during API development</h3>
             <p>
                 <a href="https://alessandrolai.dev/">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>
             </p>
             <small>
                 <p>
-                    <a href="{{ event-link }}">{{ Event name }}</a> - May 10th-11th 2018,
-                    Verona
+                    <a href="{{ event-link }}">sfday Italy @localhost</a> - May 13th 2021,
+                    Online
                 </p>
                 <p class="smaller">
                     <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>
@@ -69,6 +69,101 @@
                     </ul>
                 </div>
             </section>
+        </section>
+
+        <section>
+            <section>
+                <h3>APIs: the language of web apps</h3>
+                <p>
+                    APIs are the "common language" of web development
+                </p>
+                <ul class="fa-ul">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-arrow-alt-circle-right"></i></span>
+                        Frontend to backend
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-arrow-alt-circle-right"></i></span>
+                        Mobile to backend
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-arrow-alt-circle-right"></i></span>
+                        Between different applications <br>
+                        <small>(microservices)</small>
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-arrow-alt-circle-right"></i></span>
+                        Between different companies <br>
+                        <small>(SaaS, API monetization...)</small>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h3>Working between projects</h3>
+                <p>
+                    If you don't have a monorepo, you'll need a way to describe what your APIs does and how it does it
+                </p>
+            </section>
+            <section>
+                <h3>Contracts</h3>
+                <p>Design by contract (cit. needed)</p>
+                <p>Which language to use? Which format?</p>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h3>OpenAPI (the old Swagger)</h3>
+                <p>[screenshot]</p>
+            </section>
+            <section>
+                <h3>OpenAPI 3</h3>
+                <p>[changelog]</p>
+                <p>PHP packages that have support</p>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h3>Beware, here be YAML</h3>
+                <pre class="stretch"><code>openapi: 3.0.0
+info:
+  title: Test API for Facile.it
+  version: '1.0'
+  description: Description of the APIs
+  contact:
+    name: Alessandro Lai
+servers:
+  - url: 'https://openapi.facile.it'
+    description: Prod
+paths:
+  /api/test:
+    get:
+      summary: Get the test information
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  foo:
+                    # ...</code></pre>
+            </section>
+            <section><h3>StopLight</h3></section>
+            <section><h3>Live demo?</h3></section>
+        </section>
+        <section>
+            <section><h3>The documentation pitfall: synchronization</h3></section>
+            <section><h3>The "bad" approach: Nelmio bundle</h3></section>
+        </section>
+        <section>
+            <section><h3>A better approach: involving the spec in the code</h3></section>
+            <section><h3>Using the validator in tests</h3></section>
+            <section><h3>Using the spec in production!</h3></section>
+            <section><h3>Using validation errors as responses</h3></section>
+        </section>
+        <section>
+            <section><h3>Pitfalls and limitations</h3></section>
         </section>
 
         <section id="ending">
