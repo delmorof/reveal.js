@@ -1,31 +1,28 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <title>reveal.js</title>
-        <meta name="description" content="{{ Descrizione }}">
-        <meta name="author" content="Alessandro Lai">
-    
-        <link rel="stylesheet" href="dist/reset.css">
-        <link rel="stylesheet" href="dist/reveal.css">
-        <link rel="stylesheet" href="dist/theme/beige.css" id="theme">
-        <link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico"/>
+    <title>reveal.js</title>
+    <meta name="description" content="{{ Descrizione }}">
+    <meta name="author" content="Alessandro Lai">
 
-        <!-- Theme used for syntax highlighted code -->
-        <link rel="stylesheet" href="css/fixes.css">
-        <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
-        <!-- FontAwesome -->
-        <script defer src="lib/font/fontawesome-free-5.11.2-web/js/all.js"></script>
-	</head>
-	<body>
-		<div class="reveal">
-    <img id="logo-engineering" src="img/logo_engineering.png" style="height: 12%; position: absolute; bottom: 10px; left: 10px;">
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/facile-engineering.css" id="theme">
+    <link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico"/>
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="css/fixes.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+</head>
+<body>
+<div class="reveal">
     <div class="slides">
-        <section id="title">
-            <h1>{{ Title }}</h1>
-            <h3>{{ Second level title }}</h3>
+        <section id="title" data-background-image="img/theme/bg-cover.svg">
+            <h1>Kubernetes</h1>
+            <h2>for PHP developers</h2>
             <p>
                 <a href="https://alessandrolai.dev/">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>
             </p>
@@ -49,8 +46,7 @@
                         <li><span class="fa-li"><i class="fas fa-user"></i></span>Alessandro Lai</li>
                         <li>
                             <span class="fa-li"><i class="fas fa-desktop"></i></span>
-                            Project lead @ <img src="img/logo_engineering_full.png"
-                                                style="height: 1.6em; box-shadow: none; vertical-align: middle; margin-bottom: 0; margin-top: -0.8em">
+                            Team lead developer @ Facile.it
                         </li>
                         <li>
                             <span class="fa-li"><i class="fab fa-github"></i></span>
@@ -65,9 +61,8 @@
                             PHP UG Milan Coordinator
                         </li>
                         <li>
-                            <span class="fa-li fa-layers">
+                            <span class="fa-li">
                                 <i class="fas fa-certificate"></i>
-                                <i class="fas fa-inverse fa-check" data-fa-transform="shrink-8"></i>
                             </span>
                             PHP-FIG Secretary
                         </li>
@@ -131,29 +126,29 @@
                 <h2>Questions?</h2>
             </section>
         </section>
-			</div>
-		</div>
+    </div>
+</div>
 
-        <script src="dist/reveal.js"></script>
-        <script src="plugin/notes/notes.js"></script>
-        <script src="plugin/markdown/markdown.js"></script>
-        <script src="plugin/highlight/highlight.js"></script>
-        <script src="plugin/zoom/zoom.js"></script>
-        <script>
-            // More info about initialization & config:
-            // - https://revealjs.com/initialization/
-            // - https://revealjs.com/config/
-            Reveal.initialize({
-                hash: true,
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/zoom/zoom.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        hash: true,
 
-                // Learn about plugins: https://revealjs.com/plugins/
-                plugins: [ 
-                    RevealMarkdown,
-                    RevealHighlight,
-                    RevealNotes,
-                    RevealZoom
-                ]
-            });
-        </script>
-	</body>
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [
+            RevealMarkdown,
+            RevealHighlight,
+            RevealNotes,
+            RevealZoom
+        ]
+    });
+</script>
+</body>
 </html>

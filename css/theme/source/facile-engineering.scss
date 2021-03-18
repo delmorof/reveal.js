@@ -1,0 +1,95 @@
+/**
+ * Facile.it Engineering theme for reveal.js.
+ *
+ * Copyright (C) 2021 Facile.it, https://engineering.facile.it
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+
+// Include theme-specific fonts
+@import url(https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700);
+@import url(https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700);
+
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: #ecf1f4;
+
+// Primary/body text
+$mainFont: 'Roboto', sans-serif;
+$mainFontSize: 40px;
+$mainColor: black;
+
+// Vertical spacing between blocks of text
+$blockMargin: 20px;
+
+// Headings
+$headingMargin: 0 0 $blockMargin 0;
+$headingFont: 'Roboto Condensed', sans-serif;
+$headingColor: #f60;
+$headingLineHeight: 1.2;
+$headingLetterSpacing: normal;
+$headingTextTransform: uppercase;
+$headingTextShadow: none;
+$headingFontWeight: bold;
+$heading1TextShadow: $headingTextShadow;
+
+//$heading1Size: 3.77em;
+//$heading2Size: 2.11em;
+//$heading3Size: 1.55em;
+//$heading4Size: 1.00em;
+
+$codeFont: monospace;
+
+// Links and actions
+$linkColor: #f60;
+$linkColorHover: lighten( $linkColor, 20% );
+
+// Text selection
+//$selectionBackgroundColor: #FF5E99;
+//$selectionColor: #fff;
+
+$selectionBackgroundColor: #f60;
+//$heading1TextShadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 20px 20px rgba(0,0,0,.15);
+
+// Background generator
+@mixin bodyBackground() {
+	background-image: url("../../img/theme/bg-slide.svg");
+	background-repeat: repeat-y;
+	background-attachment: fixed;
+	background-position: bottom left;
+	background-size: 100%;
+}
+
+// Change text colors against dark slide backgrounds
+@include dark-bg-text-color(#fff);
+
+
+// Fontawesome ---------------------------------
+$fa-font-path: "fonts/fontawesome";
+@import "../../fontawesome/scss/fontawesome.scss";
+@import "../../fontawesome/scss/solid.scss";
+@import "../../fontawesome/scss/brands.scss";
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
+
+.reveal a {
+	color: $mainColor;
+}
+
+.reveal a:hover {
+	color: $linkColor;
+	text-decoration: underline;
+	text-decoration-style: solid;
+}
+
+.reveal section#title {
+	text-align: left;
+}
