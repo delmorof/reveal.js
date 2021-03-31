@@ -4613,7 +4613,7 @@ readers do not read off random characters that represent icons */
  *********************************************/
 :root {
   --background-color: #ecf1f4;
-  --main-font: Roboto, sans-serif;
+  --main-font: Roboto Condensed, sans-serif;
   --main-font-size: 40px;
   --main-color: black;
   --block-margin: 20px;
@@ -4645,7 +4645,7 @@ readers do not read off random characters that represent icons */
   background-color: #ecf1f4; }
 
 .reveal {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
   font-size: 40px;
   font-weight: normal;
   color: black; }
