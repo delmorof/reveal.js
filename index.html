@@ -105,26 +105,34 @@
                 </p>
             </section>
             <section>
-                <h3>Contracts</h3>
-                <p>Design by contract (cit. needed)</p>
-                <p>Which language to use? Which format?</p>
+                <h3>Design by contract &trade;</h3>
+                <blockquote style="width: 100%; font-size: smaller">
+                    Design by contract is an approach for designing software. <br/>
+                    <span class="fragment">
+                        [...] software designers should define <b>formal, precise and verifiable<br/>
+                        interface specifications</b> for software components,<br/>
+                    </span>
+                    <span class="fragment">[...] all client components that invoke an operation on a server component will meet the preconditions [...]<br/></span>
+                    <span class="fragment">[Otherwise] the inverse approach is taken, meaning that the server component tests that all relevant preconditions hold true...</span>
+                </blockquote>
+                <small>From <a href="https://en.wikipedia.org/wiki/Design_by_contract">Wikipedia</a></small>
+                <p class="fragment">Which language to use? Which format?</p>
             </section>
         </section>
         <section>
             <section>
                 <h3>OpenAPI (the old Swagger)</h3>
-                <p>[screenshot]</p>
+                <img class="stretch" src="img/swagger_ui.png" alt="Swagger UI" />
+                <small><a  href="https://swagger.io/tools/swagger-ui/">Swagger UI</a></small>
             </section>
             <section>
                 <h3>OpenAPI 3</h3>
-                <p>[changelog]</p>
-                <p>PHP packages that have support</p>
+                <img class="stretch" src="img/openapi3.png" alt="OpenAPI specification heading" />
+                <small><a href="https://swagger.io/specification/">OpenAPI specification</a></small>
             </section>
-        </section>
-        <section>
             <section>
                 <h3>Beware, here be YAML</h3>
-                <pre class="stretch"><code>openapi: 3.0.0
+                <pre class="stretch"><code>openapi: 3.0.3
 info:
   title: Test API for Facile.it
   version: '1.0'
@@ -149,8 +157,19 @@ paths:
                   foo:
                     # ...</code></pre>
             </section>
-            <section><h3>StopLight</h3></section>
-            <section><h3>Live demo?</h3></section>
+        </section>
+        <section>
+            <section>
+                <h3>StopLight (Studio)</h3>
+                <small><a href="https://swagger.io/specification/">https://stoplight.io/studio/</a></small>
+                + prism
+                + spectral
+            </section>
+            <section>
+                Phil Sturgeon
+            </section>
+            <section><h3>Live demo</h3></section>
+            <section><h3>OpenApi.tools</h3></section>
         </section>
         <section>
             <section><h3>The documentation pitfall: synchronization</h3></section>
