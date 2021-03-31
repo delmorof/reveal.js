@@ -4899,7 +4899,8 @@ readers do not read off random characters that represent icons */
     background-color: #ecf1f4; } }
 
 .reveal a {
-  color: black; }
+  color: black;
+  text-decoration: underline; }
 
 .reveal a:hover {
   color: #f60;
