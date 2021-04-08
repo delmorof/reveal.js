@@ -154,8 +154,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  foo:
-                    # ...</code></pre>
+                  # ...</code></pre>
             </section>
         </section>
         <section>
@@ -231,14 +230,183 @@ paths:
             </section>
         </section>
         <section>
-            <section><h3>The documentation pitfall: synchronization</h3></section>
-            <section><h3>The "bad" approach: Nelmio bundle</h3></section>
+            <section>
+                <h3>The "documentation" pitfall</h3>
+                    <ul class="fa-ul">
+                        <li>
+                            <span class="fa-li"><i class="fas fa-exchange-alt"></i></span>
+                            How do we synchronize code & spec?
+                        </li>
+                        <li>
+                            <span class="fa-li"><i class="fas fa-hourglass-end"></i></span>
+                            What's stopping us from making the spec outdated?
+                        </li>
+                        <li class="fragment">
+                            <span class="fa-li"><i class="fas fa-comment"></i></span>
+                            Just committing your OpenAPI Spec is not enough:<br/>
+                            it's the same as having too many comments in the code
+                        </li>
+                    </ul>
+            </section>
+            <section data-transition="fade">
+                <h3>The "magic" approach</h3>
+                <i class="fab fa-github"></i>
+                <a target="_blank" href="https://github.com/nelmio/NelmioApiDocBundle">NelmioApiDocBundle</a>
+                <pre class="stretch"><code>/**
+ * List the rewards of the specified user.
+ *
+ * This call takes into account all confirmed awards, but not pending or refused awards.
+ *
+ * @Route("/api/{user}/rewards", methods={"GET"})
+ * @SWG\Response(
+ *     response=200,
+ *     description="Returns the rewards of an user",
+ *     @SWG\Schema(
+ *         type="array",
+ *         @SWG\Items(ref=@Model(type=Reward::class, groups={"full"}))
+ *     )
+ * )
+ * @SWG\Parameter(name="order", in="query", type="string", description="The field used to order rewards")
+ * @SWG\Tag(name="rewards")
+ * @Security(name="Bearer")
+ */
+public function fetchUserRewardsAction(User $user)
+{
+                </code></pre>
+            </section>
+            <section data-transition="fade">
+                <h3>The "magic" approach</h3>
+                <i class="fab fa-github"></i>
+                <a target="_blank" href="https://github.com/nelmio/NelmioApiDocBundle">NelmioApiDocBundle</a>
+                <p class="stretch" style="font-size: 2em; padding-top: 1.5em">
+                    <span class="grey-block">OA Spec</span>
+                    <i class="fas fa-arrow-left fragment"></i>
+                    <span class="grey-block">Code</span>
+                </p>
+                <p class="fragment">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <b>DANGEROUS:</b><br/>
+                    code changes can accidentally alter the API contract!</p>
+            </section>
         </section>
         <section>
-            <section><h3>A better approach: involving the spec in the code</h3></section>
-            <section><h3>Using the validator in tests</h3></section>
-            <section><h3>Using the spec in production!</h3></section>
-            <section><h3>Using validation errors as responses</h3></section>
+            <section>
+                <h3>
+                    A better approach:<br/>
+                    involving the spec in the code
+                </h3>
+                <p class="stretch" style="font-size: 2em; padding-top: 1.5em">
+                    <span class="grey-block">OA Spec</span>
+                    <i class="fas fa-arrow-right"></i>
+                    <span class="grey-block">Code</span>
+                </p>
+            </section>
+            <section>
+                <h3>The validator</h3>
+                <i class="fab fa-github"></i>
+                <a target="_blank" href="https://github.com/thephpleague/openapi-psr7-validator">thephpleague/openapi-psr7-validator</a>
+                <pre><code style="padding: 1em">composer require league/openapi-psr7-validator</code></pre>
+                <img src="img/psr7-validator.png" alt="OpenAPI Spec + PSR-7 message = Valid">
+            </section>
+            <section>
+                <h3>Symfony service definition</h3>
+                <pre><code class="php">$validatorBuilder = (new \League\OpenAPIValidation\PSR7\ValidatorBuilder)
+    ->setCache(new Psr16(...))
+    ->fromYamlFile($yamlFile);
+
+$validatorBuilder->getServerRequestValidator();
+$validatorBuilder->getResponseValidator();</code></pre>
+                <pre><code class="stretch yaml">services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  League\OpenAPIValidation\PSR7\ValidatorBuilder:
+    calls:
+      - ['fromYamlFile', ['%kernel.project_dir%/openapi.yaml']]
+      - ['setCache', ['@cache.openapivalidator']] # cache pool from framework.cache.pools
+ 
+  League\OpenAPIValidation\PSR7\RequestValidator:
+    factory:
+    - '@League\OpenAPIValidation\PSR7\ValidatorBuilder'
+    - 'getRequestValidator'</code></pre>
+            </section>
+            <section>
+                <h3>Using the validator in tests</h3>
+                <p>
+                    You can validate only the response,<br/>
+                    because invalid requests are valid test cases
+                </p>
+                <pre class="stretch"><code>class OpenApiClient extends KernelBrowser
+{
+    protected function doRequest($request): Response
+    {
+        $response = parent::doRequest($request);
+
+        $psr7request = $this->psrHttpFactory->createRequest($request);
+        $psr7response = $this->psrHttpFactory->createResponse($response);
+        $operationAddress = $this->findMatchingOperation($psr7request);
+
+        try {
+            $this->responseValidator->validate($operationAddress, $psr7response);
+        } catch (\... $exception) {
+            // You should catch the exceptions to make the failures "prettier"
+        }
+
+        return $response;
+    }</code></pre>
+            </section>
+            <section>
+                <h3>Using the spec in production!</h3>
+                <pre class="stretch"><code>&lt;?php
+
+declare(strict_types=1);
+
+use League\OpenAPIValidation\PSR7\RequestValidator as Psr7RequestValidator;
+use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
+
+class RequestValidatorEventListener
+{
+    public function __construct(
+        private PsrHttpFactory $psrHttpFactory,
+        private RequestValidator $requestValidator,
+    ) {}
+
+    public function onKernelController(ControllerEvent $event): void
+    {
+        $psr7request = $this->psrHttpFactory->createRequest($event->getRequest());
+
+        $this->requestValidator->validate($psr7request);
+    }
+}</code></pre>
+            </section>
+            <section>
+                <h3>Using validation errors as responses</h3>
+                <pre class="stretch"><code>&lt;?php
+
+use League\OpenAPIValidation\PSR7\Exception\ValidationFailed;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+class ErrorEventListener
+{
+    public function onKernelException(ExceptionEvent $event): void
+    {
+        $event->setResponse(
+            $this->createFromThrowable($event->getThrowable())
+        );
+    }
+
+    private function createFromThrowable(\Throwable $error): JsonResponse
+    {
+        if ($error instanceof ValidationFailed) {
+            return new JsonResponse([/* ... */], Response::HTTP_BAD_REQUEST);
+        }
+
+        // ...
+    }
+}</code></pre>
+            </section>
         </section>
         <section>
             <section><h3>Pitfalls and limitations</h3></section>

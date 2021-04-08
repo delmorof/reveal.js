@@ -31,6 +31,13 @@ span.grey {
     color: grey;
 }
 
+span.grey-block {
+    background-color: dimgrey;
+    color: white;
+    padding: 0.2em 1em;
+    border-radius: 20px;
+}
+
 .reveal ul {
     list-style-type: none;
 }
