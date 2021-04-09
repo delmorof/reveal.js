@@ -22,7 +22,10 @@
     <div class="slides">
         <section id="title" data-background-image="img/theme/bg-cover.svg">
             <h1 style="white-space: nowrap">API contracts</h1>
-            <h3>Leveraging OpenAPI during API development</h3>
+            <h3>
+                Leveraging OpenAPI<br/>
+                during API development
+            </h3>
             <p>
                 <a target="_blank" href="https://alessandrolai.dev/">Alessandro Lai</a> / <a target="_blank" href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>
             </p>
@@ -40,8 +43,8 @@
         <section id="intro">
             <section>
                 <h2>Who am I?</h2>
-                <img src="img/github_avatar.jpg" class="avatar stretch">
-                <div style="float: right">
+                <img src="img/github_avatar.jpg" class="avatar" width="30%">
+                <div style="float: right; padding-top: 2em">
                     <ul class="fa-ul">
                         <li><span class="fa-li"><i class="fas fa-user"></i></span>Alessandro Lai</li>
                         <li>
@@ -101,7 +104,8 @@
             <section>
                 <h3>Working between projects</h3>
                 <p>
-                    If you don't have a monorepo, you'll need a way to describe what your APIs does and how it does it
+                    If you don't have a monorepo, you'll need a way to describe <br/>
+                    what your APIs does and how it does it
                 </p>
             </section>
             <section>
@@ -109,11 +113,22 @@
                 <blockquote style="width: 100%; font-size: smaller">
                     Design by contract is an approach for designing software. <br/>
                     <span class="fragment">
-                        [...] software designers should define <b>formal, precise and verifiable<br/>
-                        interface specifications</b> for software components,<br/>
+                        [...]<br/> 
+                        software designers should define <b>formal, precise and verifiable<br/>
+                        interface specifications</b> for software components,
                     </span>
-                    <span class="fragment">[...] all client components that invoke an operation on a server component will meet the preconditions [...]<br/></span>
-                    <span class="fragment">[Otherwise] the inverse approach is taken, meaning that the server component tests that all relevant preconditions hold true...</span>
+                    <br/>
+                    <span class="fragment">
+                        [...]<br/>
+                        all client components that invoke <br/>
+                        an operation on a server component will meet the preconditions
+                    </span>
+                    <br/>
+                    <span class="fragment">
+                        [...]<br/>
+                        [Otherwise] the inverse approach is taken, meaning that the server component <br/>
+                        tests that all relevant preconditions hold true.
+                    </span>
                 </blockquote>
                 <small>From <a target="_blank" href="https://en.wikipedia.org/wiki/Design_by_contract">Wikipedia</a></small>
                 <p class="fragment">Which language to use? Which format?</p>
@@ -188,7 +203,7 @@ paths:
                 <small><a target="_blank" href="https://swagger.io/specification/">https://stoplight.io/studio/</a></small>
             </section>
             <section>
-                <h3>Live demo!</h3>
+                <h2>Live demo!</h2>
             </section>
             <section>
                 <h3>Credits to this guy...</h3>
@@ -280,7 +295,7 @@ public function fetchUserRewardsAction(User $user)
                 <a target="_blank" href="https://github.com/nelmio/NelmioApiDocBundle">NelmioApiDocBundle</a>
                 <p class="stretch" style="font-size: 2em; padding-top: 1.5em">
                     <span class="grey-block">OA Spec</span>
-                    <i class="fas fa-arrow-left fragment"></i>
+                    <i class="fas fa-angle-double-left fragment"></i>
                     <span class="grey-block">Code</span>
                 </p>
                 <p class="fragment">
@@ -297,7 +312,7 @@ public function fetchUserRewardsAction(User $user)
                 </h3>
                 <p class="stretch" style="font-size: 2em; padding-top: 1.5em">
                     <span class="grey-block">OA Spec</span>
-                    <i class="fas fa-arrow-right"></i>
+                    <i class="fas fa-angle-double-right"></i>
                     <span class="grey-block">Code</span>
                 </p>
             </section>
@@ -317,7 +332,7 @@ public function fetchUserRewardsAction(User $user)
                 <pre class="bash"><code>composer require psr7-pack
 # same as
 composer require symfony/psr-http-message-bridge nyholm/psr7</code></pre>
-                <pre class="fragment"><code class="stretch yaml">services:
+                <pre><code class="stretch yaml">services:
   Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory:
     autowire: true
     autoconfigure: true</code></pre>
@@ -353,33 +368,50 @@ $validatorBuilder->getResponseValidator();</code></pre>
     - 'getRequestValidator'</code></pre>
             </section>
             <section>
-                <h3>Using the validator in tests</h3>
+                <h3>Using the validator in tests (1/2)</h3>
                 <pre class="stretch"><code>class OpenApiClient extends KernelBrowser
 {
     protected function doRequest($request): Response
     {
-        $response = parent::doRequest($request);
+        if ($this->validateRequest) {
+            $psr7request = $this->psrHttpFactory->createRequest($request);
+            $this->requestValidator->validate($psr7request);
+        }                    
 
-        $psr7request = $this->psrHttpFactory->createRequest($request);
-        $psr7response = $this->psrHttpFactory->createResponse($response);
-        $operationAddress = $this->findMatchingOperation($psr7request);
+        $pathFinder = new PathFinder(
+            $this->responseValidator->getSchema(),
+            $request->getUri(),
+            $request->getMethod()
+        );
+
+        $matchingOperations = $pathFinder->search();
+        if (count($matchingOperations) !== 1) {
+            throw new \RuntimeException(
+                "Unexpected number of matches for {$request->getUri()}: " .
+                count($matchingOperations)
+            );
+        } // ...</code></pre>
+            </section>
+            <section>
+                <h3>Using the validator in tests (2/2)</h3>
+                <pre class="php"><code>        // (continue)
 
         try {
-            $this->responseValidator->validate($operationAddress, $psr7response);
+            $this->responseValidator->validate(
+                $matchingOperations[0], 
+                $this->psrHttpFactory->createResponse($response)
+            );
         } catch (\... $exception) {
-            // You should catch the exceptions to make the failures "prettier"
+            // You should catch and decorate the exceptions 
+            // to make the failures "prettier"
         }
 
         return $response;
     }</code></pre>
-                <p>
-                    You should validate only the response,<br/>
-                    because invalid requests are valid test cases
-                </p>
             </section>
             <section>
                 <h3>Using the spec in production!</h3>
-                <pre class="stretch"><code>&lt;?php
+                <pre class="stretch php"><code>&lt;?php
 
 declare(strict_types=1);
 
