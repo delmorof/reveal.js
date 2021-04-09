@@ -46,3 +46,7 @@ span.grey-block {
 .reveal section span.smaller {
     font-size: smaller;
 }
+
+pre.composer-require > code {
+    padding: 1em;
+}

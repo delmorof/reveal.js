@@ -305,8 +305,28 @@ public function fetchUserRewardsAction(User $user)
                 <h3>The validator</h3>
                 <i class="fab fa-github"></i>
                 <a target="_blank" href="https://github.com/thephpleague/openapi-psr7-validator">thephpleague/openapi-psr7-validator</a>
-                <pre><code style="padding: 1em">composer require league/openapi-psr7-validator</code></pre>
+                <pre class="composer-require"><code>composer require league/openapi-psr7-validator</code></pre>
                 <img src="img/psr7-validator.png" alt="OpenAPI Spec + PSR-7 message = Valid">
+            </section>
+            <section>
+                <h3>Http Foundation VS PSR-7</h3>
+                If you use Flex, the new <code>psr7-pack</code>
+                    (see
+                    <i class="fab fa-github"></i>
+                    <a href="https://github.com/symfony/recipes/pull/911">symfony/recipes#911</a>)
+                <pre class="bash"><code>composer require psr7-pack
+# same as
+composer require symfony/psr-http-message-bridge nyholm/psr7</code></pre>
+                <pre class="fragment"><code class="stretch yaml">services:
+  Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory:
+    autowire: true
+    autoconfigure: true</code></pre>
+                <h5>OR</h5>
+                <i class="fab fa-github"></i>
+                <a target="_blank" href="https://github.com/sensiolabs/SensioFrameworkExtraBundle">sensio/framework-extra-bundle</a> < 6.0
+                <pre><code>sensio_framework_extra:
+   psr_message:
+      enabled: true</code></pre>
             </section>
             <section>
                 <h3>Symfony service definition</h3>
@@ -316,7 +336,7 @@ public function fetchUserRewardsAction(User $user)
 
 $validatorBuilder->getServerRequestValidator();
 $validatorBuilder->getResponseValidator();</code></pre>
-                <pre><code class="stretch yaml">services:
+                <pre class="fragment"><code class="stretch yaml">services:
   _defaults:
     autowire: true
     autoconfigure: true
@@ -324,7 +344,8 @@ $validatorBuilder->getResponseValidator();</code></pre>
   League\OpenAPIValidation\PSR7\ValidatorBuilder:
     calls:
       - ['fromYamlFile', ['%kernel.project_dir%/openapi.yaml']]
-      - ['setCache', ['@cache.openapivalidator']] # cache pool from framework.cache.pools
+      # cache pool from framework.cache.pools
+      - ['setCache', ['@cache.openapivalidator']]
  
   League\OpenAPIValidation\PSR7\RequestValidator:
     factory:
@@ -333,10 +354,6 @@ $validatorBuilder->getResponseValidator();</code></pre>
             </section>
             <section>
                 <h3>Using the validator in tests</h3>
-                <p>
-                    You can validate only the response,<br/>
-                    because invalid requests are valid test cases
-                </p>
                 <pre class="stretch"><code>class OpenApiClient extends KernelBrowser
 {
     protected function doRequest($request): Response
@@ -355,6 +372,10 @@ $validatorBuilder->getResponseValidator();</code></pre>
 
         return $response;
     }</code></pre>
+                <p>
+                    You should validate only the response,<br/>
+                    because invalid requests are valid test cases
+                </p>
             </section>
             <section>
                 <h3>Using the spec in production!</h3>
@@ -409,7 +430,21 @@ class ErrorEventListener
             </section>
         </section>
         <section>
-            <section><h3>Pitfalls and limitations</h3></section>
+            <section>
+                <h3>Pitfalls and limitations</h3>
+                <ul class="fa-ul">
+                    <li class="fragment">
+                        <span class="fa-li"><i class="fas fa-toolbox"></i></span>
+                        Tools are constraints<br/>
+                        <small>Penetration of new OAS version support is not immediate</small>
+                    </li>
+                    <li class="fragment">
+                        <span class="fa-li"><i class="fas fa-history"></i></span>
+                        Versioning issues are still there to be handled<br/>
+                        <small>... but you could leverage OAS to make it less painful</small>
+                    </li>
+                </ul>
+            </section>
         </section>
 
         <section id="ending">
@@ -424,13 +459,15 @@ class ErrorEventListener
                 </aside>
             </section>
             <section>
-                <h2>Contacts</h2>
+                <h2 style="margin-bottom: 2em">Questions?</h2>
+                <h4>Contacts</h4>
                 <div style="font-size: smaller">
-                    <ul class="fa-ul">                        <li>
-                            <span class="fa-li"><i class="fas fa-envelope"></i></span>
-                            <a target="_blank" href="mailto:alessandro.lai85@gmail.com">alessandro.lai85@gmail.com</a>
+                    <ul class="fa-ul">               
+                        <li>
+                            <span class="fa-li"><i class="fas fa-desktop"></i></span>
+                            <a target="_blank" href="https://alessandrolai.dev">https://alessandrolai.dev</a>
+                            <small style="vertical-align: middle">(slides & other talks here)</small>
                         </li>
-
                         <li>
                             <span class="fa-li"><i class="fas fa-envelope"></i></span>
                             <a target="_blank" href="mailto:alessandro.lai85@gmail.com">alessandro.lai85@gmail.com</a>
@@ -450,25 +487,6 @@ class ErrorEventListener
                         </li>
                     </ul>
                 </div>
-                <div style="clear: both; padding-top: 1em">
-                    <h6>Attributions</h6>
-                    <small>
-                        <ul class="fa-ul">
-                            <li>
-                                <span class="fa-li"><i class="fas fa-image"></i></span>
-                                <a title="money" href="https://flickr.com/photos/khrawlings/3407402643">money</a>,
-                                flickr photo by
-                                <a target="_blank" href="https://flickr.com/people/khrawlings">khrawlings</a>
-                                shared under a
-                                <a target="_blank" href="https://creativecommons.org/licenses/by-nc/2.0/">Creative Commons (BY-NC)
-                                    license</a>
-                            </li>
-                        </ul>
-                    </small>
-                </div>
-            </section>
-            <section>
-                <h2>Questions?</h2>
             </section>
         </section>
     </div>
