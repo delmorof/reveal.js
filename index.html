@@ -445,6 +445,7 @@ class ErrorEventListener
 {
     public function onKernelException(ExceptionEvent $event): void
     {
+        // ...
         $event->setResponse(
             $this->createFromThrowable($event->getThrowable())
         );
@@ -455,10 +456,48 @@ class ErrorEventListener
         if ($error instanceof ValidationFailed) {
             return new JsonResponse([/* ... */], Response::HTTP_BAD_REQUEST);
         }
-
         // ...
     }
 }</code></pre>
+            </section>
+            <section>
+                <h3>A suggestion: API Problem</h3>
+                <a href="https://tools.ietf.org/html/rfc7807">RFC 7808 - Problem Details for HTTP APIs</a>
+                <pre class="http"><code>HTTP/1.1 403 Forbidden
+Content-Type: application/problem+json
+Content-Language: en
+
+{
+    "type": "https://example.com/probs/out-of-credit",
+    "title": "You do not have enough credit.",
+    "detail": "Your current balance is 30, but that costs 50.",
+    "instance": "/account/12345/msgs/abc",
+    // arbitrary extended properties:
+    "balance": 30,
+    "accounts": ["/account/12345", "/account/67890"]
+}</code></pre>
+            </section>
+            <section>
+                <h3>PHP API Problem</h3>
+                <i class="fab fa-github"></i>
+                <a target="_blank" href="https://github.com/Crell/ApiProblem">crell/api-problem</a>
+                <pre class="composer-require"><code>composer require crell/api-problem</code></pre>
+            <pre class="stretch"><code>use Crell\ApiProblem\ApiProblem;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+
+$problem = new ApiProblem("You do not have enough credit.", "http://example.com/probs/out-of-credit");
+// Defined properties in the API have their own setter methods.
+$problem
+  ->setDetail("Your current balance is 30, but that costs 50.")
+  ->setInstance("http://example.net/account/12345/msgs/abc");
+$problem['balance'] = 30;
+$problem['accounts'] = [
+  "http://example.net/account/12345",
+  "http://example.net/account/67890"
+];
+
+return new JsonResponse($problem->asArray, Response::HTTP_BAD_REQUEST);</code></pre>
             </section>
         </section>
         <section>
