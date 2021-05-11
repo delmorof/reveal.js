@@ -14,7 +14,6 @@
     <link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico"/>
 
     <!-- Theme used for syntax highlighted code -->
-    <link rel="stylesheet" href="css/fixes.css">
     <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
 </head>
 <body>
@@ -565,7 +564,6 @@ return new JsonResponse($problem->asArray(), Response::HTTP_BAD_REQUEST);</code>
 
 <script src="dist/reveal.js"></script>
 <script src="plugin/notes/notes.js"></script>
-<script src="plugin/markdown/markdown.js"></script>
 <script src="plugin/highlight/highlight.js"></script>
 <script src="plugin/zoom/zoom.js"></script>
 <script>
@@ -578,7 +576,6 @@ return new JsonResponse($problem->asArray(), Response::HTTP_BAD_REQUEST);</code>
         height: 720,
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [
-            RevealMarkdown,
             RevealHighlight,
             RevealNotes,
             RevealZoom

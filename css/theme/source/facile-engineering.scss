@@ -101,3 +101,36 @@ $fa-font-path: "fonts/fontawesome";
 	padding-top: 0.4em;
 	padding-bottom: 0.4em;
 }
+
+.reveal section img {
+	border: 0;
+}
+
+.reveal section img.avatar {
+	border-radius: 0.5em;
+	text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+span.grey {
+	color: grey;
+}
+
+span.grey-block {
+	background-color: dimgrey;
+	color: white;
+	padding: 0.2em 1em;
+	border-radius: 20px;
+}
+
+.reveal ul {
+	list-style-type: none;
+}
+
+.reveal section div.smaller,
+.reveal section span.smaller {
+	font-size: smaller;
+}
+
+pre.composer-require > code {
+	padding: 1em;
+}
