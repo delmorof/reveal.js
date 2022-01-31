@@ -57,6 +57,7 @@
                 <h3>Event Sourcing</h3>
                 <p>[Classic example of money account]</p>
                 <p>[Distinction between events and projections, cite aggregates]</p>
+                <p>[Stress the point of immutable, append only event store]</p>
             </section>
             <section>
                 <h3>CQRS</h3>
@@ -78,7 +79,7 @@
                 <p>[cite Brandolini]</p>
             </section>
             <section>
-                <img src="img/dreamteam_assemble.jpg" class="stretch">
+                <img src="img/dreamteam_assemble.jpg" class="stretch" />
             </section>
             <section>
                 <h3>All these together</h3>
@@ -136,7 +137,11 @@
             </section>
             <section>
                 <h3>EventSauce</h3>
-                <p>[show the code]</p>
+                <pre><code>[show the code]</code></pre>
+            </section>
+            <section>
+                <h3>Last but not least: Symfony Messenger</h3>
+                <p>[brief citation]</p>
             </section>
         </section>
         
@@ -148,6 +153,33 @@
                     <li>The tools</li>
                     <li class="current">Our migration strategy</li>
                 </ol>
+            </section>
+            <section>
+                <h3>Green field vs running project</h3>
+                <p>[it's more complex to do it while running]</p>
+            </section>
+            <section>
+                <h3>Root-first or Leaf first?</h3>
+                <p>[show the aggregate graph again]</p>
+                <p>[describe difficulties of having an incomplete event picture]</p>
+                <p>[leaf first, we don't have the aggregate root id]</p>
+                <p>[root first, we have the root but a hole in the middle]</p>
+            </section>
+            <section>
+                <h3>The breakthrough</h3>
+                <img src="img/multiple-sources-of-lies.jpeg" class="stretch" />
+            </section>
+            <section>
+                <h3>Generating events on-the-fly</h3>
+                <pre><code>[use pseudocode to show how we pre-load events in the repository]</code></pre>
+            </section>
+            <section>
+                <h3>Maintain the legacy tables</h3>
+                <pre><code>[use pseudocode to show how we save to old tables alongside generating new events]</code></pre>
+            </section>
+            <section>
+                <h3>Iterate by dropping older events</h3>
+                <pre><code>[use pseudocode to show how the repo can delete outdated aggregates]</code></pre>
             </section>
         </section>
 
