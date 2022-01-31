@@ -20,53 +20,102 @@
 <div class="reveal">
     <div class="slides">
         <section id="title" data-background-image="img/theme/bg-cover.svg">
-            <h1>Kubernetes</h1>
-            <h2>for PHP developers</h2>
+            <h1>PHP + ES + CQRS + DDD = ?</h1>
+            <h2>A planned strategy</h2>
             <p>
-                <a href="https://alessandrolai.dev/">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>
+<!--                <a href="https://alessandrolai.dev/">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>-->
+                <a href="https://gitlab.facile.it/pagamenti">Payments Team</a>
             </p>
             <small>
                 <p>
-                    <a href="{{ event-link }}">{{ Event name }}</a> - May 10th-11th 2018,
-                    Verona
+                    <a href="{{ event-link }}">Venerdì protetto</a> - February 18th 2022,
+                    Facile.it (online)
                 </p>
-                <p class="smaller">
-                    <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>
-                </p>
+<!--                <p class="smaller">-->
+<!--                    <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>-->
+<!--                </p>-->
             </small>
         </section>
 
         <section id="intro">
             <section>
-                <h2>Who am I?</h2>
-                <img src="img/github_avatar.jpg" class="avatar" width="30%">
-                <div style="float: right; padding-top: 2em">
-                    <ul class="fa-ul">
-                        <li><span class="fa-li"><i class="fas fa-user"></i></span>Alessandro Lai</li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-desktop"></i></span>
-                            Team lead developer @ Facile.it
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fab fa-github"></i></span>
-                            <a target="_blank" href="https://github.com/Jean85">@Jean85</a>
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fab fa-twitter"></i></span>
-                            <a target="_blank" href="https://twitter.com/AlessandroLai">@AlessandroLai</a>
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-users"></i></span>
-                            PHP UG Milan Coordinator
-                        </li>
-                        <li>
-                            <span class="fa-li">
-                                <i class="fas fa-certificate"></i>
-                            </span>
-                            PHP-FIG Secretary
-                        </li>
-                    </ul>
-                </div>
+                <h2>Who are we?</h2>
+                (TODO: team slide from Nico)
+            </section>
+        </section>
+        
+        <section id="section-base-concepts">
+            <section style="text-align: left">
+                <ol class="sections-list">
+                    <li class="current">Base concepts</li>
+                    <li>Our starting point</li>
+                    <li>The tools</li>
+                    <li>Our migration strategy</li>
+                </ol>
+            </section>
+            <section>
+                <h3>Event Sourcing</h3>
+                <p>[Classic example of money account]</p>
+                <p>[Distinction between events and projections, cite aggregates]</p>
+            </section>
+            <section>
+                <h3>CQRS</h3>
+                <ul>
+                    <li>Command</li>
+                    <li>Query</li>
+                    <li>Responsibility</li>
+                    <li>Segregation</li>
+                </ul>
+                <p>[Events are write, projections/aggregates are read]</p>
+            </section>
+            <section>
+                <h3>Domain Driven Design</h3>
+                <p>[Tactical patterns: VO, entities, aggregates]</p>
+                <p>[Strategic DDD: from aggregates to bounded contexts]</p>
+            </section>
+            <section>
+                <h3>Bonus: Event Storming</h3>
+                <p>[cite Brandolini]</p>
+            </section>
+            <section>
+                <img src="img/dreamteam_assemble.jpg" class="stretch">
+            </section>
+            <section>
+                <h3>All these together</h3>
+                <p>[cite Avanscoperta workshop]</p>
+            </section>
+        </section>
+        
+        <section id="section-starting-point">
+            <section style="text-align: left">
+                <ol class="sections-list">
+                    <li>Base concepts</li>
+                    <li class="current">Our starting point</li>
+                    <li>The tools</li>
+                    <li>Our migration strategy</li>
+                </ol>
+            </section>
+        </section>
+        
+        <section id="section-tools">
+            <section style="text-align: left">
+                <ol class="sections-list">
+                    <li>Base concepts</li>
+                    <li>Our starting point</li>
+                    <li class="current">The tools</li>
+                    <li>Our migration strategy</li>
+                </ol>
+            </section>
+        </section>
+        
+        <section id="section-migration-strategy">
+            <section style="text-align: left">
+                <ol class="sections-list">
+                    <li>Base concepts</li>
+                    <li>Our starting point</li>
+                    <li>The tools</li>
+                    <li class="current">Our migration strategy</li>
+                </ol>
             </section>
         </section>
 

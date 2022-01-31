@@ -4941,3 +4941,12 @@ span.grey-block {
 
 pre.composer-require > code {
   padding: 1em; }
+
+ol.sections-list {
+  list-style-type: decimal-leading-zero;
+  text-align: left;
+  color: #bfbfbf; }
+
+ol.sections-list li.current {
+  font-weight: bolder;
+  color: #f60; }
