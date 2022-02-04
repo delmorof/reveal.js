@@ -4950,3 +4950,18 @@ ol.sections-list {
 ol.sections-list li.current {
   font-weight: bolder;
   color: #f60; }
+
+div.graph {
+  text-align: center; }
+  div.graph span {
+    font-weight: bolder;
+    font-size: larger;
+    display: table;
+    width: em;
+    color: white;
+    border-radius: 0.5em;
+    padding: 0.15em 0.8em;
+    margin: 0.2em auto;
+    background: #f60; }
+  div.graph i.fa-angle-down {
+    color: forestgreen; }
