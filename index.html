@@ -1,284 +1,348 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
     <title>PHP + ES + CQRS + DDD = ? - A planned strategy</title>
-    <meta name="description" content="{{ Descrizione }}">
-    <meta name="author" content="Alessandro Lai">
+    <meta name="description" content="{{ Descrizione }}" />
+    <meta name="author" content="Alessandro Lai" />
 
-    <link rel="stylesheet" href="dist/reset.css">
-    <link rel="stylesheet" href="dist/reveal.css">
-    <link rel="stylesheet" href="dist/theme/facile-engineering.css" id="theme">
-    <link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico"/>
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link
+      rel="stylesheet"
+      href="dist/theme/facile-engineering.css"
+      id="theme"
+    />
+    <link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico" />
 
     <!-- Theme used for syntax highlighted code -->
-    <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
-</head>
-<body>
-<div class="reveal">
-    <div class="slides">
+    <link
+      rel="stylesheet"
+      href="plugin/highlight/monokai.css"
+      id="highlight-theme"
+    />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
         <section id="title" data-background-image="img/theme/bg-cover.svg">
-            <h1>PHP + ES + CQRS + DDD = ?</h1>
-            <h2>A planned strategy</h2>
+          <h1>PHP + ES + CQRS + DDD = ?</h1>
+          <h2>A planned strategy</h2>
+          <p>
+            <!--                <a href="https://alessandrolai.dev/">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>-->
+            <a href="https://gitlab.facile.it/pagamenti">Payments Team</a>
+          </p>
+          <small>
             <p>
-<!--                <a href="https://alessandrolai.dev/">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>-->
-                <a href="https://gitlab.facile.it/pagamenti">Payments Team</a>
+              <a href="{{ event-link }}">Venerdì protetto</a> - February 18th
+              2022, Facile.it (online)
             </p>
-            <small>
-                <p>
-                    <a href="{{ event-link }}">Venerdì protetto</a> - February 18th 2022,
-                    Facile.it (online)
-                </p>
-<!--                <p class="smaller">-->
-<!--                    <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>-->
-<!--                </p>-->
-            </small>
+            <!--                <p class="smaller">-->
+            <!--                    <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>-->
+            <!--                </p>-->
+          </small>
         </section>
 
         <section id="intro">
-            <section>
-                <h2>Who are we?</h2>
-                (TODO: team slide from Nico)
-            </section>
+          <section>
+            <h2>Who are we?</h2>
+            (TODO: team slide from Nico)
+          </section>
         </section>
-        
+
         <section id="section-base-concepts">
-            <section style="text-align: left">
-                <ol class="sections-list">
-                    <li class="current">Base concepts</li>
-                    <li>Our starting point</li>
-                    <li>The tools</li>
-                    <li>Our migration strategy</li>
-                    <li>Conclusions</li>
-                </ol>
-            </section>
-            <section>
-                <h3>Event Sourcing</h3>
-                <p>[Classic example of money account]</p>
-                <p>[Distinction between events and projections, cite aggregates]</p>
-                <p>[Stress the point of immutable, append only event store]</p>
-                <aside class="notes">
-                    Qui possiamo avere note per lo speaker
-                </aside>
-            </section>
-            <section>
-                <h3>CQRS</h3>
-                <ul>
-                    <li>Command</li>
-                    <li>Query</li>
-                    <li>Responsibility</li>
-                    <li>Segregation</li>
-                </ul>
-                <p>[Events are write, projections/aggregates are read]</p>
-            </section>
-            <section>
-                <h3>Domain Driven Design</h3>
-                <p>[Tactical patterns: VO, entities, aggregates]</p>
-                <p>[Strategic DDD: from aggregates to bounded contexts]</p>
-            </section>
-            <section>
-                <h3>Bonus: Event Storming</h3>
-                <p>[cite Brandolini]</p>
-            </section>
-            <section>
-                <img src="img/dreamteam_assemble.jpg" class="stretch" />
-            </section>
-            <section>
-                <h3>All these together</h3>
-                <p>[cite Avanscoperta workshop]</p>
-            </section>
+          <section style="text-align: left">
+            <ol class="sections-list">
+              <li class="current">Base concepts</li>
+              <li>Our starting point</li>
+              <li>The tools</li>
+              <li>Our migration strategy</li>
+              <li>Conclusions</li>
+            </ol>
+          </section>
+          <section>
+            <h3>Event Sourcing</h3>
+            <p>[Classic example of money account]</p>
+            <p>[Distinction between events and projections, cite aggregates]</p>
+            <p>[Stress the point of immutable, append only event store]</p>
+            <aside class="notes">Qui possiamo avere note per lo speaker</aside>
+          </section>
+          <section>
+            <h3>CQRS</h3>
+            <ul>
+              <li>Command</li>
+              <li>Query</li>
+              <li>Responsibility</li>
+              <li>Segregation</li>
+            </ul>
+            <p>[Events are write, projections/aggregates are read]</p>
+          </section>
+          <section>
+            <h3>Domain Driven Design</h3>
+            <p>[Tactical patterns: VO, entities, aggregates]</p>
+            <p>[Strategic DDD: from aggregates to bounded contexts]</p>
+          </section>
+          <section>
+            <h3>Bonus: Event Storming</h3>
+            <p>[cite Brandolini]</p>
+          </section>
+          <section>
+            <img src="img/dreamteam_assemble.jpg" class="stretch" />
+          </section>
+          <section>
+            <h3>All these together</h3>
+            <p>[cite Avanscoperta workshop]</p>
+          </section>
         </section>
-        
+
         <section id="section-starting-point">
-            <section style="text-align: left">
-                <ol class="sections-list">
-                    <li>Base concepts</li>
-                    <li class="current">Our starting point</li>
-                    <li>The tools</li>
-                    <li>Our migration strategy</li>
-                    <li>Conclusions</li>
-                </ol>
-            </section>
-            <section>
-                <h3>Pagamenti 2</h3>
-                <p>[project born and motivations]</p>
-            </section>
-            <section>
-                <h3>Aggregate & entities involved</h3>
-                <p>[graph with product -> orders -> payment reservations]</p>
-            </section>
-            <section>
-                <h3>Decommissioning Sisal from api.facile.it</h3>
-                <p>[explain opportunity of limited area of intervention]</p>
-            </section>
+          <section style="text-align: left">
+            <ol class="sections-list">
+              <li>Base concepts</li>
+              <li class="current">Our starting point</li>
+              <li>The tools</li>
+              <li>Our migration strategy</li>
+              <li>Conclusions</li>
+            </ol>
+          </section>
+          <section>
+            <h3>Pagamenti 2</h3>
+            <p>[project born and motivations]</p>
+          </section>
+          <section>
+            <h3>Aggregate & entities involved</h3>
+            <p>[graph with product -> orders -> payment reservations]</p>
+          </section>
+          <section>
+            <h3>Decommissioning Sisal from api.facile.it</h3>
+            <p>[explain opportunity of limited area of intervention]</p>
+          </section>
         </section>
-        
+
         <section id="section-tools">
-            <section style="text-align: left">
-                <ol class="sections-list">
-                    <li>Base concepts</li>
-                    <li>Our starting point</li>
-                    <li class="current">The tools</li>
-                    <li>Our migration strategy</li>
-                    <li>Conclusions</li>
-                </ol>
-            </section>
-            <section>
-                <h3>OpenAPI</h3>
-                <p>[optional: talk about defining the API with a spec]</p>
-            </section>
-            <section>
-                <h3>The DDD "onion"</h3>
-                <p>[domain - infra - app layers diagram]
-            </section>
-            <section>
-                <h3>PHP AT to enforce the "onion"</h3>
-                <p>[show code of PHP AT that enforces the 3 layers]</p>
-            </section>
-            <section>
-                <h3>EventSauce</h3>
-                <p>[brief library presentation]</p>
-            </section>
-            <section>
-                <h3>EventSauce</h3>
-                <pre><code>[show the code]</code></pre>
-            </section>
-            <section>
-                <h3>Last but not least: Symfony Messenger</h3>
-                <p>[brief citation]</p>
-            </section>
+          <section style="text-align: left">
+            <ol class="sections-list">
+              <li>Base concepts</li>
+              <li>Our starting point</li>
+              <li class="current">The tools</li>
+              <li>Our migration strategy</li>
+              <li>Conclusions</li>
+            </ol>
+          </section>
+          <section>
+            <h3>The DDD "onion"</h3>
+            <img
+              class="r-stretch"
+              src="img/ddd-onion.png"
+              width="500"
+              alt="DDD Onion - Jeffrey Palermo"
+            />
+          </section>
+          <section>
+            <h3>Presentation: API</h3>
+            <h5>Open API + Stoplight</h5>
+            <img
+              style="float: left"
+              width="500"
+              src="img/stoplight.png"
+              alt="Stoplight"
+            />
+            <p>
+              <ul>
+                <li>
+                  <a hre="https://swagger.io/specification/" target="_blank"
+                  >OpenAPI 3.0 Specs</a>  
+                </li>
+                <li>
+                  <a href="https://stoplight.io/studio/">Stoplight Studio</a>
+                </li>
+                <li>
+                  <a href="https://github.com/thephpleague/openapi-psr7-validator">
+                    Openapi PSR7 Validator
+                  </a>
+                </li>
+              </ul>
+            </p>
+          </section>
+          <section>
+            <img width="300" src="img/ddd-onion-2.png" class="aside" />
+            <p class="aside">
+              <quote>
+                <em>
+                  "Nothing in an inner circle can know anything at all about
+                  something in an outer circle. That includes functions,
+                  classes, variables, or any other named software entity."
+                </em>
+                Robert C. Martin
+              </quote>
+            </p>
+          </section>
+          <section>
+            <h3>Enforcing the "onion"</h3>
+            <a href="https://github.com/carlosas/phpat">PHP AT</a>
+            <pre>
+            <code>
+              class CoreArchitectureTest extends ArchitectureTest
+              {
+                  public function testCoreDomainDependencies(): Rule
+                  {
+                      return $this->newRule
+                          ->classesThat(ClassSelector::domainClasses(ClassSelector::CONTEXT_CORE))
+                          ->canOnlyDependOn()
+                          ->classesThat(ClassSelector::domainClasses(ClassSelector::CONTEXT_CORE))
+              
+                          ->classesThat(Selector::haveClassName(Assert::class))
+                          ->classesThat(Selector::haveClassName(UuidInterface::class))
+                          ->build();
+                  }
+              
+            </code>
+          </pre>
+          </section>
+          <section>
+            <h3>EventSauce</h3>
+            <p>[brief library presentation]</p>
+          </section>
+          <section>
+            <h3>EventSauce</h3>
+            <pre><code>[show the code]</code></pre>
+          </section>
+          <section>
+            <h3>Last but not least: Symfony Messenger</h3>
+            <p>[brief citation]</p>
+          </section>
         </section>
-        
+
         <section id="section-migration-strategy">
-            <section style="text-align: left">
-                <ol class="sections-list">
-                    <li>Base concepts</li>
-                    <li>Our starting point</li>
-                    <li>The tools</li>
-                    <li class="current">Our migration strategy</li>
-                    <li>Conclusions</li>
-                </ol>
-            </section>
-            <section>
-                <h3>Green field vs running project</h3>
-                <p>[it's more complex to do it while running]</p>
-            </section>
-            <section>
-                <h3>Root-first or Leaf first?</h3>
-                <p>[show the aggregate graph again]</p>
-                <p>[describe difficulties of having an incomplete event picture]</p>
-                <p>[leaf first, we don't have the aggregate root id]</p>
-                <p>[root first, we have the root but a hole in the middle]</p>
-            </section>
-            <section>
-                <h3>The breakthrough</h3>
-                <img src="img/multiple-sources-of-lies.jpeg" class="stretch" />
-            </section>
-            <section>
-                <h3>Generating events on-the-fly</h3>
-                <pre><code>[use pseudocode to show how we pre-load events in the repository]</code></pre>
-            </section>
-            <section>
-                <h3>Maintain the legacy tables</h3>
-                <pre><code>[use pseudocode to show how we save to old tables alongside generating new events]</code></pre>
-            </section>
-            <section>
-                <h3>Iterate by dropping older events</h3>
-                <pre><code>[use pseudocode to show how the repo can delete outdated aggregates]</code></pre>
-            </section>
+          <section style="text-align: left">
+            <ol class="sections-list">
+              <li>Base concepts</li>
+              <li>Our starting point</li>
+              <li>The tools</li>
+              <li class="current">Our migration strategy</li>
+              <li>Conclusions</li>
+            </ol>
+          </section>
+          <section>
+            <h3>Green field vs running project</h3>
+            <p>[it's more complex to do it while running]</p>
+          </section>
+          <section>
+            <h3>Root-first or Leaf first?</h3>
+            <p>[show the aggregate graph again]</p>
+            <p>[describe difficulties of having an incomplete event picture]</p>
+            <p>[leaf first, we don't have the aggregate root id]</p>
+            <p>[root first, we have the root but a hole in the middle]</p>
+          </section>
+          <section>
+            <h3>The breakthrough</h3>
+            <img src="img/multiple-sources-of-lies.jpeg" class="stretch" />
+          </section>
+          <section>
+            <h3>Generating events on-the-fly</h3>
+            <pre><code>[use pseudocode to show how we pre-load events in the repository]</code></pre>
+          </section>
+          <section>
+            <h3>Maintain the legacy tables</h3>
+            <pre><code>[use pseudocode to show how we save to old tables alongside generating new events]</code></pre>
+          </section>
+          <section>
+            <h3>Iterate by dropping older events</h3>
+            <pre><code>[use pseudocode to show how the repo can delete outdated aggregates]</code></pre>
+          </section>
         </section>
 
         <section id="section-conclusions">
-            <section style="text-align: left">
-                <ol class="sections-list">
-                    <li>Base concepts</li>
-                    <li>Our starting point</li>
-                    <li>The tools</li>
-                    <li>Our migration strategy</li>
-                    <li class="current">Conclusions</li>
-                </ol>
-            </section>
-            <section>
-                <h3>Advantages</h3>
-                <ul>
-                    <li>Fast iterations, gain confidence iteratively</li>
-                    <li>Immediate migrations of domain logic to DDD & event handlers</li>
-                    <li>Legacy tables are still the single source of truth</li>
-                    <li>No fixed deadlines</li>
-                    <li>Still deliver business value</li>
-                </ul>
-            </section>
-            <section>
-                <h3>Disadvantages / pitfalls</h3>
-                <ul>
-                    <li>It may take a long time</li>
-                    <li class="fragment">...can you tell us?</li>
-                </ul>
-                <h2 class="fragment">Questions?</h2>
-            </section>
-            <section>
-                <h2>Thanks!</h2>
-<!--                <p>-->
-<!--                    Please rate my talk on Joind.in: <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>-->
-<!--                </p>-->
-<!--                <img class="stretch" src="img/joindin-qr.png" alt="Joind.in link: https://joind.in/talk/TODO-CHANGEME">-->
-            </section>
-<!--            <section>-->
-<!--                <h2 style="margin-bottom: 2em">Questions?</h2>-->
-<!--                <h4>Contacts</h4>-->
-<!--                <div style="font-size: smaller">-->
-<!--                    <ul class="fa-ul">               -->
-<!--                        <li>-->
-<!--                            <span class="fa-li"><i class="fas fa-desktop"></i></span>-->
-<!--                            <a target="_blank" href="https://alessandrolai.dev">https://alessandrolai.dev</a>-->
-<!--                            <small style="vertical-align: middle">(slides & other talks here)</small>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <span class="fa-li"><i class="fas fa-envelope"></i></span>-->
-<!--                            <a target="_blank" href="mailto:alessandro.lai85@gmail.com">alessandro.lai85@gmail.com</a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <span class="fa-li"><i class="fas fa-envelope"></i></span>-->
-<!--                            <a target="_blank" href="mailto:alessandro.lai@facile.it">alessandro.lai@facile.it</a>-->
-<!--                            <small style="vertical-align: middle">(we are hiring!)</small>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <span class="fa-li"><i class="fab fa-github"></i></span>-->
-<!--                            <a target="_blank" href="https://github.com/Jean85">@Jean85</a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <span class="fa-li"><i class="fab fa-twitter"></i></span>-->
-<!--                            <a target="_blank" href="https://twitter.com/AlessandroLai">@AlessandroLai</a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </section>-->
+          <section style="text-align: left">
+            <ol class="sections-list">
+              <li>Base concepts</li>
+              <li>Our starting point</li>
+              <li>The tools</li>
+              <li>Our migration strategy</li>
+              <li class="current">Conclusions</li>
+            </ol>
+          </section>
+          <section>
+            <h3>Advantages</h3>
+            <ul>
+              <li>Fast iterations, gain confidence iteratively</li>
+              <li>
+                Immediate migrations of domain logic to DDD & event handlers
+              </li>
+              <li>Legacy tables are still the single source of truth</li>
+              <li>No fixed deadlines</li>
+              <li>Still deliver business value</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Disadvantages / pitfalls</h3>
+            <ul>
+              <li>It may take a long time</li>
+              <li class="fragment">...can you tell us?</li>
+            </ul>
+            <h2 class="fragment">Questions?</h2>
+          </section>
+          <section>
+            <h2>Thanks!</h2>
+            <!--                <p>-->
+            <!--                    Please rate my talk on Joind.in: <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>-->
+            <!--                </p>-->
+            <!--                <img class="stretch" src="img/joindin-qr.png" alt="Joind.in link: https://joind.in/talk/TODO-CHANGEME">-->
+          </section>
+          <!--            <section>-->
+          <!--                <h2 style="margin-bottom: 2em">Questions?</h2>-->
+          <!--                <h4>Contacts</h4>-->
+          <!--                <div style="font-size: smaller">-->
+          <!--                    <ul class="fa-ul">               -->
+          <!--                        <li>-->
+          <!--                            <span class="fa-li"><i class="fas fa-desktop"></i></span>-->
+          <!--                            <a target="_blank" href="https://alessandrolai.dev">https://alessandrolai.dev</a>-->
+          <!--                            <small style="vertical-align: middle">(slides & other talks here)</small>-->
+          <!--                        </li>-->
+          <!--                        <li>-->
+          <!--                            <span class="fa-li"><i class="fas fa-envelope"></i></span>-->
+          <!--                            <a target="_blank" href="mailto:alessandro.lai85@gmail.com">alessandro.lai85@gmail.com</a>-->
+          <!--                        </li>-->
+          <!--                        <li>-->
+          <!--                            <span class="fa-li"><i class="fas fa-envelope"></i></span>-->
+          <!--                            <a target="_blank" href="mailto:alessandro.lai@facile.it">alessandro.lai@facile.it</a>-->
+          <!--                            <small style="vertical-align: middle">(we are hiring!)</small>-->
+          <!--                        </li>-->
+          <!--                        <li>-->
+          <!--                            <span class="fa-li"><i class="fab fa-github"></i></span>-->
+          <!--                            <a target="_blank" href="https://github.com/Jean85">@Jean85</a>-->
+          <!--                        </li>-->
+          <!--                        <li>-->
+          <!--                            <span class="fa-li"><i class="fab fa-twitter"></i></span>-->
+          <!--                            <a target="_blank" href="https://twitter.com/AlessandroLai">@AlessandroLai</a>-->
+          <!--                        </li>-->
+          <!--                    </ul>-->
+          <!--                </div>-->
+          <!--            </section>-->
         </section>
+      </div>
     </div>
-</div>
 
-<script src="dist/reveal.js"></script>
-<script src="plugin/notes/notes.js"></script>
-<script src="plugin/markdown/markdown.js"></script>
-<script src="plugin/highlight/highlight.js"></script>
-<script src="plugin/zoom/zoom.js"></script>
-<script>
-    // More info about initialization & config:
-    // - https://revealjs.com/initialization/
-    // - https://revealjs.com/config/
-    Reveal.initialize({
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
         hash: true,
 
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [
-            RevealMarkdown,
-            RevealHighlight,
-            RevealNotes,
-            RevealZoom
-        ]
-    });
-</script>
-</body>
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom],
+      });
+    </script>
+  </body>
 </html>
