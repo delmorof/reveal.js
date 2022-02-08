@@ -142,30 +142,76 @@
                     <li>Conclusions</li>
                 </ol>
             </section>
-            <section>
-                <h3>OpenAPI</h3>
-                <p>[optional: talk about defining the API with a spec]</p>
-            </section>
-            <section>
-                <h3>The DDD "onion"</h3>
-                <p>[domain - infra - app layers diagram]
-            </section>
-            <section>
-                <h3>PHP AT to enforce the "onion"</h3>
-                <p>[show code of PHP AT that enforces the 3 layers]</p>
-            </section>
-            <section>
-                <h3>EventSauce</h3>
-                <p>
-                <ol>
-                    <li>Focused on event sourcing</li>
-                    <li>Pragmatic library</li>
-                    <li>Extensible by design</li>
-                </ol>
-                <br/>
-                <pre><code>composer require eventsauce/eventsauce</code></pre>
-                </p>
-            </section>
+          <section>
+            <h3>The DDD "onion"</h3>
+            <img
+              class="r-stretch"
+              src="img/ddd-onion.png"
+              width="500"
+              alt="DDD Onion - Jeffrey Palermo"
+            />
+          </section>
+          <section>
+            <h3>Presentation: API</h3>
+            <h5>Open API + Stoplight</h5>
+            <img
+              style="float: left"
+              width="500"
+              src="img/stoplight.png"
+              alt="Stoplight"
+            />
+            <p>
+              <ul>
+                <li>
+                  <a hre="https://swagger.io/specification/" target="_blank"
+                  >OpenAPI 3.0 Specs</a>  
+                </li>
+                <li>
+                  <a href="https://stoplight.io/studio/">Stoplight Studio</a>
+                </li>
+                <li>
+                  <a href="https://github.com/thephpleague/openapi-psr7-validator">
+                    Openapi PSR7 Validator
+                  </a>
+                </li>
+              </ul>
+            </p>
+          </section>
+          <section>
+            <img width="300" src="img/ddd-onion-2.png" class="aside" />
+            <p class="aside">
+              <quote>
+                <em>
+                  "Nothing in an inner circle can know anything at all about
+                  something in an outer circle. That includes functions,
+                  classes, variables, or any other named software entity."
+                </em>
+                Robert C. Martin
+              </quote>
+            </p>
+          </section>
+          <section>
+            <h3>Enforcing the "onion"</h3>
+            <a href="https://github.com/carlosas/phpat">PHP AT</a>
+            <pre>
+            <code>
+              class CoreArchitectureTest extends ArchitectureTest
+              {
+                  public function testCoreDomainDependencies(): Rule
+                  {
+                      return $this->newRule
+                          ->classesThat(ClassSelector::domainClasses(ClassSelector::CONTEXT_CORE))
+                          ->canOnlyDependOn()
+                          ->classesThat(ClassSelector::domainClasses(ClassSelector::CONTEXT_CORE))
+              
+                          ->classesThat(Selector::haveClassName(Assert::class))
+                          ->classesThat(Selector::haveClassName(UuidInterface::class))
+                          ->build();
+                  }
+              
+            </code>
+          </pre>
+          </section>
             <section>
                 <h3>Aggregate Root ID</h3>
                 <pre><code>
