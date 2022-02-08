@@ -156,15 +156,440 @@
             </section>
             <section>
                 <h3>EventSauce</h3>
-                <p>[brief library presentation]</p>
+                <p>
+                <ol>
+                    <li>Focused on event sourcing</li>
+                    <li>Pragmatic library</li>
+                    <li>Extensible by design</li>
+                </ol>
+                <br/>
+                <pre><code>composer require eventsauce/eventsauce</code></pre>
+                </p>
             </section>
             <section>
-                <h3>EventSauce</h3>
-                <pre class="stretch"><code>
-                    public function foo(Foo $bar): void 
-                    {
-                    }
-                </code></pre>
+                <h3>Aggregate Root ID</h3>
+                <pre><code>
+namespace EventSauce\EventSourcing;
+
+interface AggregateRootId
+{
+  public function toString(): string;
+
+  public static function fromString(string $aggregateRootId): self;
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>Aggregate Root ID - UUID</h3>
+                <pre><code>
+namespace Facile\Domain\Model;
+
+use EventSauce\EventSourcing\AggregateRootId;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
+
+abstract class AbstractAggregateRootId implements AggregateRootId
+{
+  private function __construct(private UuidInterface $uuid)
+  {
+  }
+
+  public static function create(): static
+  {
+      return new static(Uuid::uuid4());
+  }
+
+  public function toString(): string
+  {
+      return $this->uuid->toString();
+  }
+
+  public static function fromString(string $aggregateRootId): static
+  {
+      return new static(Uuid::fromString($aggregateRootId));
+  }
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>Aggregate Root ID - Product ID</h3>
+                <pre><code>
+namespace Facile\Domain\Model;
+
+final class ProductId extends AbstractAggregateRootId
+{
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>Event</h3>
+                <pre><code>
+namespace EventSauce\EventSourcing\Serialization;
+
+interface SerializablePayload
+{
+  public function toPayload(): array;
+
+  public static function fromPayload(array $payload): self;
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>Event - Product Created</h3>
+                <pre><code>
+final class ProductCreated implements SerializablePayload
+{
+private const DATE_FORMAT = DATE_ATOM;
+private const CREATION_DATE = 'creationDate';
+private const PRODUCT_ID = 'productId';
+
+private function __construct(
+    private ProductId $productId,
+    private \DateTimeImmutable $creationDate
+) {
+}
+
+public static function create(ProductId $productId): self
+{
+    $creationDate = new \DateTimeImmutable();
+
+    return new self($productId, $creationDate);
+}
+
+public function getCreationDate(): \DateTimeImmutable
+{
+    return $this->creationDate;
+}
+
+public function toPayload(): array
+{
+    return [
+        self::PRODUCT_ID => $this->productId->toString(),
+        self::CREATION_DATE => $this->creationDate,
+    ];
+}
+
+public static function fromPayload(array $payload): SerializablePayload
+{
+    $productId = ProductId::fromString(
+        $payload[self::PRODUCT_ID]
+    );
+
+    $creationDate = \DateTimeImmutable::createFromFormat(
+        $payload[self::CREATION_DATE],
+        self::DATE_FORMAT
+    );
+
+    return new self($productId, $creationDate);
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>Aggregate Root</h3>
+                <pre><code>
+namespace EventSauce\EventSourcing;
+
+interface AggregateRoot
+{
+  public function aggregateRootId(): AggregateRootId;
+
+  public function aggregateRootVersion(): int;
+
+  public function releaseEvents(): array;
+
+  public static function reconstituteFromEvents(
+      AggregateRootId $aggregateRootId,
+      Generator $events
+  ): static;
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>Aggregate Root - Product</h3>
+                <pre><code>
+namespace Facile\Domain\Model;
+
+use EventSauce\EventSourcing\AggregateRoot;
+use EventSauce\EventSourcing\AggregateRootBehaviour;
+
+final class Product implements AggregateRoot
+{
+  use AggregateRootBehaviour;
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>Aggregate Root - Creation</h3>
+                <pre><code>
+final class Product implements AggregateRoot
+{
+  use AggregateRootBehaviour;
+
+  public static function create(ProductId $productId): self
+  {
+      $product = new self($productId);
+      $productCreated = ProductCreated::create($productId);
+      $product->recordThat($productCreated);
+
+      return $product;
+  }
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>Aggregate Root - Trait</h3>
+                <pre><code>
+namespace EventSauce\EventSourcing;
+
+trait AggregateRootBehaviour
+{
+  ...
+
+  private AggregateRootId $aggregateRootId;
+
+  private function __construct(AggregateRootId $aggregateRootId)
+  {
+      $this->aggregateRootId = $aggregateRootId;
+  }
+
+  protected function recordThat(object $event): void
+  {
+      $this->apply($event);
+      $this->recordedEvents[] = $event;
+  }
+
+  ...
+}
+            </code></pre>
+            </section>
+            <section>
+                <h4>Aggregate Root - Applying events</h4>
+                <pre><code>
+namespace EventSauce\EventSourcing;
+
+trait AggregateAlwaysAppliesEvents
+{
+  private int $aggregateRootVersion = 0;
+
+  protected function apply(object $event): void
+  {
+      $parts = explode('\\', get_class($event));
+      $this->{'apply' . end($parts)}($event);
+      ++$this->aggregateRootVersion;
+  }
+}
+            </code></pre>
+            </section>
+            <section>
+                <h4>Aggregate Root - Applying events</h4>
+                <pre><code>
+final class Product implements AggregateRoot
+{
+  ...
+
+  private ?\DateTimeImmutable $creationDate = null;
+
+  public function applyProductCreated(ProductCreated $productCreated): void
+  {
+      $this->creationDate = $productCreated->getCreationDate();
+  }
+}
+            </code></pre>
+            </section>
+            <section>
+                <h4>Aggregate Root - Reconstitution</h4>
+                <pre><code>
+namespace EventSauce\EventSourcing;
+
+trait AggregateRootBehaviour
+{
+  ...
+
+  public static function reconstituteFromEvents(
+      AggregateRootId $aggregateRootId,
+      Generator $events
+  ): static
+  {
+      $aggregateRoot = new static($aggregateRootId);
+
+      foreach ($events as $event) {
+          $aggregateRoot->apply($event);
+      }
+      ...
+
+      return $aggregateRoot;
+  }
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>Aggregate Root Repository</h3>
+                <pre><code>
+interface AggregateRootRepository
+{
+  public function retrieve(AggregateRootId $aggregateRootId): object;
+
+  public function persist(object $aggregateRoot): void;
+
+  ...
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>Product Repository</h3>
+                <pre><code>
+namespace Facile\Infrastructure\Repository;
+
+use EventSauce\EventSourcing\EventSourcedAggregateRootRepository;
+
+final class ProductRepository extends EventSourcedAggregateRootRepository
+{
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>Aggregate Root Repository</h3>
+                <pre><code>
+namespace EventSauce\EventSourcing;
+
+class EventSourcedAggregateRootRepository implements AggregateRootRepository
+{
+...
+public function __construct(
+    string $aggregateRootClassName,
+    MessageRepository $messageRepository,
+    MessageDispatcher $dispatcher = null,
+    ...
+) {
+    $this->aggregateRootClassName = $aggregateRootClassName;
+    $this->messageRepository = $messageRepository;
+    $this->dispatcher = $dispatcher ?: new SynchronousMessageDispatcher();
+    ...
+}
+
+public function retrieve(AggregateRootId $aggregateRootId): object
+{
+    ...
+    $className = $this->aggregateRootClassName;
+    $events = $this->retrieveAllEvents($aggregateRootId);
+
+    return $className::reconstituteFromEvents($aggregateRootId, $events);
+}
+
+public function persist(object $aggregateRoot): void
+{
+    ...
+    $this->persistEvents(
+        $aggregateRoot->aggregateRootId(),
+        $aggregateRoot->aggregateRootVersion(),
+        ...$aggregateRoot->releaseEvents()
+    );
+}
+
+public function persistEvents(AggregateRootId $aggregateRootId, int $aggregateRootVersion, object ...$events): void
+{
+    ...
+    $messages = array_map(function (object $event) {
+       // Events are transformed into messages
+    }, $events);
+
+    $this->messageRepository->persist(...$messages);
+    $this->dispatcher->dispatch(...$messages);
+}
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>Doctrine2 Message Repository</h3>
+                <pre><code>composer require eventsauce/message-repository-for-doctrine-v2</code></pre>
+            </section>
+            <section>
+                <h3>Doctrine2 Message Repository</h3>
+                <pre><code>
+CREATE TABLE IF NOT EXISTS `your_table_name` (
+`event_id` BINARY(16) NOT NULL,
+`aggregate_root_id` BINARY(16) NOT NULL,
+`version` int(20) unsigned NULL,
+`payload` varchar(16001) NOT NULL,
+PRIMARY KEY (`event_id`),
+KEY (`aggregate_root_id`),
+KEY `reconstitution` (`aggregate_root_id`, `version` ASC)
+)
+DEFAULT CHARACTER SET utf8mb4
+COLLATE utf8mb4_general_ci ENGINE=InnoDB;</code></pre>
+            </section>
+            <section>
+                <h3>Doctrine2 Message Repository</h3>
+                <pre><code>
+{
+"headers": {
+  "__aggregate_root_id": "b62a84f8-72f0-11ec-90d6-0242ac120003",
+  "__aggregate_root_type": "facile.domain.model.product",
+  "__aggregate_root_version": 1,
+  "__event_type": "facile.domain.events.product_created",
+  "__time_of_recording": "2022-02-08 09:44:36.407236+0000",
+  "__aggregate_root_id_type": "facile.domain.model.product_id",
+  "__event_id": "24b38b08-9042-4035-bbff-6bd75295e1b9"
+},
+"payload": {
+  "productId": "b62a84f8-72f0-11ec-90d6-0242ac120003",
+  "creationDate": "2022-02-08T10:44:36+01:00"
+}
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>EventSauce Lifecycle</h3>
+                <pre><code>
+$product = $productRepository->retrieve($aggregateRootId);
+
+$product->addOrder($orderId, $money);
+
+$productRepository->persist($product);
+            </code></pre>
+            </section>
+            <section>
+                <h3>EventSauce Lifecycle</h3>
+                <pre><code>
+public function addOrder(OrderId $orderId, Money $money): void
+{
+  if (null !== $this->order) {
+      throw new \DomainException('Order already present');
+  }
+
+  $orderAdded = OrderAdded::create($orderId, $money);
+  $this->recordThat($orderAdded);
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>EventSauce Lifecycle</h3>
+                <pre><code>
+public function applyOrderAdded(OrderAdded $orderAdded): void
+{
+  $this->order = new Order(
+      $orderAdded->getOrderId(),
+      $orderAdded->getMoney()
+  );
+}
+            </code></pre>
+            </section>
+            <section>
+                <h3>EventSauce Lifecycle</h3>
+                <pre><code>
+use EventSauce\EventSourcing\MessageConsumer;
+
+class SomeConsumer implements MessageConsumer
+{
+  public function handle(Message $message)
+  {
+      $aggregateRootId = $message->aggregateRootId();
+      $event = $message->event();
+      // do stuff
+  }
+}
+
+            </code></pre>
             </section>
             <section>
                 <h3>Last but not least: Symfony Messenger</h3>
@@ -332,443 +757,6 @@
     // ...
 }</code></pre>
             </section>
-        </section>
-        <section>
-            <h3>EventSauce</h3>
-            <p>
-            <ol>
-                <li>Focused on event sourcing</li>
-                <li>Pragmatic library</li>
-                <li>Extensible by design</li>
-            </ol>
-            <br/>
-            <pre><code>composer require eventsauce/eventsauce</code></pre>
-            </p>
-        </section>
-        <section>
-            <h3>Aggregate Root ID</h3>
-            <pre><code>
-namespace EventSauce\EventSourcing;
-
-interface AggregateRootId
-{
-  public function toString(): string;
-
-  public static function fromString(string $aggregateRootId): self;
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>Aggregate Root ID - UUID</h3>
-            <pre><code>
-namespace Facile\Domain\Model;
-
-use EventSauce\EventSourcing\AggregateRootId;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
-
-abstract class AbstractAggregateRootId implements AggregateRootId
-{
-  private function __construct(private UuidInterface $uuid)
-  {
-  }
-
-  public static function create(): static
-  {
-      return new static(Uuid::uuid4());
-  }
-
-  public function toString(): string
-  {
-      return $this->uuid->toString();
-  }
-
-  public static function fromString(string $aggregateRootId): static
-  {
-      return new static(Uuid::fromString($aggregateRootId));
-  }
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>Aggregate Root ID - Product ID</h3>
-            <pre><code>
-namespace Facile\Domain\Model;
-
-final class ProductId extends AbstractAggregateRootId
-{
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>Event</h3>
-            <pre><code>
-namespace EventSauce\EventSourcing\Serialization;
-
-interface SerializablePayload
-{
-  public function toPayload(): array;
-
-  public static function fromPayload(array $payload): self;
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>Event - Product Created</h3>
-            <pre><code>
-final class ProductCreated implements SerializablePayload
-{
-private const DATE_FORMAT = DATE_ATOM;
-private const CREATION_DATE = 'creationDate';
-private const PRODUCT_ID = 'productId';
-
-private function __construct(
-    private ProductId $productId,
-    private \DateTimeImmutable $creationDate
-) {
-}
-
-public static function create(ProductId $productId): self
-{
-    $creationDate = new \DateTimeImmutable();
-
-    return new self($productId, $creationDate);
-}
-
-public function getCreationDate(): \DateTimeImmutable
-{
-    return $this->creationDate;
-}
-
-public function toPayload(): array
-{
-    return [
-        self::PRODUCT_ID => $this->productId->toString(),
-        self::CREATION_DATE => $this->creationDate,
-    ];
-}
-
-public static function fromPayload(array $payload): SerializablePayload
-{
-    $productId = ProductId::fromString(
-        $payload[self::PRODUCT_ID]
-    );
-
-    $creationDate = \DateTimeImmutable::createFromFormat(
-        $payload[self::CREATION_DATE],
-        self::DATE_FORMAT
-    );
-
-    return new self($productId, $creationDate);
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>Aggregate Root</h3>
-            <pre><code>
-namespace EventSauce\EventSourcing;
-
-interface AggregateRoot
-{
-  public function aggregateRootId(): AggregateRootId;
-
-  public function aggregateRootVersion(): int;
-
-  public function releaseEvents(): array;
-
-  public static function reconstituteFromEvents(
-      AggregateRootId $aggregateRootId,
-      Generator $events
-  ): static;
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>Aggregate Root - Product</h3>
-            <pre><code>
-namespace Facile\Domain\Model;
-
-use EventSauce\EventSourcing\AggregateRoot;
-use EventSauce\EventSourcing\AggregateRootBehaviour;
-
-final class Product implements AggregateRoot
-{
-  use AggregateRootBehaviour;
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>Aggregate Root - Creation</h3>
-            <pre><code>
-final class Product implements AggregateRoot
-{
-  use AggregateRootBehaviour;
-
-  public static function create(ProductId $productId): self
-  {
-      $product = new self($productId);
-      $productCreated = ProductCreated::create($productId);
-      $product->recordThat($productCreated);
-
-      return $product;
-  }
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>Aggregate Root - Trait</h3>
-            <pre><code>
-namespace EventSauce\EventSourcing;
-
-trait AggregateRootBehaviour
-{
-  ...
-
-  private AggregateRootId $aggregateRootId;
-
-  private function __construct(AggregateRootId $aggregateRootId)
-  {
-      $this->aggregateRootId = $aggregateRootId;
-  }
-
-  protected function recordThat(object $event): void
-  {
-      $this->apply($event);
-      $this->recordedEvents[] = $event;
-  }
-
-  ...
-}
-            </code></pre>
-        </section>
-        <section>
-            <h4>Aggregate Root - Applying events</h4>
-            <pre><code>
-namespace EventSauce\EventSourcing;
-
-trait AggregateAlwaysAppliesEvents
-{
-  private int $aggregateRootVersion = 0;
-
-  protected function apply(object $event): void
-  {
-      $parts = explode('\\', get_class($event));
-      $this->{'apply' . end($parts)}($event);
-      ++$this->aggregateRootVersion;
-  }
-}
-            </code></pre>
-        </section>
-        <section>
-            <h4>Aggregate Root - Applying events</h4>
-            <pre><code>
-final class Product implements AggregateRoot
-{
-  ...
-
-  private ?\DateTimeImmutable $creationDate = null;
-
-  public function applyProductCreated(ProductCreated $productCreated): void
-  {
-      $this->creationDate = $productCreated->getCreationDate();
-  }
-}
-            </code></pre>
-        </section>
-        <section>
-            <h4>Aggregate Root - Reconstitution</h4>
-            <pre><code>
-namespace EventSauce\EventSourcing;
-
-trait AggregateRootBehaviour
-{
-  ...
-
-  public static function reconstituteFromEvents(
-      AggregateRootId $aggregateRootId,
-      Generator $events
-  ): static
-  {
-      $aggregateRoot = new static($aggregateRootId);
-
-      foreach ($events as $event) {
-          $aggregateRoot->apply($event);
-      }
-      ...
-
-      return $aggregateRoot;
-  }
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>Aggregate Root Repository</h3>
-            <pre><code>
-interface AggregateRootRepository
-{
-  public function retrieve(AggregateRootId $aggregateRootId): object;
-
-  public function persist(object $aggregateRoot): void;
-
-  ...
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>Product Repository</h3>
-            <pre><code>
-namespace Facile\Infrastructure\Repository;
-
-use EventSauce\EventSourcing\EventSourcedAggregateRootRepository;
-
-final class ProductRepository extends EventSourcedAggregateRootRepository
-{
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>Aggregate Root Repository</h3>
-            <pre><code>
-namespace EventSauce\EventSourcing;
-
-class EventSourcedAggregateRootRepository implements AggregateRootRepository
-{
-...
-public function __construct(
-    string $aggregateRootClassName,
-    MessageRepository $messageRepository,
-    MessageDispatcher $dispatcher = null,
-    ...
-) {
-    $this->aggregateRootClassName = $aggregateRootClassName;
-    $this->messageRepository = $messageRepository;
-    $this->dispatcher = $dispatcher ?: new SynchronousMessageDispatcher();
-    ...
-}
-
-public function retrieve(AggregateRootId $aggregateRootId): object
-{
-    ...
-    $className = $this->aggregateRootClassName;
-    $events = $this->retrieveAllEvents($aggregateRootId);
-
-    return $className::reconstituteFromEvents($aggregateRootId, $events);
-}
-
-public function persist(object $aggregateRoot): void
-{
-    ...
-    $this->persistEvents(
-        $aggregateRoot->aggregateRootId(),
-        $aggregateRoot->aggregateRootVersion(),
-        ...$aggregateRoot->releaseEvents()
-    );
-}
-
-public function persistEvents(AggregateRootId $aggregateRootId, int $aggregateRootVersion, object ...$events): void
-{
-    ...
-    $messages = array_map(function (object $event) {
-       // Events are transformed into messages
-    }, $events);
-
-    $this->messageRepository->persist(...$messages);
-    $this->dispatcher->dispatch(...$messages);
-}
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>Doctrine2 Message Repository</h3>
-            <pre><code>composer require eventsauce/message-repository-for-doctrine-v2</code></pre>
-        </section>
-        <section>
-            <h3>Doctrine2 Message Repository</h3>
-            <pre><code>
-CREATE TABLE IF NOT EXISTS `your_table_name` (
-`event_id` BINARY(16) NOT NULL,
-`aggregate_root_id` BINARY(16) NOT NULL,
-`version` int(20) unsigned NULL,
-`payload` varchar(16001) NOT NULL,
-PRIMARY KEY (`event_id`),
-KEY (`aggregate_root_id`),
-KEY `reconstitution` (`aggregate_root_id`, `version` ASC)
-)
-DEFAULT CHARACTER SET utf8mb4
-COLLATE utf8mb4_general_ci ENGINE=InnoDB;</code></pre>
-        </section>
-        <section>
-            <h3>Doctrine2 Message Repository</h3>
-            <pre><code>
-{
-"headers": {
-  "__aggregate_root_id": "b62a84f8-72f0-11ec-90d6-0242ac120003",
-  "__aggregate_root_type": "facile.domain.model.product",
-  "__aggregate_root_version": 1,
-  "__event_type": "facile.domain.events.product_created",
-  "__time_of_recording": "2022-02-08 09:44:36.407236+0000",
-  "__aggregate_root_id_type": "facile.domain.model.product_id",
-  "__event_id": "24b38b08-9042-4035-bbff-6bd75295e1b9"
-},
-"payload": {
-  "productId": "b62a84f8-72f0-11ec-90d6-0242ac120003",
-  "creationDate": "2022-02-08T10:44:36+01:00"
-}
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>EventSauce Lifecycle</h3>
-            <pre><code>
-$product = $productRepository->retrieve($aggregateRootId);
-
-$product->addOrder($orderId, $money);
-
-$productRepository->persist($product);
-            </code></pre>
-        </section>
-        <section>
-            <h3>EventSauce Lifecycle</h3>
-            <pre><code>
-public function addOrder(OrderId $orderId, Money $money): void
-{
-  if (null !== $this->order) {
-      throw new \DomainException('Order already present');
-  }
-
-  $orderAdded = OrderAdded::create($orderId, $money);
-  $this->recordThat($orderAdded);
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>EventSauce Lifecycle</h3>
-            <pre><code>
-public function applyOrderAdded(OrderAdded $orderAdded): void
-{
-  $this->order = new Order(
-      $orderAdded->getOrderId(),
-      $orderAdded->getMoney()
-  );
-}
-            </code></pre>
-        </section>
-        <section>
-            <h3>EventSauce Lifecycle</h3>
-            <pre><code>
-use EventSauce\EventSourcing\MessageConsumer;
-
-class SomeConsumer implements MessageConsumer
-{
-  public function handle(Message $message)
-  {
-      $aggregateRootId = $message->aggregateRootId();
-      $event = $message->event();
-      // do stuff
-  }
-}
-
-            </code></pre>
         </section>
         <section id="section-conclusions">
             <section style="text-align: left">
