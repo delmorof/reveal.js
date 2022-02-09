@@ -23,7 +23,7 @@
             <h1>PHP + ES + CQRS + DDD = ?</h1>
             <h2>A planned strategy</h2>
             <p>
-                <!--                <a href="https://alessandrolai.dev/">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>-->
+<!--                <a href="https://alessandrolai.dev/">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>-->
                 <a href="https://gitlab.facile.it/pagamenti">Payments Team</a>
             </p>
             <small>
@@ -31,9 +31,9 @@
                     <a href="{{ event-link }}">Venerdì protetto</a> - February 18th 2022,
                     Facile.it (online)
                 </p>
-                <!--                <p class="smaller">-->
-                <!--                    <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>-->
-                <!--                </p>-->
+<!--                <p class="smaller">-->
+<!--                    <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>-->
+<!--                </p>-->
             </small>
         </section>
 
@@ -43,7 +43,7 @@
                 (TODO: team slide from Nico)
             </section>
         </section>
-
+        
         <section id="section-base-concepts">
             <section style="text-align: left">
                 <ol class="sections-list">
@@ -61,31 +61,26 @@
                 <h3>No! - We start from here </h3>
             </section>
             <section>
-                <h3>True value: business centric approach</h3>
+                <h3>We finally together</h3>
             </section>
             <section>
-                <h3>We finally toggeter </h3>
-            </section>
+                <h3>True value - Business Centric Approach vs Data Centric Approach</h3>
+            </section>            
             <section>
-                <h3>ddd - cqrs - cqrs /es - The time line</h3>
-            </section>
+                <h3>pi-timeline - DD - CQRS - CQRS/ES</h3>
+            </section>            
             <section>
-                <h3> domain e ub - Two brothers always with us</h3>
-            </section>
+                <h3>Domain & Ubiquitous Language - Two brothers always with us</h3>
+            </section>            
             <section>
-                <h3>cite domain concept </h3>
-            </section>
+                <h3>pic-matrioska - Overall image from business to Ide and Vice Versa</h3>
+            </section>            
             <section>
-                <h3>cite ubiquitos language </h3>
-            </section>
-            <section>
-                <h3>pic-matrioska - Overall image from business to Ide and Viceversa </h3>
-            </section>
-            <section>
-                <h3>New opportunity - For Business and For Devs, New capacity to explore the Domain </h3>
-            </section>
-        </section>
+                <h3>New capacity to explore the Domain means New opportunity For Business and For Devs</h3>
+            </section>            
 
+        </section>
+        
         <section id="section-starting-point">
             <section style="text-align: left">
                 <ol class="sections-list">
@@ -98,29 +93,35 @@
             </section>
             <section>
                 <h3>Pagamenti 2</h3>
+                <ul>
                 <p>
-                    Provide a homogeneous interface for managing different payment and
-                    purchasing methods
+                  Provide a homogeneous interface for managing different payment and
+                  purchasing methods
                 </p>
                 <br/>
                 <p>How does it work?</p>
-            </section>
-            <section>
+              </section>
+              <section>
                 <h3>Aggregate & entities involved</h3>
                 <p>
                     Main entities: Product -> Orders -> Payment reservation
                 </p>
-                <p>
-                <p>Are entities immutable?</p>
-                <p>State management</p>
-            </section>
-            <section>
+                <p>                
+                    <p>Are entities immutable?</p>
+                    <p>State management</p>                
+                </p>
+                <aside class="notes">
+    
+                </aside>
+              </section>
+              <section>
                 <h3>Decommissioning Sisal from api.facile.it</h3>
                 <p>Why incorporate it?</p>
                 <p>Opportunity of limited area of intervention</p>
+              </section>
             </section>
         </section>
-
+        
         <section id="section-tools">
             <section style="text-align: left">
                 <ol class="sections-list">
@@ -131,54 +132,58 @@
                     <li>Conclusions</li>
                 </ol>
             </section>
-            <section>
-                <h3>The DDD "onion"</h3>
-                <img
-                        class="r-stretch"
-                        src="img/ddd-onion.png"
-                        width="500"
-                        alt="DDD Onion - Jeffrey Palermo"
-                />
-            </section>
-            <section>
-                <h3>Presentation: API</h3>
-                <h5>Open API + Stoplight</h5>
-                <img
-                        style="float: left"
-                        width="500"
-                        src="img/stoplight.png"
-                        alt="Stoplight"
-                />
-                <ul>
-                    <li>
-                        <a href="https://swagger.io/specification/" target="_blank"
-                        >OpenAPI 3.0 Specs</a>
-                    </li>
-                    <li>
-                        <a href="https://stoplight.io/studio/">Stoplight Studio</a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/thephpleague/openapi-psr7-validator">
-                            Openapi PSR7 Validator
-                        </a>
-                    </li>
-                </ul>
-            </section>
-            <section>
-                <img width="300" src="img/ddd-onion-2.png" style="float: left"/>
-                <quote>
-                    <em>
-                        "Nothing in an inner circle can know anything at all about
-                        something in an outer circle. That includes functions,
-                        classes, variables, or any other named software entity."
-                    </em><br><br>
-                    Robert C. Martin
-                </quote>
-            </section>
-            <section>
-                <h3>Enforcing the "onion"</h3>
-                <a href="https://github.com/carlosas/phpat">PHP AT</a>
-                <pre>
+          <section>
+            <h3>The DDD "onion"</h3>
+            <img
+              class="r-stretch"
+              src="img/ddd-onion.png"
+              width="500"
+              alt="DDD Onion - Jeffrey Palermo"
+            />
+          </section>
+          <section>
+            <h3>Presentation: API</h3>
+            <h5>Open API + Stoplight</h5>
+            <img
+              style="float: left"
+              width="500"
+              src="img/stoplight.png"
+              alt="Stoplight"
+            />
+            <p>
+              <ul>
+                <li>
+                  <a hre="https://swagger.io/specification/" target="_blank"
+                  >OpenAPI 3.0 Specs</a>  
+                </li>
+                <li>
+                  <a href="https://stoplight.io/studio/">Stoplight Studio</a>
+                </li>
+                <li>
+                  <a href="https://github.com/thephpleague/openapi-psr7-validator">
+                    Openapi PSR7 Validator
+                  </a>
+                </li>
+              </ul>
+            </p>
+          </section>
+          <section>
+            <img width="300" src="img/ddd-onion-2.png" class="aside" />
+            <p class="aside">
+              <quote>
+                <em>
+                  "Nothing in an inner circle can know anything at all about
+                  something in an outer circle. That includes functions,
+                  classes, variables, or any other named software entity."
+                </em>
+                Robert C. Martin
+              </quote>
+            </p>
+          </section>
+          <section>
+            <h3>Enforcing the "onion"</h3>
+            <a href="https://github.com/carlosas/phpat">PHP AT</a>
+            <pre>
             <code>
               class CoreArchitectureTest extends ArchitectureTest
               {
@@ -196,17 +201,7 @@
               
             </code>
           </pre>
-            </section>
-            <section>
-                <h3>EventSauce</h3>
-                <ol>
-                    <li>Focused on event sourcing</li>
-                    <li>Pragmatic library</li>
-                    <li>Extensible by design</li>
-                </ol>
-                <br/>
-                <pre><code>composer require eventsauce/eventsauce</code></pre>
-            </section>
+          </section>
             <section>
                 <h3>Aggregate Root ID</h3>
                 <pre><code>
@@ -637,7 +632,7 @@ class SomeConsumer implements MessageConsumer
                 <p>[brief citation]</p>
             </section>
         </section>
-
+        
         <section id="section-migration-strategy">
             <section style="text-align: left">
                 <ol class="sections-list">
@@ -652,7 +647,7 @@ class SomeConsumer implements MessageConsumer
                 <h3>Green field vs running project</h3>
                 All this is great for a new project...<br>
                 ...but what can we do in a running project?
-                <img src="img/changing_wheels.webp" class="fragment"/>
+                <img src="img/changing_wheels.webp" class="fragment" />
             </section>
             <section>
                 <h3>Root-first or Leaf first?</h3>
@@ -677,7 +672,7 @@ class SomeConsumer implements MessageConsumer
             </section>
             <section>
                 <h3>The breakthrough</h3>
-                <img src="img/multiple-sources-of-lies.jpeg" class="stretch"/>
+                <img src="img/multiple-sources-of-lies.jpeg" class="stretch" />
                 <br>
                 <small>
                     "You have a single source of truth,
@@ -851,41 +846,41 @@ class SomeConsumer implements MessageConsumer
             </section>
             <section>
                 <h2>Thanks!</h2>
-                <!--                <p>-->
-                <!--                    Please rate my talk on Joind.in: <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>-->
-                <!--                </p>-->
-                <!--                <img class="stretch" src="img/joindin-qr.png" alt="Joind.in link: https://joind.in/talk/TODO-CHANGEME">-->
+<!--                <p>-->
+<!--                    Please rate my talk on Joind.in: <a href="https://joind.in/talk/TODO-CHANGEME">https://joind.in/talk/TODO-CHANGEME</a>-->
+<!--                </p>-->
+<!--                <img class="stretch" src="img/joindin-qr.png" alt="Joind.in link: https://joind.in/talk/TODO-CHANGEME">-->
             </section>
-            <!--            <section>-->
-            <!--                <h2 style="margin-bottom: 2em">Questions?</h2>-->
-            <!--                <h4>Contacts</h4>-->
-            <!--                <div style="font-size: smaller">-->
-            <!--                    <ul class="fa-ul">               -->
-            <!--                        <li>-->
-            <!--                            <span class="fa-li"><i class="fas fa-desktop"></i></span>-->
-            <!--                            <a target="_blank" href="https://alessandrolai.dev">https://alessandrolai.dev</a>-->
-            <!--                            <small style="vertical-align: middle">(slides & other talks here)</small>-->
-            <!--                        </li>-->
-            <!--                        <li>-->
-            <!--                            <span class="fa-li"><i class="fas fa-envelope"></i></span>-->
-            <!--                            <a target="_blank" href="mailto:alessandro.lai85@gmail.com">alessandro.lai85@gmail.com</a>-->
-            <!--                        </li>-->
-            <!--                        <li>-->
-            <!--                            <span class="fa-li"><i class="fas fa-envelope"></i></span>-->
-            <!--                            <a target="_blank" href="mailto:alessandro.lai@facile.it">alessandro.lai@facile.it</a>-->
-            <!--                            <small style="vertical-align: middle">(we are hiring!)</small>-->
-            <!--                        </li>-->
-            <!--                        <li>-->
-            <!--                            <span class="fa-li"><i class="fab fa-github"></i></span>-->
-            <!--                            <a target="_blank" href="https://github.com/Jean85">@Jean85</a>-->
-            <!--                        </li>-->
-            <!--                        <li>-->
-            <!--                            <span class="fa-li"><i class="fab fa-twitter"></i></span>-->
-            <!--                            <a target="_blank" href="https://twitter.com/AlessandroLai">@AlessandroLai</a>-->
-            <!--                        </li>-->
-            <!--                    </ul>-->
-            <!--                </div>-->
-            <!--            </section>-->
+<!--            <section>-->
+<!--                <h2 style="margin-bottom: 2em">Questions?</h2>-->
+<!--                <h4>Contacts</h4>-->
+<!--                <div style="font-size: smaller">-->
+<!--                    <ul class="fa-ul">               -->
+<!--                        <li>-->
+<!--                            <span class="fa-li"><i class="fas fa-desktop"></i></span>-->
+<!--                            <a target="_blank" href="https://alessandrolai.dev">https://alessandrolai.dev</a>-->
+<!--                            <small style="vertical-align: middle">(slides & other talks here)</small>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <span class="fa-li"><i class="fas fa-envelope"></i></span>-->
+<!--                            <a target="_blank" href="mailto:alessandro.lai85@gmail.com">alessandro.lai85@gmail.com</a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <span class="fa-li"><i class="fas fa-envelope"></i></span>-->
+<!--                            <a target="_blank" href="mailto:alessandro.lai@facile.it">alessandro.lai@facile.it</a>-->
+<!--                            <small style="vertical-align: middle">(we are hiring!)</small>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <span class="fa-li"><i class="fab fa-github"></i></span>-->
+<!--                            <a target="_blank" href="https://github.com/Jean85">@Jean85</a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <span class="fa-li"><i class="fab fa-twitter"></i></span>-->
+<!--                            <a target="_blank" href="https://twitter.com/AlessandroLai">@AlessandroLai</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </section>-->
         </section>
     </div>
 </div>
