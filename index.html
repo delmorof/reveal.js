@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="dist/theme/facile-engineering.css" id="theme">
     <link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico"/>
 
+    <link rel="stylesheet"
+          href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/monokai-sublime.min.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
 </head>
@@ -257,12 +262,12 @@ class CoreArchitectureTest extends ArchitectureTest
                     <li>Extensible by design</li>
                 </ol>
                 <br/>
-                <pre><code>composer require eventsauce/eventsauce</code></pre>
+                <pre><code class="language-php">composer require eventsauce/eventsauce</code></pre>
                 </p>
             </section>
             <section>
                 <h3>Aggregate Root ID</h3>
-                <pre><code>
+                <pre><code class="language-php">
 namespace EventSauce\EventSourcing;
 
 interface AggregateRootId
@@ -275,7 +280,7 @@ interface AggregateRootId
             </section>
             <section>
                 <h3>Aggregate Root ID - UUID</h3>
-                <pre class="php stretch"><code>namespace Facile\Domain\Model;
+                <pre class="php stretch"><code class="language-php">namespace Facile\Domain\Model;
 
 use EventSauce\EventSourcing\AggregateRootId;
 
@@ -302,7 +307,7 @@ abstract class AbstractAggregateRootId implements AggregateRootId
             </section>
             <section>
                 <h3>Aggregate Root ID - Product ID</h3>
-                <pre class="php"><code>
+                <pre class="php"><code class="language-php">
 namespace Facile\Domain\Model;
 
 final class ProductId extends AbstractAggregateRootId
@@ -312,7 +317,7 @@ final class ProductId extends AbstractAggregateRootId
             </section>
             <section>
                 <h3>Event</h3>
-                <pre class="php"><code>
+                <pre class="php"><code class="language-php">
 namespace EventSauce\EventSourcing\Serialization;
 
 interface SerializablePayload
@@ -325,7 +330,7 @@ interface SerializablePayload
             </section>
             <section>
                 <h3>Event - Product Created</h3>
-                <pre class="php stretch"><code>final class ProductCreated implements SerializablePayload
+                <pre class="php stretch"><code class="language-php">final class ProductCreated implements SerializablePayload
 {
   private const DATE_FORMAT = DATE_ATOM;
   private const CREATION_DATE = 'creationDate';
@@ -390,7 +395,7 @@ interface AggregateRoot
             </section>
             <section>
                 <h3>Aggregate Root - Product</h3>
-                <pre><code>
+                <pre><code class="language-php">
 namespace Facile\Domain\Model;
 
 use EventSauce\EventSourcing\AggregateRoot;
@@ -404,7 +409,7 @@ final class Product implements AggregateRoot
             </section>
             <section>
                 <h3>Aggregate Root - Creation</h3>
-                <pre><code>
+                <pre><code class="language-php">
 final class Product implements AggregateRoot
 {
   use AggregateRootBehaviour;
@@ -422,7 +427,7 @@ final class Product implements AggregateRoot
             </section>
             <section>
                 <h3>Aggregate Root - Trait</h3>
-                <pre class="php stretch"><code>
+                <pre class="php stretch"><code class="language-php">
 namespace EventSauce\EventSourcing;
 
 trait AggregateRootBehaviour
@@ -448,7 +453,7 @@ trait AggregateRootBehaviour
             </section>
             <section>
                 <h4>Aggregate Root - Applying events</h4>
-                <pre><code>
+                <pre><code class="language-php">
 namespace EventSauce\EventSourcing;
 
 trait AggregateAlwaysAppliesEvents
@@ -484,7 +489,7 @@ final class Product implements AggregateRoot
             </section>
             <section>
                 <h4>Aggregate Root - Reconstitution</h4>
-                <pre class="php stretch"><code>
+                <pre class="php stretch"><code class="language-php">
 namespace EventSauce\EventSourcing;
 
 trait AggregateRootBehaviour
@@ -510,7 +515,7 @@ trait AggregateRootBehaviour
             </section>
             <section>
                 <h3>Aggregate Root Repository</h3>
-                <pre class="php"><code>
+                <pre class="php"><code class="language-php">
 interface AggregateRootRepository
 {
   public function retrieve(AggregateRootId $aggregateRootId): object;
@@ -535,7 +540,7 @@ final class ProductRepository extends EventSourcedAggregateRootRepository
             </section>
             <section>
                 <h3>Aggregate Root Repository</h3>
-                <pre class="php stretch"><code>
+                <pre class="php stretch"><code class="language-php">
 namespace EventSauce\EventSourcing;
 
 class EventSourcedAggregateRootRepository implements AggregateRootRepository
@@ -587,8 +592,8 @@ class EventSourcedAggregateRootRepository implements AggregateRootRepository
             </section>
             <section>
                 <h3>Doctrine2 Message Repository</h3>
-                <pre><code>composer require eventsauce/message-repository-for-doctrine-v2</code></pre>
-                <pre><code>
+                <pre><code class="language-php">composer require eventsauce/message-repository-for-doctrine-v2</code></pre>
+                <pre><code class="language-php">
   CREATE TABLE IF NOT EXISTS `your_table_name` (
     `event_id` BINARY(16) NOT NULL,
     `aggregate_root_id` BINARY(16) NOT NULL,
@@ -604,7 +609,7 @@ class EventSourcedAggregateRootRepository implements AggregateRootRepository
             </section>
             <section>
                 <h3>Serialized Payload</h3>
-                <pre class="stretch"><code>
+                <pre class="stretch"><code class="language-php">
 
 
   {
@@ -626,7 +631,7 @@ class EventSourcedAggregateRootRepository implements AggregateRootRepository
             </section>
             <section>
                 <h3>EventSauce Lifecycle</h3>
-                <pre><code>
+                <pre><code class="language-php">
 $product = $productRepository->retrieve($aggregateRootId);
 
 $product->addOrder($command);
@@ -636,7 +641,7 @@ $productRepository->persist($product);
             </section>
             <section>
                 <h3>EventSauce Lifecycle</h3>
-                <pre class="php stretch"><code>
+                <pre class="php stretch"><code class="language-php">
 public function addOrder(AddOrderCommand $command): void
 {
   if (null !== $this->order) {
@@ -658,7 +663,7 @@ public function applyOrderAdded(OrderAdded $orderAdded): void
             </section>
             <section>
                 <h3>EventSauce Lifecycle</h3>
-                <pre class="php stretch"><code>
+                <pre class="php stretch"><code class="language-php">
 use EventSauce\EventSourcing\MessageConsumer;
 
 class OrdersReadModel implements MessageConsumer
@@ -772,7 +777,7 @@ class OrdersReadModel implements MessageConsumer
             <section>
                 <h3>Generating events on-the-fly</h3>
                 <pre class="php stretch">
-<code>class ProductRepository 
+<code class="language-php">class ProductRepository 
     extends EventSourcedAggregateRootRepository 
     implements ProductRepositoryInterface
 {
@@ -795,7 +800,7 @@ class OrdersReadModel implements MessageConsumer
             <section>
                 <h3>Maintain the legacy tables</h3>
                 <pre class="stretch">
-<code>final class Prodotto implements AggregateRoot
+<code class="language-php">final class Prodotto implements AggregateRoot
 {
     // ...
 
@@ -820,7 +825,7 @@ class OrdersReadModel implements MessageConsumer
             <section>
                 <h3>Maintain the legacy tables</h3>
                 <pre class="stretch">
-<code>class ReservePaymentHandler implements MessageHandlerInterface
+<code class="language-php">class ReservePaymentHandler implements MessageHandlerInterface
 {
     public function __invoke(ReservePayment $command): void
     {
@@ -844,7 +849,7 @@ class OrdersReadModel implements MessageConsumer
             <section>
                 <h3>How to iterate</h3>
                 <pre class="php stretch">
-<code>class ProductRepository 
+<code class="language-php">class ProductRepository 
     extends EventSourcedAggregateRootRepository 
     implements ProductRepositoryInterface
 {
@@ -961,7 +966,6 @@ class OrdersReadModel implements MessageConsumer
 <script src="dist/reveal.js"></script>
 <script src="plugin/notes/notes.js"></script>
 <script src="plugin/markdown/markdown.js"></script>
-<script src="plugin/highlight/highlight.js"></script>
 <script src="plugin/zoom/zoom.js"></script>
 <script>
     // More info about initialization & config:
@@ -976,7 +980,6 @@ class OrdersReadModel implements MessageConsumer
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [
             RevealMarkdown,
-            RevealHighlight,
             RevealNotes,
             RevealZoom
         ]
