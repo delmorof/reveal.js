@@ -186,21 +186,21 @@
             <h3>Enforcing the "onion"</h3>
             <a href="https://github.com/carlosas/phpat">PHP AT</a>
             <pre>
-            <code>
-              class CoreArchitectureTest extends ArchitectureTest
-              {
-                  public function testCoreDomainDependencies(): Rule
-                  {
-                      return $this->newRule
-                          ->classesThat(ClassSelector::domainClasses(ClassSelector::CONTEXT_CORE))
-                          ->canOnlyDependOn()
-                          ->classesThat(ClassSelector::domainClasses(ClassSelector::CONTEXT_CORE))
-              
-                          ->classesThat(Selector::haveClassName(Assert::class))
-                          ->classesThat(Selector::haveClassName(UuidInterface::class))
-                          ->build();
-                  }
-              
+            <code style="font-size:0.7em">
+class CoreArchitectureTest extends ArchitectureTest
+{
+    public function testCoreDomainDependencies(): Rule
+    {
+        return $this->newRule
+            ->classesThat(ClassSelector::domainClasses(ClassSelector::CONTEXT_CORE))
+            ->canOnlyDependOn()
+            ->classesThat(ClassSelector::domainClasses(ClassSelector::CONTEXT_CORE))
+
+            ->classesThat(Selector::haveClassName(Assert::class))
+            ->classesThat(Selector::haveClassName(UuidInterface::class))
+            ->build();
+    }
+}
             </code>
           </pre>
           </section>
