@@ -103,13 +103,25 @@
               </section>
               <section>
                 <h3>Aggregate & entities involved</h3>
-                <p>
-                    Main entities: Product -> Orders -> Payment reservation
-                </p>
-                <p>                
-                    <p>Are entities immutable?</p>
-                    <p>State management</p>                
-                </p>
+                <div style="margin-top: 2em;">
+                    <span style="float: left; width: 50%; font-size: x-large;">
+                        <div class="stretch graph">
+                            <span>Product (root)</span>
+                            <div>
+                                <i class="fas fa-angle-down"></i> 1..n
+                                <span>Orders</span>
+                                <i class="fas fa-angle-down"></i> 0..n
+                                <span>Payment reservations</span>
+                            </div>
+                        </div>
+                    </span>
+                    <span  style="float: right;  width: 50%;">            
+                        <p>                
+                            <p>Are entities immutable?</p>
+                            <p>What about state management?</p>                
+                        </p>
+                    </span>
+                </div>
                 <aside class="notes">
     
                 </aside>
