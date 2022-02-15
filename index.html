@@ -20,7 +20,7 @@
 <div class="reveal">
     <div class="slides">
         <section id="title" data-background-image="img/theme/bg-cover.svg">
-            <h1>PHP + ES + CQRS + DDD = ?</h1>
+            <h1>PHP+ES+CQRS+DDD = ?</h1>
             <h2>A planned strategy</h2>
             <p>
 <!--                <a href="https://alessandrolai.dev/">Alessandro Lai</a> / <a href="http://twitter.com/AlessandroLai">@AlessandroLai</a><br>-->
@@ -680,19 +680,45 @@ class SomeConsumer implements MessageConsumer
                 </small>
             </section>
             <section>
-                <h3>The second golden nugget</h3>
-                <ul>
-                    <li class="fragment">Migrating will take a LONG time</li>
-                    <li class="fragment">Sync between legacy and event store</li>
-                    <li class="fragment">DB transactions to save data atomically</li>
-                </ul>
-                <aside class="notes">
-                    <ul>
-                        <li>Migrating will take a LONG time</li>
-                        <li>Sync between legacy and event store</li>
-                        <li>DB transactions to save data atomically</li>
-                    </ul>
-                </aside>
+                <h3>The great workshop take-away</h3>
+                <table>
+                    <tr>
+                        <td style="text-align: center; vertical-align: top">
+                            <img src="img/marco.png" alt="Marco Heimeshoff"/>
+                            <br>
+                            <i class="fab fa-twitter"></i>
+                            <a href="https://twitter.com/Heimeshoff">
+                                @Heimeshoff
+                            </a>
+                            <br><br>
+                            <small>
+                            </small>
+                        </td>
+                        <td>
+                            <ul class="fa-ul" style="margin-top: 1em">
+                                <li style="margin-bottom: 1em">
+                                    <span class="fa-li"><i class="fas fa-chalkboard-teacher"></i></span>
+                                    <a href="https://www.avanscoperta.it/it/training/domain-models-in-practice-ddd-cqrs-event-sourcing/">
+                                        Domain Models in practice:<br>
+                                        DDD, CQRS & Event Sourcing
+                                    </a>
+                                </li>
+                                <li class="fragment">
+                                    <span class="fa-li"><i class="fas fa-database"></i></span>
+                                    DB transactions to save data atomically
+                                </li>
+                                <li class="fragment">
+                                    <span class="fa-li"><i class="fas fa-sync"></i></span>
+                                    Sync between legacy tables and event store
+                                </li>
+                                <li class="fragment">
+                                    <span class="fa-li"><i class="fas fa-clock"></i></span>
+                                    Migrating will take a LONG time
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
             </section>
             <section>
                 <h3>Generating events on-the-fly</h3>
@@ -706,7 +732,7 @@ class SomeConsumer implements MessageConsumer
         $product = parent::retrieve($id);
 
         if ($product === null) {
-            $legacyProduct = $this->legacyRepository->find($id);
+            $legacyProduct = $this->doctrineRepository->find($id);
 
             $product = Product::reconstituteFromEvents(
                 $this->eventGenerator->generateFrom($legacyProduct)
@@ -736,7 +762,7 @@ class SomeConsumer implements MessageConsumer
         $this->recordThat($event);
 
         // register the same stuff in the legacy entity
-        $this->getLegacyProduct()->addNewCode($event)
+        $this->getDoctrineProduct()->addNewCode($event)
     }
 
     // ...
@@ -752,19 +778,17 @@ class SomeConsumer implements MessageConsumer
         $id = $command->getRootId();
         // retrieve both the aggregate and the legacy entity
         $product = $this->productRepository->retrieve($id);
-        $legacyProduct = $product->getLegacyProduct(
-            $this->legacyRepository
-        );
+
         // invoke the domain logic
         $product->reservePayment($command);
 
         // atomic flush due to single DB connection
-        $this->legacyRepository->beginTransaction();
+        $this->doctrineRepository->beginTransaction();
 
         $this->productRepository->persist($product);
-        $this->legacyRepository->flush();
+        $this->doctrineRepository->flush();
 
-        $this->legacyRepository->commit();
+        $this->doctrineRepository->commit();
     }
 }</code></pre>
             </section>
@@ -821,7 +845,7 @@ class SomeConsumer implements MessageConsumer
                     </li>
                     <li class="fragment">
                         <span class="fa-li"><i class="fas fa-database"></i></span>
-                        Legacy still works
+                        Doctrine still works
                     </li>
                     <li class="fragment">
                         <span class="fa-li"><i class="fas fa-hourglass-half"></i></span>
