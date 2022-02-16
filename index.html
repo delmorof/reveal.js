@@ -774,10 +774,10 @@ class ProductRepository
         $product = parent::retrieve($id);
 
         if ($product === null) {
-            $legacyProduct = $this->doctrineRepository->find($id);
+            $doctrineProduct = $this->doctrineRepository->find($id);
 
             $product = Product::reconstituteFromEvents(
-                $this->eventGenerator->generateFrom($legacyProduct)
+                $this->eventGenerator->generateFrom($doctrineProduct)
             );
         }
 
@@ -786,7 +786,7 @@ class ProductRepository
 }</code></pre>
             </section>
             <section>
-                <h3>Maintain the legacy tables</h3>
+                <h3>Maintain the Doctrine tables (1/2)</h3>
                 <pre class="stretch">
 <code class="language-php">final class Prodotto implements AggregateRoot
 {
@@ -811,14 +811,14 @@ class ProductRepository
 }</code></pre>
             </section>
             <section>
-                <h3>Maintain the legacy tables</h3>
+                <h3>Maintain the Doctrine tables (2/2)</h3>
                 <pre class="stretch">
 <code class="language-php">class ReservePaymentHandler implements MessageHandlerInterface
 {
     public function __invoke(ReservePayment $command): void
     {
         $id = $command->getRootId();
-        // retrieve both the aggregate and the legacy entity
+        // retrieve both the aggregate and the Doctrine entity
         $product = $this->productRepository->retrieve($id);
 
         // invoke the domain logic
