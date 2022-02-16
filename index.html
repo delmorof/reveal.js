@@ -685,8 +685,10 @@ class OrdersReadModel implements MessageConsumer
             <section>
                 <h3>Green field vs running project</h3>
                 All this is great for a new project...<br>
-                ...but what can we do in a running project?
-                <img src="img/changing_wheels.webp" class="fragment" />
+                <div class="fragment">
+                    ...but what can we do in a running project?
+                    <img src="img/changing_wheels.webp" />
+                </div>
             </section>
             <section>
                 <h3>Root-first or Leaf first?</h3>
@@ -761,8 +763,9 @@ class OrdersReadModel implements MessageConsumer
             </section>
             <section>
                 <h3>Generating events on-the-fly</h3>
-                <pre class="php stretch">
-<code class="language-php">class ProductRepository 
+                <pre class="stretch">
+<code class="language-php">
+class ProductRepository 
     extends EventSourcedAggregateRootRepository 
     implements ProductRepositoryInterface
 {
@@ -792,7 +795,7 @@ class OrdersReadModel implements MessageConsumer
     public function reservePayment(ReservePayment $command): void
     {
         if (/* ... */) {
-            // domain logic...
+            // domain logic & validation...
         }
 
         $event = new MooneyCodeCreated(/* ... */);
@@ -800,7 +803,7 @@ class OrdersReadModel implements MessageConsumer
         // add the event to the aggregate
         $this->recordThat($event);
 
-        // register the same stuff in the legacy entity
+        // register the same stuff in the Doctrine entity
         $this->getDoctrineProduct()->addNewCode($event)
     }
 
